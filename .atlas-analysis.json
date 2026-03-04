@@ -1,0 +1,203 @@
+{
+  "projectType": "cli-tool",
+  "projectName": "SEO Machine",
+  "projectDescription": "A Claude Code workspace for creating SEO-optimized blog content with custom commands, agents, and analytics.",
+  "theme": "palm",
+  "primaryColor": "#2563eb",
+  "lightColor": "#3b82f6",
+  "darkColor": "#1e40af",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "introduction",
+              "installation",
+              "quickstart",
+              "configuration"
+            ]
+          },
+          {
+            "group": "Core Concepts",
+            "pages": [
+              "concepts/architecture",
+              "concepts/workflow",
+              "concepts/context-files",
+              "concepts/content-pipeline"
+            ]
+          },
+          {
+            "group": "Workflows",
+            "pages": [
+              "workflows/creating-content",
+              "workflows/updating-content",
+              "workflows/landing-pages",
+              "workflows/publishing"
+            ]
+          },
+          {
+            "group": "Commands",
+            "pages": [
+              "commands/overview",
+              "commands/research",
+              "commands/write",
+              "commands/rewrite",
+              "commands/optimize",
+              "commands/analyze-existing",
+              "commands/publish-draft"
+            ]
+          },
+          {
+            "group": "Advanced Commands",
+            "pages": [
+              "commands/research-commands",
+              "commands/landing-page-commands",
+              "commands/performance-review"
+            ]
+          },
+          {
+            "group": "Agents",
+            "pages": [
+              "agents/overview",
+              "agents/content-analyzer",
+              "agents/seo-optimizer",
+              "agents/meta-creator",
+              "agents/internal-linker",
+              "agents/keyword-mapper",
+              "agents/editor",
+              "agents/performance"
+            ]
+          },
+          {
+            "group": "Data Sources",
+            "pages": [
+              "data-sources/overview",
+              "data-sources/google-analytics",
+              "data-sources/google-search-console",
+              "data-sources/dataforseo"
+            ]
+          },
+          {
+            "group": "Integrations",
+            "pages": [
+              "integrations/wordpress",
+              "integrations/analytics-setup"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Python API",
+        "groups": [
+          {
+            "group": "Analysis Modules",
+            "pages": [
+              "api/overview",
+              "api/search-intent-analyzer",
+              "api/keyword-analyzer",
+              "api/seo-quality-rater",
+              "api/content-length-comparator",
+              "api/readability-scorer"
+            ]
+          },
+          {
+            "group": "Data Modules",
+            "pages": [
+              "api/google-analytics",
+              "api/google-search-console",
+              "api/dataforseo",
+              "api/data-aggregator"
+            ]
+          },
+          {
+            "group": "CRO Modules",
+            "pages": [
+              "api/landing-page-scorer",
+              "api/cta-analyzer",
+              "api/trust-signal-analyzer"
+            ]
+          },
+          {
+            "group": "Scoring Modules",
+            "pages": [
+              "api/opportunity-scorer",
+              "api/content-scorer"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Reference",
+        "groups": [
+          {
+            "group": "Configuration",
+            "pages": [
+              "reference/context-files",
+              "reference/brand-voice",
+              "reference/style-guide",
+              "reference/seo-guidelines",
+              "reference/environment-variables"
+            ]
+          },
+          {
+            "group": "Scripts",
+            "pages": [
+              "reference/research-scripts",
+              "reference/seo-scripts"
+            ]
+          },
+          {
+            "group": "Quality Standards",
+            "pages": [
+              "reference/content-standards",
+              "reference/seo-checklist"
+            ]
+          },
+          {
+            "group": "Resources",
+            "pages": [
+              "reference/directory-structure",
+              "reference/troubleshooting",
+              "reference/best-practices"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Custom slash commands for content workflows",
+    "Specialized AI agents for SEO analysis",
+    "Python modules for keyword and readability analysis",
+    "Google Analytics and Search Console integration",
+    "WordPress publishing with Yoast SEO support",
+    "Content performance tracking and prioritization",
+    "Landing page CRO optimization",
+    "Comprehensive SEO quality scoring"
+  ],
+  "publicApiSurface": [
+    "/research [topic]",
+    "/write [topic]",
+    "/rewrite [topic]",
+    "/optimize [file]",
+    "/analyze-existing [URL or file]",
+    "/publish-draft [file]",
+    "/performance-review",
+    "/priorities",
+    "/research-serp [keyword]",
+    "/research-gaps",
+    "/research-trending",
+    "/landing-write [topic]",
+    "/landing-audit [file]",
+    "SearchIntentAnalyzer",
+    "KeywordAnalyzer",
+    "SEOQualityRater",
+    "ContentLengthComparator",
+    "ReadabilityScorer",
+    "OpportunityScorer",
+    "LandingPageScorer"
+  ]
+}

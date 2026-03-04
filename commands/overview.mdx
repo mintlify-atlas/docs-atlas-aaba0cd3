@@ -37,6 +37,50 @@ SEO Machine provides custom commands that orchestrate complete SEO content workf
   </Card>
 </CardGroup>
 
+## Additional Commands
+
+### Article Command
+
+The `/article` command provides a unified content creation pipeline with mandatory research:
+
+```bash
+/article "Best Project Management Tools for Small Teams"
+```
+
+**4-Step Pipeline:**
+1. **SERP Analysis** - Analyze top 5 ranking articles for gaps and opportunities
+2. **Social Research** - Mine Reddit threads and YouTube videos for unique insights
+3. **Article Planning** - Create section-by-section strategy with engagement hooks
+4. **Section Writing** - Write and edit each section individually for consistent quality
+
+**When to use:**
+- Comprehensive new articles on competitive topics
+- Topics where you need to beat existing content
+- Content requiring deep research and differentiation
+
+**Output:** Research files in `research/`, final article in `drafts/`
+
+See the [complete /article workflow](/workflows/creating-content) for detailed steps.
+
+### Scrub Command
+
+The `/scrub` command removes AI-generated watermarks and telltale patterns:
+
+```bash
+/scrub drafts/article-2025-03-04.md
+```
+
+**What it removes:**
+- Invisible Unicode watermarks (zero-width spaces, BOM characters)
+- AI detection patterns (excessive em-dash usage)
+- Whitespace and formatting artifacts
+
+**When to use:**
+- Before publishing content to remove AI fingerprints
+- When content needs to appear naturally human-written
+
+**Note:** `/write` and `/rewrite` automatically invoke `/scrub`, so manual use is rarely needed.
+
 ## Command Structure
 
 All commands follow this pattern:

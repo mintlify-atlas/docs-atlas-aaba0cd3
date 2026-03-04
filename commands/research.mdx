@@ -1,0 +1,348 @@
+---
+title: /research Command
+description: Conduct comprehensive keyword research and competitive analysis before writing new content
+---
+
+The `/research` command performs SEO keyword research and analyzes top-ranking competitor content to create a detailed research brief for article writing.
+
+## Usage
+
+```bash
+/research [topic]
+```
+
+<ParamField path="topic" type="string" required>
+  The topic or keyword to research. Can be a short phrase or full question.
+</ParamField>
+
+## Examples
+
+```bash
+/research content marketing strategies for B2B SaaS
+```
+
+```bash
+/research podcast editing software
+```
+
+```bash
+/research how to grow podcast audience
+```
+
+## What It Does
+
+### 1. Keyword Research
+
+- **Primary Keyword**: Identifies main target keyword for the topic
+- **Search Volume & Difficulty**: Estimates monthly searches and competition level
+- **Keyword Variations**: Finds semantic variations and long-tail opportunities
+- **Related Questions**: Discovers what people are asking (People Also Ask, forums, Reddit)
+- **Search Intent**: Determines if intent is informational, navigational, commercial, or transactional
+- **Topic Cluster**: Identifies how topic fits into your content clusters
+
+### 2. Competitive Analysis
+
+- **Top 10 SERP Review**: Analyzes the top 10 ranking articles
+- **Content Length**: Notes word count of top performers (benchmark target)
+- **Common Themes**: Identifies topics/sections all top articles cover
+- **Content Gaps**: Discovers what's missing from competitor coverage
+- **Unique Angles**: Finds underexplored perspectives or insights
+- **Featured Snippets**: Identifies snippet opportunities
+- **Domain Authority**: Notes which competitors rank
+
+### 3. Context Integration
+
+The command references your context files:
+
+- `context/brand-voice.md` - For messaging fit
+- `context/internal-links-map.md` - For related articles
+- `context/target-keywords.md` - For priority keywords
+- `context/seo-guidelines.md` - For SEO requirements
+- `context/features.md` - For product integration opportunities
+
+### 4. Content Planning
+
+- **Recommended Structure**: H2 and H3 outline based on research
+- **Content Depth**: Target word count (typically 2000-3000+)
+- **Supporting Evidence**: Statistics, studies, or data to include
+- **Expert Sources**: Industry experts or quotes to reference
+- **Visual Opportunities**: Images, screenshots, or graphics needed
+- **Internal Links**: 3-5 key pages to link to
+- **External Authority**: 2-3 authoritative external sources
+
+## Output
+
+Creates a comprehensive research brief saved to:
+
+```
+research/brief-[topic-slug]-[YYYY-MM-DD].md
+```
+
+### Research Brief Structure
+
+<Tabs>
+  <Tab title="SEO Foundation">
+    ```markdown
+    ## SEO Foundation
+    
+    **Primary Keyword**: [keyword] (volume, difficulty)
+    **Secondary Keywords**: 3-5 related keywords
+    **Target Word Count**: Minimum words needed to compete
+    **Featured Snippet Opportunity**: Yes/No, format type
+    ```
+  </Tab>
+  
+  <Tab title="Competitive Landscape">
+    ```markdown
+    ## Competitive Landscape
+    
+    **Top 3 Competitor Articles**:
+    1. [URL] - Key takeaways
+    2. [URL] - Key takeaways
+    3. [URL] - Key takeaways
+    
+    **Common Sections**: Must-cover topics
+    **Content Gaps**: Opportunities for unique value
+    **Differentiation Strategy**: How to stand out
+    ```
+  </Tab>
+  
+  <Tab title="Recommended Outline">
+    ```markdown
+    ## Recommended Outline
+    
+    H1: [Optimized headline with primary keyword]
+    
+    Introduction
+    - Hook
+    - Problem statement
+    - Value proposition
+    
+    H2: [Main section 1]
+    H3: [Subsection]
+    H3: [Subsection]
+    
+    H2: [Main section 2]
+    ...
+    
+    Conclusion
+    - Key takeaways
+    - Call to action
+    ```
+  </Tab>
+  
+  <Tab title="Supporting Elements">
+    ```markdown
+    ## Supporting Elements
+    
+    **Statistics to Include**: 5-7 relevant data points with sources
+    **Expert Quotes**: Potential sources or existing quotes
+    **Examples/Case Studies**: Real scenarios to feature
+    **Visual Suggestions**: Screenshots, charts, graphics
+    ```
+  </Tab>
+</Tabs>
+
+### Internal Linking Strategy
+
+The brief includes specific internal linking recommendations:
+
+```markdown
+## Internal Linking Strategy
+
+**Pillar Page**: Main pillar content to link to
+**Related Articles**: 2-4 relevant blog posts
+**Product Pages**: Product features to naturally mention
+**Resource Pages**: Tools or guides to reference
+```
+
+### Meta Elements Preview
+
+Draft meta elements for planning:
+
+```markdown
+## Meta Elements Preview
+
+**Meta Title**: Draft optimized title (50-60 characters)
+**Meta Description**: Draft compelling description (150-160 characters)
+**URL Slug**: Recommended URL structure
+```
+
+## Real Example
+
+<Accordion title="Example: /research podcast analytics">
+  ```markdown
+  # Research Brief: Podcast Analytics
+  Date: 2025-03-04
+  
+  ## SEO Foundation
+  
+  **Primary Keyword**: podcast analytics (2,400/mo, Medium difficulty)
+  **Secondary Keywords**:
+  - podcast analytics tools (720/mo)
+  - best podcast analytics (480/mo)
+  - podcast performance metrics (320/mo)
+  - how to track podcast downloads (260/mo)
+  
+  **Target Word Count**: 2,500-3,000 words
+  **Featured Snippet Opportunity**: Yes - List of metrics to track
+  
+  ## Competitive Landscape
+  
+  **Top 3 Competitor Articles**:
+  1. https://buzzsprout.com/podcast-analytics (2,800 words)
+     - Comprehensive metrics breakdown
+     - Platform comparison
+     - Missing: Advanced analysis strategies
+  
+  2. https://podcast.co/create/podcast-analytics (2,200 words)
+     - Beginner-friendly approach
+     - Tool recommendations
+     - Missing: Technical depth on IAB standards
+  
+  3. https://blog.rephonic.com/podcast-analytics-guide (3,100 words)
+     - Very technical and comprehensive
+     - Covers attribution and tracking
+     - Missing: Practical examples for creators
+  
+  **Content Gaps**:
+  - Actionable interpretation of analytics data
+  - Common mistakes podcast creators make
+  - Real examples of using data to grow a show
+  
+  **Differentiation Strategy**:
+  Focus on practical analytics interpretation for creators, not just metric definitions. Include real case studies from Castos customers.
+  
+  ## Recommended Outline
+  
+  H1: Podcast Analytics: The Complete Guide to Tracking & Growing Your Show
+  
+  Introduction
+  - Hook: Statistic about podcasters who don't use analytics
+  - Problem: Analytics dashboards are overwhelming
+  - Promise: Learn which metrics matter and how to use them
+  
+  H2: Why Podcast Analytics Matter (Beyond Vanity Metrics)
+  H3: The Difference Between Downloads and Real Impact
+  H3: How Analytics Drive Monetization
+  
+  H2: Essential Podcast Metrics to Track
+  H3: Downloads and Listeners (What's the Difference?)
+  H3: Unique Listeners vs Total Downloads
+  H3: Retention Rate and Drop-off Points
+  H3: Geographic and Demographic Data
+  H3: Listening Apps and Platforms
+  
+  H2: Advanced Analytics: IAB Standards Explained
+  H3: Why IAB Certification Matters
+  H3: How IAB Standards Affect Your Numbers
+  
+  H2: Best Podcast Analytics Tools (Comparison)
+  H3: Hosting Platform Analytics (Castos, Buzzsprout, etc.)
+  H3: Third-Party Tools (Chartable, Podtrac)
+  H3: What to Look for in Analytics Tools
+  
+  H2: How to Interpret Your Podcast Analytics
+  H3: Setting Realistic Benchmarks
+  H3: Identifying Growth Trends
+  H3: Spotting Problem Episodes
+  
+  H2: Using Analytics to Grow Your Podcast
+  H3: Content Strategy Based on Data
+  H3: Optimizing Episode Length
+  H3: Best Time to Publish (Using Your Data)
+  
+  H2: Common Podcast Analytics Mistakes
+  H3: Obsessing Over Downloads Only
+  H3: Comparing to Irrelevant Benchmarks
+  H3: Ignoring Retention Metrics
+  
+  Conclusion
+  - Recap: Focus on actionable metrics
+  - CTA: Start tracking with Castos analytics
+  
+  ## Supporting Elements
+  
+  **Statistics to Include**:
+  - Average podcast downloads by episode
+  - Industry retention rate benchmarks
+  - Percentage of podcasters using analytics
+  - Growth rate correlation with analytics usage
+  - IAB certified vs non-certified number differences
+  
+  **Examples/Case Studies**:
+  - Castos customer who 2x'd downloads using retention data
+  - Example of how geographic data revealed new audience
+  - Real dashboard screenshot walkthrough
+  
+  **Visual Suggestions**:
+  - Annotated Castos analytics dashboard
+  - Chart showing retention drop-off curve
+  - Comparison table of analytics platforms
+  - Infographic of essential metrics
+  
+  ## Internal Linking Strategy
+  
+  **Pillar Page**: https://castos.com/podcast-hosting/
+  **Related Articles**:
+  - How to Start a Podcast (link in intro)
+  - Podcast Marketing Guide (link in growth section)
+  - Best Podcast Hosting Platforms (link in tools section)
+  
+  **Product Pages**:
+  - Castos Analytics feature page
+  - IAB certification info page
+  
+  ## Meta Elements Preview
+  
+  **Meta Title**: Podcast Analytics Guide: Track & Grow Your Show | Castos
+  **Meta Description**: Learn which podcast analytics matter, how to interpret your data, and use metrics to grow your audience. Complete guide with tools and examples.
+  **URL Slug**: /podcast-analytics-guide
+  ```
+</Accordion>
+
+## Next Steps
+
+After research completion:
+
+1. **Review the brief** - Read through all sections carefully
+2. **Run `/write`** - Use the topic to create the article
+3. **Reference the brief** - The `/write` command will automatically reference this research
+
+```bash
+/write podcast analytics
+```
+
+The research brief serves as the foundation for writing optimized, comprehensive content.
+
+## Tips
+
+<CardGroup cols={2}>
+  <Card title="Be Specific" icon="bullseye">
+    Use specific topics rather than broad terms. "Podcast analytics for beginners" is better than "analytics".
+  </Card>
+  
+  <Card title="Check Context" icon="file-lines">
+    Ensure `context/target-keywords.md` is updated with your keyword research before running the command.
+  </Card>
+  
+  <Card title="Review Competitors" icon="magnifying-glass">
+    Manually check the top 3 competitor URLs to validate the analysis.
+  </Card>
+  
+  <Card title="Save the Brief" icon="bookmark">
+    Keep research briefs for future reference when updating content.
+  </Card>
+</CardGroup>
+
+## Related Commands
+
+<CardGroup cols={2}>
+  <Card title="/write" icon="pen-to-square" href="/commands/write">
+    Create the article using this research brief
+  </Card>
+  
+  <Card title="Research Scripts" icon="code" href="/integrations/research-scripts">
+    Advanced Python research scripts for deeper analysis
+  </Card>
+</CardGroup>

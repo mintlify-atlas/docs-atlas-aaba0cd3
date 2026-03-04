@@ -1,0 +1,280 @@
+---
+title: 'Data Aggregator'
+description: 'Combine data from multiple sources (GA4, GSC, DataForSEO) for comprehensive content analysis'
+---
+
+## Overview
+
+The `DataAggregator` class combines data from Google Analytics 4, Google Search Console, and DataForSEO into unified reports for comprehensive content analysis and opportunity identification.
+
+## Installation
+
+```python
+from data_sources.modules.data_aggregator import DataAggregator
+```
+
+## Authentication
+
+The aggregator automatically initializes all data source clients using their respective environment variables. See individual module documentation for authentication setup:
+
+- [Google Analytics](/api/google-analytics)
+- [Google Search Console](/api/google-search-console)
+- [DataForSEO](/api/dataforseo)
+
+## Initialization
+
+```python
+aggregator = DataAggregator()
+```
+
+The aggregator will attempt to initialize all three data sources. If any fail (missing credentials, etc.), it will print a warning and continue with available sources.
+
+## Methods
+
+### get_comprehensive_page_performance
+
+Get all available data for a specific page from all sources.
+
+```python
+performance = aggregator.get_comprehensive_page_performance(
+    url="/blog/podcast-monetization",
+    days=30
+)
+```
+
+<ParamField path="url" type="str" required>
+  Page path or full URL
+</ParamField>
+
+<ParamField path="days" type="int" default="30">
+  Days to analyze
+</ParamField>
+
+<ResponseField name="performance" type="dict">
+  <ResponseField name="url" type="str">
+    Page URL
+  </ResponseField>
+  <ResponseField name="analyzed_at" type="str">
+    ISO timestamp of analysis
+  </ResponseField>
+  <ResponseField name="period_days" type="int">
+    Analysis period in days
+  </ResponseField>
+  <ResponseField name="ga4" type="dict">
+    Google Analytics data (pageviews, trends)
+  </ResponseField>
+  <ResponseField name="gsc" type="dict">
+    Search Console data (clicks, impressions, keywords)
+  </ResponseField>
+  <ResponseField name="dataforseo" type="dict">
+    DataForSEO rankings for top keywords
+  </ResponseField>
+</ResponseField>
+
+### identify_content_opportunities
+
+Identify content opportunities across all data sources.
+
+```python
+opportunities = aggregator.identify_content_opportunities(
+    days=30,
+    min_monthly_pageviews=100
+)
+```
+
+<ParamField path="days" type="int" default="30">
+  Number of days to analyze
+</ParamField>
+
+<ParamField path="min_monthly_pageviews" type="int" default="100">
+  Minimum monthly pageviews threshold
+</ParamField>
+
+<ResponseField name="opportunities" type="dict">
+  <ResponseField name="quick_wins" type="list">
+    Keywords ranking 11-20 (from GSC)
+  </ResponseField>
+  <ResponseField name="declining_content" type="list">
+    Pages losing traffic (from GA4)
+  </ResponseField>
+  <ResponseField name="low_ctr" type="list">
+    High impressions, low CTR pages (from GSC)
+  </ResponseField>
+  <ResponseField name="trending_topics" type="list">
+    Rising queries (from GSC)
+  </ResponseField>
+  <ResponseField name="competitor_gaps" type="list">
+    Keywords competitors rank for (placeholder)
+  </ResponseField>
+</ResponseField>
+
+### generate_performance_report
+
+Generate comprehensive performance report with summary metrics, top performers, opportunities, and recommendations.
+
+```python
+report = aggregator.generate_performance_report(days=30)
+```
+
+<ParamField path="days" type="int" default="30">
+  Days to analyze
+</ParamField>
+
+<ResponseField name="report" type="dict">
+  <ResponseField name="generated_at" type="str">
+    ISO timestamp
+  </ResponseField>
+  <ResponseField name="period_days" type="int">
+    Analysis period
+  </ResponseField>
+  <ResponseField name="summary" type="dict">
+    Summary metrics from all sources
+  </ResponseField>
+  <ResponseField name="top_performers" type="list">
+    Top 10 pages by pageviews
+  </ResponseField>
+  <ResponseField name="opportunities" type="dict">
+    Content opportunities by category
+  </ResponseField>
+  <ResponseField name="recommendations" type="list">
+    Actionable recommendations
+  </ResponseField>
+</ResponseField>
+
+### get_priority_queue
+
+Get prioritized list of content tasks.
+
+```python
+tasks = aggregator.get_priority_queue(limit=10)
+```
+
+<ParamField path="limit" type="int" default="10">
+  Number of tasks to return
+</ParamField>
+
+<ResponseField name="tasks" type="list">
+  Prioritized task list sorted by priority (high → medium → low)
+  <ResponseField name="priority" type="str">
+    "high", "medium", or "low"
+  </ResponseField>
+  <ResponseField name="type" type="str">
+    Task type (optimize, update, optimize_meta, create_new)
+  </ResponseField>
+  <ResponseField name="action" type="str">
+    Description of action
+  </ResponseField>
+  <ResponseField name="reason" type="str">
+    Why this task is recommended
+  </ResponseField>
+</ResponseField>
+
+## Recommendation Types
+
+The aggregator generates actionable recommendations based on identified opportunities:
+
+### Quick Wins
+```python
+{
+    'priority': 'high',
+    'type': 'optimize',
+    'action': "Optimize for 'podcast hosting'",
+    'reason': "Currently ranking #12 with 1,500 impressions. Small improvements could push to page 1.",
+    'keyword': 'podcast hosting',
+    'current_position': 12
+}
+```
+
+### Declining Content
+```python
+{
+    'priority': 'high',
+    'type': 'update',
+    'action': 'Update declining article: How to Monetize Your Podcast',
+    'reason': 'Traffic down 35% (1,200 → 780 pageviews). Needs refresh.',
+    'url': '/blog/podcast-monetization',
+    'change_percent': -35.0
+}
+```
+
+### Low CTR
+```python
+{
+    'priority': 'medium',
+    'type': 'optimize_meta',
+    'action': 'Improve meta elements for: /blog/podcast-analytics',
+    'reason': 'Getting 2,000 impressions but only 2.1% CTR. Better title/description could add 50 clicks/month.',
+    'url': '/blog/podcast-analytics',
+    'potential_clicks': 50
+}
+```
+
+### Trending Topics
+```python
+{
+    'priority': 'medium',
+    'type': 'create_new',
+    'action': "Create content for trending topic: 'video podcast software'",
+    'reason': 'Search interest up 45% with 800 recent impressions. Strike while hot!',
+    'query': 'video podcast software',
+    'growth': 45.0
+}
+```
+
+## Example Usage
+
+```python
+from data_sources.modules.data_aggregator import DataAggregator
+
+aggregator = DataAggregator()
+
+# Generate full report
+report = aggregator.generate_performance_report(days=30)
+
+print(f"Report Period: Last {report['period_days']} days")
+print(f"Generated: {report['generated_at']}")
+
+# Summary
+if report['summary']:
+    print("\n📊 SUMMARY")
+    print("-" * 80)
+    if 'total_pageviews' in report['summary']:
+        print(f"Total Pageviews: {report['summary']['total_pageviews']:,}")
+        print(f"Total Sessions: {report['summary']['total_sessions']:,}")
+        print(f"Avg Engagement Rate: {report['summary']['avg_engagement_rate']:.1%}")
+    if 'total_clicks' in report['summary']:
+        print(f"Total Clicks (GSC): {report['summary']['total_clicks']:,}")
+        print(f"Total Impressions: {report['summary']['total_impressions']:,}")
+        print(f"Avg CTR: {report['summary']['avg_ctr']:.2%}")
+
+# Top performers
+if report.get('top_performers'):
+    print("\n🏆 TOP 10 PERFORMERS")
+    print("-" * 80)
+    for i, page in enumerate(report['top_performers'][:10], 1):
+        print(f"{i}. {page['title']}")
+        print(f"   {page['pageviews']:,} views | {page['engagement_rate']:.1%} engagement")
+
+# Recommendations
+if report.get('recommendations'):
+    print("\n✅ TOP RECOMMENDATIONS")
+    print("-" * 80)
+    for i, rec in enumerate(report['recommendations'][:5], 1):
+        print(f"\n{i}. [{rec['priority'].upper()}] {rec['action']}")
+        print(f"   {rec['reason']}")
+
+# Priority queue for task management
+print("\n📋 PRIORITY QUEUE")
+print("-" * 80)
+tasks = aggregator.get_priority_queue(limit=10)
+for i, task in enumerate(tasks, 1):
+    print(f"\n{i}. [{task['priority'].upper()}] {task['type']}")
+    print(f"   {task['action']}")
+    print(f"   {task['reason']}")
+```
+
+## Source Code Reference
+
+Location: `data_sources/modules/data_aggregator.py:24`
+
+The aggregator automatically handles errors from individual data sources gracefully, continuing with available data if some sources fail.

@@ -1,0 +1,567 @@
+---
+title: Publishing Workflow
+description: Options for publishing your content to WordPress or managing files manually
+---
+
+SEO Machine provides flexible publishing options: automated WordPress publishing via REST API or manual file management. Choose the workflow that fits your team's process.
+
+## Publishing Options
+
+### Option 1: WordPress REST API (Automated)
+
+Publish directly to WordPress as drafts with all SEO metadata automatically populated.
+
+**Best for**:
+- Teams with WordPress sites
+- Automated workflows
+- Yoast SEO users
+- High-volume content production
+
+### Option 2: Manual File Management
+
+Manage content files locally and publish through your existing CMS workflow.
+
+**Best for**:
+- Non-WordPress sites
+- Editorial review processes
+- Multi-step approval workflows
+- Custom publishing pipelines
+
+## WordPress Publishing Workflow
+
+### Prerequisites
+
+<Steps>
+  <Step title="Install WordPress Plugin">
+    Install `wordpress/seo-machine-yoast-rest.php` as an MU-plugin on your WordPress site. This exposes Yoast SEO fields to the REST API.
+  </Step>
+  
+  <Step title="Add Theme Snippet">
+    Add `wordpress/functions-snippet.php` to your theme's `functions.php` file for additional API support.
+  </Step>
+  
+  <Step title="Generate Application Password">
+    1. Log into WordPress Admin
+    2. Go to Users → Your Profile
+    3. Scroll to "Application Passwords"
+    4. Enter name: "SEO Machine"
+    5. Click "Add New Application Password"
+    6. Copy the generated password
+  </Step>
+  
+  <Step title="Configure Environment Variables">
+    Add credentials to `.env` file:
+    ```bash
+    WORDPRESS_URL=https://yoursite.com
+    WORDPRESS_USERNAME=your_username
+    WORDPRESS_APP_PASSWORD=xxxx-xxxx-xxxx-xxxx
+    ```
+  </Step>
+</Steps>
+
+<Info>
+See `wordpress/README.md` in the SEO Machine repository for detailed setup instructions.
+</Info>
+
+### Publishing Commands
+
+#### Publish Blog Posts
+
+```bash
+/publish-draft [filename]
+```
+
+**Example**:
+```bash
+/publish-draft drafts/content-marketing-guide-2025-03-04.md
+```
+
+#### Publish Landing Pages
+
+```bash
+/landing-publish [filename]
+```
+
+**Example**:
+```bash
+/landing-publish landing-pages/podcast-hosting-trial-2025-03-04.md
+```
+
+#### Publish Custom Post Types
+
+```bash
+/publish-draft [filename] --type [custom-type]
+```
+
+**Example**:
+```bash
+/publish-draft drafts/product-comparison.md --type compare
+```
+
+<Warning>
+Custom post types must be registered in WordPress with REST API support enabled.
+</Warning>
+
+### What Gets Published
+
+When you publish to WordPress, the command:
+
+<Steps>
+  <Step title="Parses Metadata">
+    Extracts all metadata from the markdown file's frontmatter
+  </Step>
+  
+  <Step title="Converts to HTML">
+    Converts markdown content to WordPress-compatible HTML
+  </Step>
+  
+  <Step title="Creates Draft Post">
+    Creates a new post in WordPress with status "draft" (never auto-publishes)
+  </Step>
+  
+  <Step title="Sets Yoast SEO Fields">
+    Populates Yoast SEO metadata:
+    - SEO Title (from Meta Title)
+    - Meta Description
+    - Focus Keyphrase (from Target Keyword)
+  </Step>
+  
+  <Step title="Assigns Taxonomy">
+    Sets categories and tags if specified in frontmatter
+  </Step>
+  
+  <Step title="Returns Edit URL">
+    Provides direct link to edit the post in WordPress admin
+  </Step>
+</Steps>
+
+### Metadata Mapping
+
+| Draft Field | WordPress/Yoast Field |
+|-------------|----------------------|
+| H1 Title | Post Title |
+| Meta Title | Yoast SEO Title |
+| Meta Description | Yoast Meta Description + Excerpt |
+| Target Keyword | Yoast Focus Keyphrase |
+| URL Slug | Post Slug |
+| Category | Post Categories |
+| Tags | Post Tags |
+| Content | Post Content (HTML) |
+
+### Adding Categories and Tags
+
+To assign categories or tags, add these fields to your draft frontmatter:
+
+```markdown
+**Category**: [Content Marketing]
+**Tags**: SEO, content strategy, B2B
+```
+
+Multiple categories/tags are comma-separated. If a category doesn't exist, it will be created automatically.
+
+### WordPress Publishing Checklist
+
+Before publishing to WordPress:
+
+- [ ] Article has been optimized (`/optimize` command run)
+- [ ] SEO score ≥ 70 (blog posts) or ≥ 75 (landing pages)
+- [ ] All priority fixes addressed
+- [ ] Meta title 50-60 characters
+- [ ] Meta description 150-160 characters
+- [ ] Target keyword specified
+- [ ] Categories/tags specified (if desired)
+- [ ] Environment variables configured
+
+### After Publishing
+
+<Steps>
+  <Step title="Review in WordPress">
+    Click the edit URL provided to review the draft in WordPress admin
+  </Step>
+  
+  <Step title="Add Media">
+    Upload featured image and inline images/screenshots (media is not transferred automatically)
+  </Step>
+  
+  <Step title="Verify Formatting">
+    Check that markdown converted correctly to WordPress blocks/HTML
+  </Step>
+  
+  <Step title="Review Yoast Analysis">
+    Check Yoast SEO panel for any additional recommendations
+  </Step>
+  
+  <Step title="Preview">
+    Use WordPress preview to see how the post looks on your site
+  </Step>
+  
+  <Step title="Publish">
+    Click "Publish" in WordPress when ready (posts are always created as drafts)
+  </Step>
+</Steps>
+
+<Tip>
+You can run the publish command multiple times on the same file. Each run creates a new draft, so you can test different versions.
+</Tip>
+
+### Troubleshooting WordPress Publishing
+
+#### "WORDPRESS_URL must be set"
+
+**Solution**: Add credentials to `.env` file. See Prerequisites section above.
+
+#### "401 Unauthorized"
+
+**Solutions**:
+- Verify username is correct
+- Regenerate Application Password
+- Ensure user has permission to create posts
+- Check that WORDPRESS_URL includes https://
+
+#### "Could not find category"
+
+**Solution**: The category will be created automatically. This is a warning, not an error.
+
+#### "Images not showing"
+
+**Solution**: Images are not uploaded automatically. You must add them manually in WordPress after the draft is created.
+
+#### "Formatting looks wrong"
+
+**Solution**: WordPress may interpret markdown differently. Use the WordPress editor to adjust formatting after publishing.
+
+## Manual File Management Workflow
+
+If you're not using WordPress or prefer a manual workflow, SEO Machine organizes content files for easy management.
+
+### Directory Structure
+
+```
+seomachine/
+├── topics/              # Raw topic ideas
+├── research/            # Research briefs and analysis reports
+├── drafts/              # Work in progress articles
+├── review-required/     # Articles that need manual improvement
+├── published/           # Final versions ready to publish
+├── rewrites/            # Updated existing content
+├── landing-pages/       # Landing page content
+└── audits/              # Audit reports
+```
+
+### Content Lifecycle
+
+<Steps>
+  <Step title="Ideation">
+    **Directory**: `topics/`
+    
+    Store raw ideas and preliminary research here. Simple text files with initial thoughts.
+  </Step>
+  
+  <Step title="Research">
+    **Directory**: `research/`
+    
+    Running `/research` saves briefs here:
+    - `brief-[topic]-[date].md` - Research briefs
+    - `analysis-[topic]-[date].md` - Existing content analysis
+  </Step>
+  
+  <Step title="Drafting">
+    **Directory**: `drafts/`
+    
+    Running `/write` saves articles and reports here:
+    - `[topic]-[date].md` - Main article
+    - `content-analysis-[topic]-[date].md` - Content Analyzer report
+    - `seo-report-[topic]-[date].md` - SEO Optimizer report
+    - `meta-options-[topic]-[date].md` - Meta Creator options
+    - `link-suggestions-[topic]-[date].md` - Internal Linker suggestions
+    - `keyword-analysis-[topic]-[date].md` - Keyword Mapper analysis
+    - `optimization-report-[topic]-[date].md` - Final optimization report
+  </Step>
+  
+  <Step title="Review Required (If Needed)">
+    **Directory**: `review-required/`
+    
+    Articles that score below quality thresholds are saved here with:
+    - `[topic]-[date].md` - The article
+    - `[topic]-[date]_REVIEW_NOTES.md` - Issues to fix
+  </Step>
+  
+  <Step title="Publishing Ready">
+    **Directory**: `published/`
+    
+    Move finalized articles here when ready to publish. This is your "ready to go live" queue.
+  </Step>
+</Steps>
+
+### Manual Publishing Process
+
+<Steps>
+  <Step title="Select Article">
+    Choose an article from `published/` directory
+  </Step>
+  
+  <Step title="Copy Content">
+    Copy the markdown or HTML content to your CMS
+  </Step>
+  
+  <Step title="Apply Metadata">
+    Use the metadata from the article frontmatter:
+    - Meta Title
+    - Meta Description
+    - Target Keyword (focus keyword in your SEO plugin)
+    - URL Slug
+    - Categories/Tags
+  </Step>
+  
+  <Step title="Add Media">
+    Upload images, screenshots, and other media assets
+  </Step>
+  
+  <Step title="Set Internal Links">
+    Add internal links as specified in the article and `link-suggestions` report
+  </Step>
+  
+  <Step title="Preview and Publish">
+    Preview in your CMS, make final adjustments, and publish
+  </Step>
+  
+  <Step title="Track in System">
+    Move the article file to an archive or add a "published" date to the frontmatter
+  </Step>
+</Steps>
+
+### File Naming Conventions
+
+SEO Machine uses consistent naming:
+
+- **Articles**: `[topic-slug]-[YYYY-MM-DD].md`
+- **Rewrites**: `[topic-slug]-rewrite-[YYYY-MM-DD].md`
+- **Research**: `brief-[topic-slug]-[YYYY-MM-DD].md`
+- **Analysis**: `analysis-[topic-slug]-[YYYY-MM-DD].md`
+- **Reports**: `[report-type]-[topic-slug]-[YYYY-MM-DD].md`
+
+**Examples**:
+- `content-marketing-strategies-2025-03-04.md`
+- `email-marketing-guide-rewrite-2025-03-04.md`
+- `brief-podcast-monetization-2025-03-04.md`
+- `seo-report-content-marketing-strategies-2025-03-04.md`
+
+### Organizing by Status
+
+You can add status indicators to filenames or use subdirectories:
+
+#### Option 1: Status Prefixes
+
+```
+drafts/
+├── DRAFT_content-marketing-2025-03-04.md
+├── REVIEW_email-guide-2025-03-01.md
+└── READY_podcast-tips-2025-02-28.md
+```
+
+#### Option 2: Status Subdirectories
+
+```
+drafts/
+├── in-progress/
+│   └── content-marketing-2025-03-04.md
+├── needs-review/
+│   └── email-guide-2025-03-01.md
+└── ready-to-publish/
+    └── podcast-tips-2025-02-28.md
+```
+
+### Frontmatter Format
+
+All articles include structured frontmatter:
+
+```markdown
+---
+Meta Title: Content Marketing Strategies for 2025
+Meta Description: Discover 7 proven content marketing strategies that drive organic traffic and conversions for B2B SaaS companies.
+Primary Keyword: content marketing strategies
+Secondary Keywords: B2B content marketing, content strategy, content planning
+URL Slug: /blog/content-marketing-strategies-2025
+Category: Content Marketing
+Tags: strategy, SEO, B2B
+Word Count: 2,847
+SEO Score: 87/100
+Publishing Status: Ready
+Created: 2025-03-04
+---
+```
+
+You can add custom fields as needed for your workflow.
+
+## Publishing Checklist
+
+Regardless of your publishing method, verify these before going live:
+
+### Content Quality
+- [ ] Article meets minimum word count (2000+ for blogs, appropriate length for landing pages)
+- [ ] Quality score ≥ 70 (blogs) or ≥ 75 (landing pages)
+- [ ] All priority fixes from optimization report addressed
+- [ ] Examples and statistics are current and cited
+- [ ] Brand voice is consistent
+- [ ] No grammatical or spelling errors
+
+### SEO Elements
+- [ ] Primary keyword in H1
+- [ ] Primary keyword in first 100 words
+- [ ] Primary keyword in 2-3 H2 headings
+- [ ] Keyword density 1-2%
+- [ ] Meta title 50-60 characters
+- [ ] Meta description 150-160 characters
+- [ ] URL slug is optimized (short, includes keyword)
+- [ ] Proper H1/H2/H3 hierarchy (no skipped levels)
+
+### Links
+- [ ] 3-5+ internal links with descriptive anchor text
+- [ ] 2-3+ external authority links
+- [ ] All links tested and working
+- [ ] Internal links follow user journey (awareness → consideration → decision)
+- [ ] No broken external links
+
+### Media & Formatting
+- [ ] Featured image added
+- [ ] Inline images added where appropriate
+- [ ] All images have alt text with keywords
+- [ ] Lists use bullets or numbers for scannability
+- [ ] Key concepts are bolded
+- [ ] Paragraphs are 2-4 sentences max
+- [ ] Subheadings every 300-400 words
+
+### Technical
+- [ ] Categories assigned (if applicable)
+- [ ] Tags assigned (if applicable)
+- [ ] Focus keyword set in SEO plugin
+- [ ] Schema markup considered (FAQ, How-To, Article)
+- [ ] Mobile responsive (preview on mobile)
+- [ ] Page loads quickly (under 3 seconds)
+
+### Before Going Live
+- [ ] Preview in staging or preview mode
+- [ ] Check formatting in actual page layout
+- [ ] Test all CTAs and forms
+- [ ] Verify social sharing preview (og:image, og:description)
+- [ ] Set appropriate publish date
+- [ ] Add to XML sitemap (usually automatic)
+
+## Post-Publishing Workflow
+
+After content goes live:
+
+<Steps>
+  <Step title="Add to Internal Links Map">
+    Update `context/internal-links-map.md` with the new URL for future internal linking
+  </Step>
+  
+  <Step title="Share Internally">
+    Notify your team that new content is live
+  </Step>
+  
+  <Step title="Promote">
+    Share on social media, email newsletter, or other channels
+  </Step>
+  
+  <Step title="Monitor Indexing">
+    Check Google Search Console to ensure the page is indexed
+  </Step>
+  
+  <Step title="Track Performance">
+    Set up tracking for:
+    - Organic traffic (Google Analytics)
+    - Keyword rankings (Google Search Console or rank tracker)
+    - Conversions/goals
+    - Engagement (time on page, bounce rate)
+  </Step>
+  
+  <Step title="Schedule Review">
+    Set a calendar reminder to review performance in 30-60 days
+  </Step>
+</Steps>
+
+### Performance Tracking
+
+After 30-60 days, analyze:
+
+- **Traffic**: Did the article attract organic traffic?
+- **Rankings**: Is it ranking for target keywords? Position 1-10?
+- **Engagement**: High time on page? Low bounce rate?
+- **Conversions**: Is it driving sign-ups, demos, or downloads?
+- **Backlinks**: Has it attracted natural backlinks?
+
+Use these insights to:
+- Identify what worked (apply to future content)
+- Spot underperformers (candidates for updates using `/analyze-existing`)
+- Prioritize content topics that resonate with your audience
+
+## Bulk Publishing
+
+For high-volume content workflows:
+
+### Batch Publishing to WordPress
+
+Publish multiple articles in sequence:
+
+```bash
+/publish-draft drafts/article-1.md
+/publish-draft drafts/article-2.md
+/publish-draft drafts/article-3.md
+```
+
+All articles will be created as drafts. Review and publish them in WordPress when ready.
+
+### Scheduled Publishing
+
+In WordPress:
+1. Edit each draft
+2. Set publish date/time in the future
+3. Click "Schedule"
+
+This allows you to batch-create content and publish it over time.
+
+### Editorial Calendar
+
+Track publishing schedule:
+
+- Use `published/` directory with files named by publish date
+- Add "Scheduled Publish Date" to frontmatter
+- Use project management tools (Trello, Asana, Notion) to track status
+- Integrate with WordPress editorial calendar plugins
+
+## Best Practices
+
+### Version Control
+
+- Keep original drafts even after publishing
+- Save copies before major rewrites
+- Use git to track changes to markdown files
+- Tag published versions in git
+
+### Quality Control
+
+- Always run `/optimize` before publishing
+- Have a second person review high-priority content
+- Preview on mobile and desktop before publishing
+- Test all links and CTAs
+
+### Workflow Efficiency
+
+- Batch similar tasks (write multiple articles, then optimize all)
+- Use templates for common content types
+- Create shortcuts for frequent commands
+- Automate where possible (scheduled publishing, social sharing)
+
+### Documentation
+
+- Keep notes on what works (successful headlines, CTAs, structures)
+- Document your publishing workflow for team members
+- Track performance metrics in a spreadsheet or dashboard
+- Update `context/writing-examples.md` with your best-performing content
+
+## Next Steps
+
+- Learn about [Creating Content](/workflows/creating-content) from scratch
+- Explore [Updating Content](/workflows/updating-content) workflows
+- Understand [Landing Pages](/workflows/landing-pages) for conversions

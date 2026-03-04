@@ -1,0 +1,294 @@
+---
+title: 'Google Analytics'
+description: 'Fetch traffic, engagement, and conversion data from Google Analytics 4 properties'
+---
+
+## Overview
+
+The `GoogleAnalytics` class provides integration with Google Analytics 4 (GA4) to fetch traffic metrics, engagement data, and conversion information for your content.
+
+## Installation
+
+```python
+from data_sources.modules.google_analytics import GoogleAnalytics
+```
+
+## Authentication
+
+The module uses Google service account credentials for authentication.
+
+### Environment Variables
+
+```bash
+GA4_PROPERTY_ID=your-property-id
+GA4_CREDENTIALS_PATH=/path/to/credentials.json
+```
+
+### Service Account Setup
+
+1. Create a service account in Google Cloud Console
+2. Download the credentials JSON file
+3. Grant the service account "Viewer" access to your GA4 property
+4. Set the credentials path in your environment
+
+## Initialization
+
+```python
+ga = GoogleAnalytics(
+    property_id="123456789",  # Optional, defaults to env var
+    credentials_path="/path/to/credentials.json"  # Optional, defaults to env var
+)
+```
+
+<ParamField path="property_id" type="str" optional>
+  GA4 property ID. Defaults to `GA4_PROPERTY_ID` environment variable.
+</ParamField>
+
+<ParamField path="credentials_path" type="str" optional>
+  Path to service account credentials JSON. Defaults to `GA4_CREDENTIALS_PATH` environment variable.
+</ParamField>
+
+## Methods
+
+### get_top_pages
+
+Get top performing pages by pageviews.
+
+```python
+top_pages = ga.get_top_pages(
+    days=30,
+    limit=20,
+    path_filter="/blog/"
+)
+```
+
+<ParamField path="days" type="int" default="30">
+  Number of days to look back
+</ParamField>
+
+<ParamField path="limit" type="int" default="20">
+  Number of results to return
+</ParamField>
+
+<ParamField path="path_filter" type="str" optional>
+  Filter pages by path (e.g., "/blog/")
+</ParamField>
+
+<ResponseField name="results" type="list">
+  List of page performance data
+  <ResponseField name="path" type="str">
+    Page URL path
+  </ResponseField>
+  <ResponseField name="title" type="str">
+    Page title
+  </ResponseField>
+  <ResponseField name="pageviews" type="int">
+    Total pageviews
+  </ResponseField>
+  <ResponseField name="sessions" type="int">
+    Total sessions
+  </ResponseField>
+  <ResponseField name="avg_session_duration" type="float">
+    Average session duration in seconds
+  </ResponseField>
+  <ResponseField name="bounce_rate" type="float">
+    Bounce rate (0-1)
+  </ResponseField>
+  <ResponseField name="engagement_rate" type="float">
+    Engagement rate (0-1)
+  </ResponseField>
+</ResponseField>
+
+### get_page_trends
+
+Get traffic trends for a specific page over time.
+
+```python
+trends = ga.get_page_trends(
+    url="/blog/podcast-monetization",
+    days=90,
+    granularity="week"
+)
+```
+
+<ParamField path="url" type="str" required>
+  Page path to analyze
+</ParamField>
+
+<ParamField path="days" type="int" default="90">
+  Number of days to analyze
+</ParamField>
+
+<ParamField path="granularity" type="str" default="week">
+  Time granularity: "day" or "week"
+</ParamField>
+
+<ResponseField name="trends" type="dict">
+  <ResponseField name="url" type="str">
+    Page URL
+  </ResponseField>
+  <ResponseField name="timeline" type="list">
+    List of data points by period
+  </ResponseField>
+  <ResponseField name="trend_direction" type="str">
+    "rising", "declining", or "stable"
+  </ResponseField>
+  <ResponseField name="trend_percent" type="float">
+    Percentage change
+  </ResponseField>
+  <ResponseField name="total_pageviews" type="int">
+    Total pageviews in period
+  </ResponseField>
+</ResponseField>
+
+### get_conversions
+
+Get conversion data by page.
+
+```python
+conversions = ga.get_conversions(
+    days=30,
+    path_filter="/blog/"
+)
+```
+
+<ParamField path="days" type="int" default="30">
+  Number of days to look back
+</ParamField>
+
+<ParamField path="path_filter" type="str" optional>
+  Filter pages by path
+</ParamField>
+
+<ResponseField name="results" type="list">
+  <ResponseField name="path" type="str">
+    Page URL path
+  </ResponseField>
+  <ResponseField name="title" type="str">
+    Page title
+  </ResponseField>
+  <ResponseField name="pageviews" type="int">
+    Total pageviews
+  </ResponseField>
+  <ResponseField name="conversions" type="float">
+    Total conversions
+  </ResponseField>
+  <ResponseField name="conversion_rate" type="float">
+    Conversion rate percentage
+  </ResponseField>
+  <ResponseField name="revenue" type="float">
+    Total revenue
+  </ResponseField>
+</ResponseField>
+
+### get_traffic_sources
+
+Get traffic source breakdown for a page or entire site.
+
+```python
+sources = ga.get_traffic_sources(
+    url="/blog/podcast-monetization",  # Optional
+    days=30
+)
+```
+
+<ParamField path="url" type="str" optional>
+  Specific page path (None = all pages)
+</ParamField>
+
+<ParamField path="days" type="int" default="30">
+  Number of days to analyze
+</ParamField>
+
+<ResponseField name="results" type="list">
+  <ResponseField name="source" type="str">
+    Traffic source (e.g., "Organic Search", "Direct")
+  </ResponseField>
+  <ResponseField name="sessions" type="int">
+    Total sessions
+  </ResponseField>
+  <ResponseField name="pageviews" type="int">
+    Total pageviews
+  </ResponseField>
+  <ResponseField name="engagement_rate" type="float">
+    Engagement rate (0-1)
+  </ResponseField>
+</ResponseField>
+
+### get_declining_pages
+
+Identify pages with declining traffic.
+
+```python
+declining = ga.get_declining_pages(
+    comparison_days=30,
+    threshold_percent=-20.0,
+    path_filter="/blog/"
+)
+```
+
+<ParamField path="comparison_days" type="int" default="30">
+  Compare this many recent days vs previous period
+</ParamField>
+
+<ParamField path="threshold_percent" type="float" default="-20.0">
+  Consider declining if drop exceeds this percentage
+</ParamField>
+
+<ParamField path="path_filter" type="str" optional>
+  Filter pages by path
+</ParamField>
+
+<ResponseField name="results" type="list">
+  <ResponseField name="path" type="str">
+    Page URL path
+  </ResponseField>
+  <ResponseField name="title" type="str">
+    Page title
+  </ResponseField>
+  <ResponseField name="pageviews" type="int">
+    Current pageviews
+  </ResponseField>
+  <ResponseField name="previous_pageviews" type="int">
+    Previous period pageviews
+  </ResponseField>
+  <ResponseField name="change_percent" type="float">
+    Percentage change (negative)
+  </ResponseField>
+  <ResponseField name="priority" type="str">
+    "high" or "medium"
+  </ResponseField>
+</ResponseField>
+
+## Example Usage
+
+```python
+from dotenv import load_dotenv
+from data_sources.modules.google_analytics import GoogleAnalytics
+
+load_dotenv('data_sources/config/.env')
+
+ga = GoogleAnalytics()
+
+# Get top 10 blog articles
+top_pages = ga.get_top_pages(days=30, limit=10)
+for i, page in enumerate(top_pages, 1):
+    print(f"{i}. {page['title']}")
+    print(f"   {page['path']}")
+    print(f"   {page['pageviews']:,} pageviews | {page['engagement_rate']:.1%} engagement")
+    print()
+
+# Find declining articles
+declining = ga.get_declining_pages(comparison_days=30)
+for page in declining[:5]:
+    print(f"- {page['title']}")
+    print(f"  {page['path']}")
+    print(f"  {page['change_percent']:.1f}% change ({page['previous_pageviews']} → {page['pageviews']})")
+    print()
+```
+
+## Source Code Reference
+
+Location: `data_sources/modules/google_analytics.py:24`
+
+The module uses the Google Analytics Data API v1beta with service account authentication. All requests are made using the `BetaAnalyticsDataClient` with read-only analytics scope.

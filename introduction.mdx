@@ -1,0 +1,211 @@
+---
+title: Introduction
+description: Learn what SEO Machine is and how it helps you create high-quality, SEO-optimized content at scale
+---
+
+# Introduction to SEO Machine
+
+SEO Machine is a specialized Claude Code workspace that streamlines the creation of long-form, SEO-optimized blog content for any business. Built on Claude Code, it combines custom commands, specialized AI agents, and Python-based analytics to help you research, write, analyze, and optimize content that ranks well and serves your target audience.
+
+## What is SEO Machine?
+
+SEO Machine transforms the content creation process by providing:
+
+<CardGroup cols={2}>
+  <Card title="Custom Commands" icon="terminal">
+    15+ slash commands for research, writing, optimization, and publishing workflows
+  </Card>
+  <Card title="Specialized Agents" icon="robot">
+    10 AI agents for SEO analysis, content scoring, meta creation, and CRO optimization
+  </Card>
+  <Card title="Marketing Skills" icon="lightbulb">
+    26 marketing skills for copywriting, CRO, analytics, and content strategy
+  </Card>
+  <Card title="Data Integrations" icon="chart-line">
+    Real-time insights from Google Analytics 4, Search Console, and DataForSEO
+  </Card>
+</CardGroup>
+
+## Key Features
+
+### Advanced SEO Analysis
+
+- **Search Intent Detection**: Automatically classifies content as informational, navigational, transactional, or commercial
+- **Keyword Density & Clustering**: Analyzes keyword usage, detects stuffing risks, and identifies topic clusters using TF-IDF
+- **Content Length Comparison**: Benchmarks your content against top 10-20 SERP competitors
+- **Readability Scoring**: Calculates Flesch Reading Ease, grade level, and sentence complexity
+- **SEO Quality Rating**: Comprehensive 0-100 scoring across content, keywords, meta, structure, links, and readability
+
+### Context-Driven Content
+
+All content generation is guided by your business context:
+
+- **Brand Voice**: Define your unique tone, messaging pillars, and writing style
+- **Style Guide**: Editorial standards, formatting rules, and terminology preferences
+- **SEO Guidelines**: Your specific requirements for keywords, meta elements, and content structure
+- **Writing Examples**: 3-5 exemplary posts that teach the AI your style through real examples
+- **Internal Links Map**: Catalog of key pages for strategic internal linking
+- **Target Keywords**: Organized keyword research by topic cluster
+
+### Workflow Organization
+
+Structured directories keep your content pipeline organized:
+
+```
+topics/              → Raw topic ideas
+research/            → Research briefs and analysis reports
+drafts/              → Work in progress articles
+review-required/     → Articles pending review
+published/           → Final versions ready to publish
+rewrites/            → Updated existing content
+landing-pages/       → Landing page content
+audits/              → Audit reports
+```
+
+## How It Works
+
+<Steps>
+  <Step title="Research">
+    Use `/research [topic]` to perform comprehensive keyword research and competitive analysis. The command analyzes top-ranking competitors, identifies content gaps, and creates a detailed research brief.
+  </Step>
+  
+  <Step title="Write">
+    Run `/write [topic]` to generate a 2000-3000+ word SEO-optimized article. The article maintains your brand voice, integrates keywords naturally, and includes internal/external links.
+  </Step>
+  
+  <Step title="Analyze">
+    Specialized agents automatically analyze your content for SEO optimization, meta elements, internal linking opportunities, and keyword placement.
+  </Step>
+  
+  <Step title="Optimize">
+    Use `/optimize [file]` for a final SEO audit before publishing. Get a publishing readiness score and priority fixes.
+  </Step>
+  
+  <Step title="Publish">
+    Optionally publish directly to WordPress using `/publish-draft [file]` with Yoast SEO metadata integration.
+  </Step>
+</Steps>
+
+## Content Quality Standards
+
+Every article produced by SEO Machine meets rigorous standards:
+
+### Content Requirements
+- Minimum 2,000 words (2,500-3,000+ preferred)
+- Proper H1/H2/H3 hierarchy
+- Factually accurate and current information
+- Actionable advice for your target audience
+- Maintains your brand voice throughout
+
+### SEO Requirements
+- Primary keyword density: 1-2%
+- Keyword in H1, first 100 words, and 2-3 H2 headings
+- 3-5 internal links with descriptive anchor text
+- 2-3 external authority links
+- Meta title: 50-60 characters
+- Meta description: 150-160 characters
+
+### Readability Requirements
+- 8th-10th grade reading level
+- Average sentence length: 15-20 words
+- Paragraphs: 2-4 sentences maximum
+- Subheadings every 300-400 words
+- Lists and formatting for scannability
+
+## Who Should Use SEO Machine?
+
+SEO Machine is perfect for:
+
+- **Content Marketers**: Scale high-quality content production while maintaining brand consistency
+- **SEO Specialists**: Create optimized content backed by competitive research and data
+- **Marketing Teams**: Streamline the content workflow from research to publication
+- **SaaS Companies**: Build content libraries that drive organic traffic and conversions
+- **Agencies**: Manage content production for multiple clients with customizable context files
+
+## What Makes It Different?
+
+<AccordionGroup>
+  <Accordion title="Built on Claude Code">
+    SEO Machine leverages Claude Code's powerful workspace capabilities, providing a seamless environment for content creation with persistent context and file management.
+  </Accordion>
+  
+  <Accordion title="Data-Driven Decisions">
+    Real-time integrations with Google Analytics 4, Search Console, and DataForSEO provide actual performance metrics to guide your content strategy—not just guesses.
+  </Accordion>
+  
+  <Accordion title="Context-Aware AI">
+    Unlike generic AI writing tools, SEO Machine learns your specific brand voice, style guidelines, and SEO requirements through detailed context files.
+  </Accordion>
+  
+  <Accordion title="Complete Workflow">
+    From initial research to final publication, SEO Machine handles the entire content lifecycle with specialized commands and agents for each stage.
+  </Accordion>
+  
+  <Accordion title="Python-Powered Analysis">
+    Advanced SEO analysis modules written in Python provide deep insights: search intent classification, keyword clustering, readability scoring, and competitive benchmarking.
+  </Accordion>
+</AccordionGroup>
+
+## Core Workflows
+
+### Creating New Content
+
+```bash
+# Research the topic
+/research content marketing strategies
+
+# Review the research brief
+# (saved to research/brief-content-marketing-strategies-[date].md)
+
+# Write the article
+/write content marketing strategies
+
+# Review agent feedback in drafts/
+# - SEO optimization report
+# - Meta element options
+# - Internal linking suggestions
+# - Keyword analysis
+
+# Final optimization pass
+/optimize drafts/content-marketing-strategies-[date].md
+```
+
+### Updating Existing Content
+
+```bash
+# Analyze the existing post
+/analyze-existing https://yoursite.com/blog/product-guide
+
+# Review the analysis report
+# (check content health score and recommendations)
+
+# Rewrite the content
+/rewrite product guide
+
+# Optimize and publish
+/optimize rewrites/product-guide-rewrite-[date].md
+```
+
+### Creating Landing Pages
+
+```bash
+# Research positioning and competitors
+/landing-research [topic]
+
+# Create conversion-optimized landing page
+/landing-write [topic]
+
+# Audit for CRO issues
+/landing-audit [file]
+
+# Publish to WordPress
+/landing-publish [file]
+```
+
+## Next Steps
+
+Ready to get started? Follow the installation guide to set up SEO Machine in your environment.
+
+<Card title="Installation Guide" icon="download" href="/installation">
+  Install SEO Machine and configure your workspace
+</Card>

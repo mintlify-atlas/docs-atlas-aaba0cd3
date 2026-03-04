@@ -1,0 +1,341 @@
+---
+title: "Search Intent Analyzer"
+description: "Classify search intent from keywords and SERP features as informational, navigational, transactional, or commercial investigation"
+---
+
+The Search Intent Analyzer determines the search intent of a query by analyzing SERP features and content patterns. It classifies queries into four intent types: **Informational**, **Navigational**, **Transactional**, or **Commercial Investigation**.
+
+## Intent Types
+
+The analyzer uses the `SearchIntent` enum with four intent classifications:
+
+<ResponseField name="INFORMATIONAL" type="enum">
+  User wants to learn or find information (how-to, guides, definitions)
+</ResponseField>
+
+<ResponseField name="NAVIGATIONAL" type="enum">
+  User wants to find a specific website or page (brand searches, login pages)
+</ResponseField>
+
+<ResponseField name="TRANSACTIONAL" type="enum">
+  User wants to complete an action (buy, download, sign up)
+</ResponseField>
+
+<ResponseField name="COMMERCIAL" type="enum">
+  User is researching before purchase (reviews, comparisons, alternatives)
+</ResponseField>
+
+## Basic Usage
+
+Use the convenience function for quick analysis:
+
+```python
+from data_sources.modules.search_intent_analyzer import analyze_intent
+
+result = analyze_intent("how to start a podcast")
+
+print(f"Primary Intent: {result['primary_intent']}")
+print(f"Confidence: {result['confidence']}")
+print(f"Recommendations: {result['recommendations']}")
+```
+
+Output:
+```python
+{
+    'keyword': 'how to start a podcast',
+    'primary_intent': 'informational',
+    'secondary_intent': None,
+    'confidence': {
+        'informational': 75.0,
+        'navigational': 5.0,
+        'transactional': 10.0,
+        'commercial_investigation': 10.0
+    },
+    'signals_detected': {
+        'informational': [
+            "Keyword contains 'how'",
+            "Keyword contains 'guide'"
+        ]
+    },
+    'recommendations': [
+        'Create comprehensive, educational content',
+        'Include step-by-step instructions or explanations',
+        'Answer common questions (People Also Ask)',
+        'Use FAQ sections and definition boxes',
+        'Target featured snippet optimization',
+        'Include videos, images, and visual aids'
+    ]
+}
+```
+
+## Class API
+
+### SearchIntentAnalyzer
+
+The main analyzer class:
+
+```python
+from data_sources.modules.search_intent_analyzer import SearchIntentAnalyzer
+
+analyzer = SearchIntentAnalyzer()
+result = analyzer.analyze(
+    keyword="best podcast hosting platforms",
+    serp_features=["carousel", "people_also_ask", "video"],
+    top_results=[
+        {
+            'title': 'Top 10 Podcast Hosting Platforms in 2024',
+            'description': 'Compare the best podcast hosting services...',
+            'url': 'https://example.com/podcast-hosting'
+        }
+    ]
+)
+```
+
+### analyze()
+
+Analyze search intent of a keyword.
+
+<ParamField path="keyword" type="string" required>
+  The search query to analyze
+</ParamField>
+
+<ParamField path="serp_features" type="list[string]">
+  List of SERP features present (from DataForSEO). Examples: `featured_snippet`, `people_also_ask`, `shopping_results`, `local_pack`, `ads`, `video`, `carousel`
+</ParamField>
+
+<ParamField path="top_results" type="list[dict]">
+  Top ranking pages with titles/descriptions. Each dict should contain:
+  - `title` (string): Page title
+  - `description` (string): Meta description
+  - `url` (string): Page URL
+</ParamField>
+
+<ResponseField name="keyword" type="string">
+  The analyzed keyword
+</ResponseField>
+
+<ResponseField name="primary_intent" type="string">
+  Primary intent classification: `informational`, `navigational`, `transactional`, or `commercial_investigation`
+</ResponseField>
+
+<ResponseField name="secondary_intent" type="string | null">
+  Secondary intent if within 15% confidence of primary, otherwise `None`
+</ResponseField>
+
+<ResponseField name="confidence" type="dict">
+  Confidence scores for each intent type (percentages summing to 100)
+</ResponseField>
+
+<ResponseField name="signals_detected" type="dict">
+  Detected signals for each intent type (keyword patterns and SERP features)
+</ResponseField>
+
+<ResponseField name="recommendations" type="list[string]">
+  Content strategy recommendations based on detected intent
+</ResponseField>
+
+## Intent Detection Logic
+
+The analyzer uses three scoring methods:
+
+### 1. Keyword Pattern Analysis
+
+Detects intent from keyword patterns:
+
+```python
+# Informational signals
+['what', 'why', 'how', 'when', 'where', 'who', 'guide', 'tutorial',
+ 'learn', 'tips', 'best practices', 'explained', 'definition']
+
+# Navigational signals
+['login', 'sign in', 'website', 'official', 'home page', 'account']
+
+# Transactional signals
+['buy', 'purchase', 'order', 'download', 'pricing', 'cost',
+ 'sign up', 'subscribe', 'coupon', 'deal', 'discount']
+
+# Commercial signals
+['best', 'top', 'review', 'vs', 'versus', 'compare', 'comparison',
+ 'alternative', 'better than', 'or', 'option']
+```
+
+### 2. SERP Features Analysis
+
+Maps SERP features to intent types:
+
+```python
+# Informational
+'featured_snippet', 'knowledge_graph', 'people_also_ask', 'video'
+
+# Transactional
+'shopping_results', 'local_pack', 'ads'
+
+# Commercial
+'carousel'
+```
+
+### 3. Content Pattern Analysis
+
+Analyzes titles and descriptions of top-ranking pages for intent indicators.
+
+## Real-World Examples
+
+### Example 1: Informational Query
+
+```python
+result = analyze_intent("how to start a podcast")
+
+print(result['primary_intent'])  # 'informational'
+print(result['confidence']['informational'])  # 75.0
+```
+
+**Recommendations:**
+- Create comprehensive, educational content
+- Include step-by-step instructions
+- Target featured snippet optimization
+- Add FAQ sections
+
+### Example 2: Commercial Query with SERP Data
+
+```python
+result = analyze_intent(
+    "best podcast hosting platforms",
+    serp_features=['carousel', 'people_also_ask', 'video'],
+    top_results=[
+        {
+            'title': 'Top 10 Podcast Hosting Platforms in 2024',
+            'description': 'Compare the best podcast hosting services for your show',
+            'url': 'https://example.com/best-podcast-hosting'
+        },
+        {
+            'title': 'Best Podcast Hosting Services: Expert Review',
+            'description': 'Our in-depth review of podcast hosting platforms',
+            'url': 'https://example.com/podcast-hosting-review'
+        }
+    ]
+)
+
+print(result['primary_intent'])  # 'commercial_investigation'
+print(result['confidence']['commercial_investigation'])  # 65.0
+print(result['secondary_intent'])  # 'informational' (within 15% confidence)
+```
+
+**Recommendations:**
+- Create comparison and review content
+- Include pros/cons and alternatives
+- Add detailed feature breakdowns
+- Show 'best for' categories
+
+### Example 3: Transactional Query
+
+```python
+result = analyze_intent(
+    "buy podcast microphone",
+    serp_features=['shopping_results', 'ads', 'local_pack']
+)
+
+print(result['primary_intent'])  # 'transactional'
+print(result['confidence']['transactional'])  # 80.0
+```
+
+**Recommendations:**
+- Focus on product/service pages
+- Include clear pricing and purchase options
+- Add trust signals (reviews, testimonials)
+- Optimize for conversion, not just traffic
+- Include strong, action-oriented CTAs
+
+### Example 4: Navigational Query
+
+```python
+result = analyze_intent("spotify for podcasters login")
+
+print(result['primary_intent'])  # 'navigational'
+print(result['confidence']['navigational'])  # 85.0
+```
+
+**Recommendations:**
+- Optimize for brand-related searches
+- Ensure homepage/key pages rank well
+- Include site navigation and clear CTAs
+- Strengthen brand presence
+
+## Signal Detection
+
+The `signals_detected` field shows which patterns triggered each intent:
+
+```python
+result = analyze_intent(
+    "how to buy the best podcast microphone",
+    serp_features=['shopping_results', 'people_also_ask']
+)
+
+print(result['signals_detected'])
+```
+
+Output:
+```python
+{
+    'informational': [
+        "Keyword contains 'how'",
+        "SERP has people_also_ask"
+    ],
+    'transactional': [
+        "Keyword contains 'buy'",
+        "SERP has shopping_results"
+    ],
+    'commercial': [
+        "Keyword contains 'best'"
+    ]
+}
+```
+
+## Secondary Intent
+
+When secondary intent is detected (within 15% confidence of primary), consider blending content approaches:
+
+```python
+if result['secondary_intent']:
+    print(f"Primary: {result['primary_intent']}")
+    print(f"Secondary: {result['secondary_intent']}")
+    print("Consider blending both content approaches")
+```
+
+Example: "best podcast hosting" might have:
+- **Primary**: Commercial (65%) - comparison content
+- **Secondary**: Informational (55%) - educational content
+- **Strategy**: Create comparison article with educational elements
+
+## Integration with DataForSEO
+
+Combine with DataForSEO for real SERP analysis:
+
+```python
+from data_sources.modules.dataforseo import DataForSEO
+from data_sources.modules.search_intent_analyzer import analyze_intent
+
+# Get SERP data
+dfs = DataForSEO()
+serp_data = dfs.get_serp_data("your keyword")
+
+# Analyze intent
+result = analyze_intent(
+    keyword="your keyword",
+    serp_features=serp_data['features'],
+    top_results=serp_data['organic_results'][:10]
+)
+```
+
+## Best Practices
+
+1. **Always provide SERP features** when available for more accurate classification
+2. **Include top 10 results** for content pattern analysis
+3. **Check for secondary intent** - many queries have mixed intent
+4. **Follow recommendations** - they're tailored to the detected intent type
+5. **Monitor confidence scores** - low confidence may indicate ambiguous intent
+
+## Related Modules
+
+- [Keyword Analyzer](/api/keyword-analyzer) - Optimize keyword usage after determining intent
+- [Content Length Comparator](/api/content-length-comparator) - Match content length to intent type
+- [SEO Quality Rater](/api/seo-quality-rater) - Ensure content matches intent requirements

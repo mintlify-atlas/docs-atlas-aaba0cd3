@@ -1,122 +1,183 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "SEO Machine",
+  "theme": "palm",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#2563eb",
+    "light": "#3b82f6",
+    "dark": "#1e40af"
   },
-  "favicon": "/favicon.svg",
+  "navbar": {
+    "primary": {
+      "type": "github",
+      "href": "https://github.com/TheCraigHewitt/seomachine"
+    }
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/TheCraigHewitt/seomachine"
+    }
+  },
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Documentation",
         "groups": [
           {
-            "group": "Getting started",
+            "group": "Getting Started",
             "pages": [
-              "index",
+              "introduction",
+              "installation",
               "quickstart",
-              "development"
+              "configuration"
             ]
           },
           {
-            "group": "Customization",
+            "group": "Core Concepts",
             "pages": [
-              "essentials/settings",
-              "essentials/navigation"
+              "concepts/architecture",
+              "concepts/workflow",
+              "concepts/context-files",
+              "concepts/content-pipeline"
             ]
           },
           {
-            "group": "Writing content",
+            "group": "Workflows",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
+              "workflows/creating-content",
+              "workflows/updating-content",
+              "workflows/landing-pages",
+              "workflows/publishing"
             ]
           },
           {
-            "group": "AI tools",
+            "group": "Commands",
             "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "commands/overview",
+              "commands/research",
+              "commands/write",
+              "commands/rewrite",
+              "commands/optimize",
+              "commands/analyze-existing",
+              "commands/publish-draft"
+            ]
+          },
+          {
+            "group": "Advanced Commands",
+            "pages": [
+              "commands/research-commands",
+              "commands/landing-page-commands",
+              "commands/performance-review"
+            ]
+          },
+          {
+            "group": "Agents",
+            "pages": [
+              "agents/overview",
+              "agents/content-analyzer",
+              "agents/seo-optimizer",
+              "agents/meta-creator",
+              "agents/internal-linker",
+              "agents/keyword-mapper",
+              "agents/editor",
+              "agents/performance"
+            ]
+          },
+          {
+            "group": "Data Sources",
+            "pages": [
+              "data-sources/overview",
+              "data-sources/google-analytics",
+              "data-sources/google-search-console",
+              "data-sources/dataforseo"
+            ]
+          },
+          {
+            "group": "Integrations",
+            "pages": [
+              "integrations/wordpress",
+              "integrations/analytics-setup"
             ]
           }
         ]
       },
       {
-        "tab": "API reference",
+        "tab": "Python API",
         "groups": [
           {
-            "group": "API documentation",
+            "group": "Analysis Modules",
             "pages": [
-              "api-reference/introduction"
+              "api/overview",
+              "api/search-intent-analyzer",
+              "api/keyword-analyzer",
+              "api/seo-quality-rater",
+              "api/content-length-comparator",
+              "api/readability-scorer"
             ]
           },
           {
-            "group": "Endpoint examples",
+            "group": "Data Modules",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "api/google-analytics",
+              "api/google-search-console",
+              "api/dataforseo",
+              "api/data-aggregator"
+            ]
+          },
+          {
+            "group": "CRO Modules",
+            "pages": [
+              "api/landing-page-scorer",
+              "api/cta-analyzer",
+              "api/trust-signal-analyzer"
+            ]
+          },
+          {
+            "group": "Scoring Modules",
+            "pages": [
+              "api/opportunity-scorer",
+              "api/content-scorer"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Reference",
+        "groups": [
+          {
+            "group": "Configuration",
+            "pages": [
+              "reference/context-files",
+              "reference/brand-voice",
+              "reference/style-guide",
+              "reference/seo-guidelines",
+              "reference/environment-variables"
+            ]
+          },
+          {
+            "group": "Scripts",
+            "pages": [
+              "reference/research-scripts",
+              "reference/seo-scripts"
+            ]
+          },
+          {
+            "group": "Quality Standards",
+            "pages": [
+              "reference/content-standards",
+              "reference/seo-checklist"
+            ]
+          },
+          {
+            "group": "Resources",
+            "pages": [
+              "reference/directory-structure",
+              "reference/troubleshooting",
+              "reference/best-practices"
             ]
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
-  },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
-  },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
-    }
-  },
-  "contextual": {
-    "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
-  },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
-    }
+    ]
   }
 }

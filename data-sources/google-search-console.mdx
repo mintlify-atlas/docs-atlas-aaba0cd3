@@ -1,0 +1,328 @@
+---
+title: Google Search Console
+description: Connect Google Search Console to track search performance, keyword rankings, and SERP visibility
+---
+
+Google Search Console provides search query data, click-through rates, average positions, and impressions for your website in Google Search results.
+
+## What You'll Get
+
+- Impressions and clicks by page
+- Average position by keyword
+- Click-through rate (CTR) analysis
+- Quick win opportunities (keywords ranking 11-20)
+- Trending search queries
+- Low CTR pages needing meta optimization
+- Position change tracking
+
+## Prerequisites
+
+- Verified ownership of your website in Google Search Console
+- A Google Cloud project (same one used for GA4 is fine)
+
+## Setup Instructions
+
+<Steps>
+  <Step title="Enable the Google Search Console API">
+    1. Go to the [Google Cloud Console](https://console.cloud.google.com/)
+    2. Select the same project you used for GA4 (or create a new one)
+    3. Navigate to **APIs & Services > Library**
+    4. Search for "Google Search Console API"
+    5. Click on the API and click **Enable**
+  </Step>
+  
+  <Step title="Use Existing or Create New Service Account">
+    **Option A: Reuse Your GA4 Service Account** (Recommended)
+    
+    You can use the same service account created for GA4. Skip to Step 3 and use the same JSON key file.
+    
+    **Option B: Create a New Service Account**
+    
+    1. In Google Cloud Console, go to **APIs & Services > Credentials**
+    2. Click **Create Credentials** and select **Service Account**
+    3. Fill in the service account details:
+       - **Name**: `seo-machine-gsc`
+       - **Description**: "Service account for SEO Machine GSC integration"
+    4. Click **Create and Continue**
+    5. Skip the optional steps and click **Done**
+    6. Create and download a JSON key (same process as GA4)
+  </Step>
+  
+  <Step title="Grant Access to Search Console Property">
+    1. Go to [Google Search Console](https://search.google.com/search-console)
+    2. Select your property (website)
+    3. Click **Settings** in the left sidebar
+    4. Click **Users and permissions**
+    5. Click **Add user**
+    6. Enter the service account email (e.g., `seo-machine-ga4@your-project.iam.gserviceaccount.com`)
+    7. Select permission level: **Full** (required for API access, but only provides read access)
+    8. Click **Add**
+  </Step>
+  
+  <Step title="Get Your Site URL">
+    Your site URL is the property name in Search Console, typically one of:
+    - `https://yoursite.com/` (for URL prefix properties)
+    - `sc-domain:yoursite.com` (for domain properties)
+    
+    Check in Search Console settings to confirm the exact format.
+  </Step>
+  
+  <Step title="Configure SEO Machine">
+    **Using the Same Service Account as GA4:**
+    
+    ```bash
+    # Add to your .env file
+    GSC_SITE_URL=https://yoursite.com/
+    GSC_CREDENTIALS_PATH=./credentials/ga4-credentials.json
+    ```
+    
+    **If Using a Separate Service Account:**
+    
+    1. Rename the JSON key to `gsc-credentials.json`
+    2. Move to: `credentials/gsc-credentials.json`
+    3. Add to your `.env` file:
+    
+    ```bash
+    GSC_SITE_URL=https://yoursite.com/
+    GSC_CREDENTIALS_PATH=./credentials/gsc-credentials.json
+    ```
+  </Step>
+</Steps>
+
+## Available Methods
+
+The `GoogleSearchConsole` class provides these methods:
+
+### Get Keyword Positions
+
+Fetch keyword rankings and performance:
+
+```python
+from data_sources.modules.google_search_console import GoogleSearchConsole
+
+gsc = GoogleSearchConsole()
+
+# Get top 1000 keywords (last 30 days)
+rankings = gsc.get_keyword_positions(
+    days=30,
+    limit=1000
+)
+
+for kw in rankings[:10]:
+    print(f"{kw['keyword']}")
+    print(f"  Position: {kw['position']}")
+    print(f"  Impressions: {kw['impressions']:,}")
+    print(f"  Clicks: {kw['clicks']}")
+    print(f"  CTR: {kw['ctr']:.2%}")
+```
+
+### Get Quick Wins
+
+Find keywords ranking 11-20 (easiest to improve):
+
+```python
+quick_wins = gsc.get_quick_wins(
+    days=30,
+    position_min=11,
+    position_max=20,
+    min_impressions=50,
+    prioritize_commercial=True  # Weights by commercial intent
+)
+
+for kw in quick_wins[:10]:
+    print(f"{kw['keyword']}")
+    print(f"  Position: {kw['position']}")
+    print(f"  Impressions: {kw['impressions']:,}")
+    print(f"  Intent: {kw['commercial_intent_category']}")
+    print(f"  Opportunity Score: {kw['opportunity_score']:.1f}")
+    print(f"  Priority: {kw['priority']}")
+```
+
+**Commercial Intent Categories:**
+- **Transactional**: Keywords like "pricing", "buy", "best", "vs"
+- **Commercial Investigation**: Keywords like "how to", "guide", "tutorial"
+- **Informational (Relevant)**: Keywords like "what is", "benefits"
+- **Informational (Low Value)**: Celebrity/news queries
+
+### Get Page Performance
+
+Analyze search performance for a specific page:
+
+```python
+page_data = gsc.get_page_performance(
+    url="/blog/podcast-monetization-guide",
+    days=30
+)
+
+print(f"URL: {page_data['url']}")
+print(f"Clicks: {page_data['clicks']:,}")
+print(f"Impressions: {page_data['impressions']:,}")
+print(f"CTR: {page_data['ctr']:.2f}%")
+print(f"Avg Position: {page_data['avg_position']}")
+
+print("\nTop Keywords:")
+for kw in page_data['top_keywords'][:5]:
+    print(f"  {kw['keyword']}: Position {kw['position']}")
+```
+
+### Get Low CTR Pages
+
+Find pages with high impressions but low CTR:
+
+```python
+low_ctr = gsc.get_low_ctr_pages(
+    days=30,
+    ctr_threshold=0.03,  # 3%
+    min_impressions=100,
+    path_filter="/blog/"
+)
+
+for page in low_ctr[:10]:
+    print(f"{page['url']}")
+    print(f"  Impressions: {page['impressions']:,}")
+    print(f"  CTR: {page['ctr']:.2f}%")
+    print(f"  Missed Clicks: {page['missed_clicks']}")
+    print(f"  Priority: {page['priority']}")
+```
+
+These pages need better titles and meta descriptions to improve CTR.
+
+### Get Trending Queries
+
+Find queries gaining traction:
+
+```python
+trending = gsc.get_trending_queries(
+    days_recent=7,
+    days_comparison=30,
+    min_impressions=20
+)
+
+for query in trending[:10]:
+    print(f"{query['query']}")
+    print(f"  Change: +{query['change_percent']:.1f}%")
+    print(f"  Recent Impressions: {query['recent_impressions']:,}")
+```
+
+### Track Position Changes
+
+Monitor keyword position improvements/declines:
+
+```python
+changes = gsc.get_position_changes(
+    days_recent=7,
+    days_comparison=30
+)
+
+print("Improved Keywords:")
+for kw in changes['improved'][:5]:
+    print(f"  {kw['keyword']}")
+    print(f"    {kw['previous_position']} → {kw['position']} (+{kw['position_change']:.1f})")
+
+print("\nDeclining Keywords:")
+for kw in changes['declined'][:5]:
+    print(f"  {kw['keyword']}")
+    print(f"    {kw['previous_position']} → {kw['position']} ({kw['position_change']:.1f})")
+```
+
+## Data Returned
+
+Keyword data includes:
+
+```python
+{
+    'keyword': 'podcast monetization',
+    'clicks': 127,
+    'impressions': 3420,
+    'ctr': 0.037,  # 3.7%
+    'position': 8.5,
+    'commercial_intent': 2.0,  # For quick wins
+    'commercial_intent_category': 'Commercial Investigation',
+    'opportunity_score': 342.5,
+    'priority': 'high'
+}
+```
+
+## Integration with Performance Agent
+
+The Performance Agent uses GSC data to:
+
+```bash
+/performance-review
+```
+
+1. Identify quick win opportunities (position 11-20)
+2. Find pages with low CTR needing meta optimization
+3. Track declining keyword positions
+4. Discover trending queries for new content
+
+## Opportunity Scoring Formula
+
+For quick wins, opportunity score is calculated as:
+
+```python
+base_score = impressions / (distance_from_position_10 + 1)
+opportunity_score = base_score * commercial_intent_multiplier
+```
+
+Where:
+- **Impressions**: Higher = more potential traffic
+- **Distance from position 10**: Closer = easier to improve
+- **Commercial intent**: 0.1 (informational) to 3.0 (transactional)
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Error: User does not have sufficient permissions">
+    - Verify the service account is added to Search Console with **Full** permissions
+    - Make sure you're using the correct site URL format in `.env`
+    - Wait a few minutes after adding the user for changes to propagate
+  </Accordion>
+  
+  <Accordion title="Error: Site not found">
+    - Check the `GSC_SITE_URL` format matches exactly what's in Search Console
+    - Try both formats: `https://yoursite.com/` and `sc-domain:yoursite.com`
+    - Verify the property exists in Search Console
+  </Accordion>
+  
+  <Accordion title="Error: No data returned">
+    - Search Console data has a 2-3 day delay
+    - Try a longer time range (e.g., 30 days instead of 7)
+    - Verify your site has search traffic for the requested period
+  </Accordion>
+  
+  <Accordion title="Error: Credentials file not found">
+    - Verify the path in `GSC_CREDENTIALS_PATH` is correct
+    - If reusing GA4 credentials, ensure the path matches: `./credentials/ga4-credentials.json`
+    - Check file permissions: `chmod 600 credentials/*.json`
+  </Accordion>
+</AccordionGroup>
+
+## Testing Your Integration
+
+Verify GSC is working:
+
+```bash
+python3 -c "from data_sources.modules.google_search_console import GoogleSearchConsole; gsc = GoogleSearchConsole(); print(gsc.get_quick_wins(days=30, limit=5))"
+```
+
+Expected output: List of quick win keywords with opportunity scores.
+
+## Best Practices
+
+1. **Cache Aggressively**: GSC has generous limits but use 24-hour cache for historical data
+2. **Batch Requests**: Fetch multiple pages/keywords in one request when possible
+3. **Focus on Quick Wins**: Position 11-20 keywords are easiest to improve
+4. **Monitor CTR**: Low CTR with high impressions = need better meta tags
+5. **Track Trends**: Rising queries indicate emerging opportunities
+
+## What's Next
+
+<CardGroup cols={2}>
+  <Card title="DataForSEO" icon="ranking-star" href="/data-sources/dataforseo">
+    Add competitive SERP analysis and keyword research
+  </Card>
+  <Card title="Performance Agent" icon="chart-mixed" href="/agents/performance">
+    Learn how the Performance Agent uses GSC data
+  </Card>
+</CardGroup>

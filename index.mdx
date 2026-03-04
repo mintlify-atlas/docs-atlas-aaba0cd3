@@ -1,97 +1,242 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: SEO Machine Documentation
+description: Create SEO-optimized blog content with custom commands, AI agents, and analytics integrations
+mode: custom
 ---
 
-## Setting up
+<div className="relative overflow-hidden bg-gradient-to-br from-[#1e40af] via-[#2563eb] to-[#3b82f6] dark:from-[#0f1117] dark:via-[#1a1d27] dark:to-[#1e40af] py-20 lg:py-24">
+  <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:40px_40px]" />
+  <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <div className="lg:col-span-7">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white dark:text-gray-100 mb-6">
+          Create SEO-optimized content with AI
+        </h1>
+        <p className="text-lg sm:text-xl text-white/90 dark:text-gray-300 max-w-2xl mb-8">
+          A specialized Claude Code workspace for researching, writing, and optimizing long-form blog content that ranks well and serves your audience.
+        </p>
+        <div className="flex flex-wrap gap-4">
+          <a
+            href="/quickstart"
+            className="inline-flex items-center px-6 py-3 rounded-lg bg-white dark:bg-gray-100 text-[#2563eb] dark:text-[#1e40af] font-semibold hover:bg-gray-100 dark:hover:bg-white transition-colors shadow-lg"
+          >
+            Get started
+            <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </a>
+          <a
+            href="/commands/overview"
+            className="inline-flex items-center px-6 py-3 rounded-lg border-2 border-white/30 bg-white/10 text-white font-semibold hover:bg-white/20 hover:border-white/50 transition-colors backdrop-blur-sm"
+          >
+            View commands
+          </a>
+        </div>
+      </div>
+      <div className="lg:col-span-5 hidden lg:block">
+        <div className="relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-2xl blur-2xl" />
+          <div className="relative bg-[#1a1d27] dark:bg-[#0f1117] rounded-2xl border border-white/10 dark:border-gray-800 p-6 shadow-2xl">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-3 h-3 rounded-full bg-red-500" />
+              <div className="w-3 h-3 rounded-full bg-yellow-500" />
+              <div className="w-3 h-3 rounded-full bg-green-500" />
+            </div>
+            <div className="font-mono text-sm space-y-2">
+              <div className="text-gray-400 dark:text-gray-500">$ <span className="text-[#3b82f6]">/research</span> <span className="text-gray-300 dark:text-gray-400">content marketing strategies</span></div>
+              <div className="text-gray-500 dark:text-gray-600">→ Analyzing top 10 competitors...</div>
+              <div className="text-gray-500 dark:text-gray-600">→ Identifying content gaps...</div>
+              <div className="text-green-400 dark:text-green-500">✓ Research brief created</div>
+              <div className="mt-4 text-gray-400 dark:text-gray-500">$ <span className="text-[#3b82f6]">/write</span> <span className="text-gray-300 dark:text-gray-400">content marketing strategies</span></div>
+              <div className="text-gray-500 dark:text-gray-600">→ Writing 2,500-word article...</div>
+              <div className="text-green-400 dark:text-green-500">✓ Article created with SEO score: 94/100</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-Get your documentation site up and running in minutes.
+<div className="mt-16 mb-16 max-w-5xl mx-auto px-6">
+  <div className="text-center mb-12">
+    <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+      Get started in minutes
+    </h2>
+    <p className="text-lg text-gray-600 dark:text-gray-400">
+      Follow these steps to create your first SEO-optimized article
+    </p>
+  </div>
 
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
+  <Steps>
+    <Step title="Install and configure">
+      Clone the repository and install Python dependencies:
+      
+      ```bash
+      git clone https://github.com/TheCraigHewitt/seomachine.git
+      cd seomachine
+      pip install -r data_sources/requirements.txt
+      ```
+      
+      Open in Claude Code:
+      
+      ```bash
+      claude-code .
+      ```
+    </Step>
 
-## Make it yours
+    <Step title="Customize context files">
+      Configure your brand voice, style guide, and SEO guidelines in the `context/` directory:
+      
+      - `context/brand-voice.md` - Define your brand voice and messaging
+      - `context/style-guide.md` - Set your style preferences
+      - `context/seo-guidelines.md` - Configure SEO requirements
+      - `context/target-keywords.md` - Add your keyword research
+      
+      <Tip>Check out `examples/castos/` for a complete real-world example of all context files</Tip>
+    </Step>
 
-Design a docs site that looks great and empowers your users.
+    <Step title="Research your topic">
+      Use the `/research` command to analyze competitors and identify content opportunities:
+      
+      ```
+      /research content marketing strategies for B2B SaaS
+      ```
+      
+      This creates a comprehensive research brief with keyword analysis, competitor insights, and a recommended outline.
+    </Step>
 
-<Columns cols={2}>
-  <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
-  >
-    Edit your docs locally and preview them in real time.
-  </Card>
-  <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
-  >
-    Customize the design and colors of your site to match your brand.
-  </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
-  </Card>
-  <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
-  </Card>
-</Columns>
+    <Step title="Write your article">
+      Use the `/write` command to generate a 2,000-3,000+ word SEO-optimized article:
+      
+      ```
+      /write content marketing strategies for B2B SaaS
+      ```
+      
+      SEO Machine automatically:
+      - Maintains your brand voice
+      - Integrates keywords naturally
+      - Includes internal and external links
+      - Generates meta elements
+      - Triggers optimization agents for analysis
+    </Step>
+  </Steps>
+</div>
 
-## Create beautiful pages
+<div className="mt-16 mb-16 max-w-5xl mx-auto px-6">
+  <div className="text-center mb-12">
+    <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+      Explore by topic
+    </h2>
+    <p className="text-lg text-gray-600 dark:text-gray-400">
+      Everything you need to create world-class SEO content
+    </p>
+  </div>
 
-Everything you need to create world-class documentation.
+  <CardGroup cols={3}>
+    <Card title="Commands" icon="terminal" href="/commands/overview">
+      Learn all available slash commands for content research, writing, optimization, and publishing
+    </Card>
+    <Card title="Agents" icon="robot" href="/agents/overview">
+      Discover specialized AI agents that analyze and optimize your content automatically
+    </Card>
+    <Card title="Workflows" icon="diagram-project" href="/workflows/creating-content">
+      Master the complete content creation workflow from research to publication
+    </Card>
+    <Card title="Python API" icon="code" href="/api/overview">
+      Use Python modules for keyword analysis, SEO scoring, and performance tracking
+    </Card>
+    <Card title="Data sources" icon="database" href="/data-sources/overview">
+      Connect Google Analytics, Search Console, and DataForSEO for real-time insights
+    </Card>
+    <Card title="Integrations" icon="plug" href="/integrations/wordpress">
+      Publish directly to WordPress with Yoast SEO metadata and block formatting
+    </Card>
+  </CardGroup>
+</div>
 
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
+<div className="mt-16 mb-16 max-w-5xl mx-auto px-6">
+  <div className="text-center mb-12">
+    <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+      Key features
+    </h2>
+  </div>
 
-## Need inspiration?
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="p-6 rounded-2xl border border-gray-200 dark:border-[#27272a] bg-white dark:bg-[#1a1d27] hover:border-[#2563eb] dark:hover:border-[#3b82f6] transition-colors">
+      <div className="w-12 h-12 rounded-lg bg-[#2563eb]/10 dark:bg-[#2563eb]/20 flex items-center justify-center mb-4">
+        <svg className="w-6 h-6 text-[#2563eb]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+      </div>
+      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+        Custom slash commands
+      </h3>
+      <p className="text-gray-600 dark:text-gray-400">
+        Use `/research`, `/write`, `/optimize`, and more to streamline your content workflow
+      </p>
+    </div>
 
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+    <div className="p-6 rounded-2xl border border-gray-200 dark:border-[#27272a] bg-white dark:bg-[#1a1d27] hover:border-[#2563eb] dark:hover:border-[#3b82f6] transition-colors">
+      <div className="w-12 h-12 rounded-lg bg-[#2563eb]/10 dark:bg-[#2563eb]/20 flex items-center justify-center mb-4">
+        <svg className="w-6 h-6 text-[#2563eb]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+        </svg>
+      </div>
+      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+        Specialized AI agents
+      </h3>
+      <p className="text-gray-600 dark:text-gray-400">
+        Content analyzer, SEO optimizer, meta creator, and more provide expert recommendations
+      </p>
+    </div>
+
+    <div className="p-6 rounded-2xl border border-gray-200 dark:border-[#27272a] bg-white dark:bg-[#1a1d27] hover:border-[#2563eb] dark:hover:border-[#3b82f6] transition-colors">
+      <div className="w-12 h-12 rounded-lg bg-[#2563eb]/10 dark:bg-[#2563eb]/20 flex items-center justify-center mb-4">
+        <svg className="w-6 h-6 text-[#2563eb]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+      </div>
+      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+        Analytics integration
+      </h3>
+      <p className="text-gray-600 dark:text-gray-400">
+        Connect Google Analytics, Search Console, and DataForSEO for performance insights
+      </p>
+    </div>
+
+    <div className="p-6 rounded-2xl border border-gray-200 dark:border-[#27272a] bg-white dark:bg-[#1a1d27] hover:border-[#2563eb] dark:hover:border-[#3b82f6] transition-colors">
+      <div className="w-12 h-12 rounded-lg bg-[#2563eb]/10 dark:bg-[#2563eb]/20 flex items-center justify-center mb-4">
+        <svg className="w-6 h-6 text-[#2563eb]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+        </svg>
+      </div>
+      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+        Python analysis modules
+      </h3>
+      <p className="text-gray-600 dark:text-gray-400">
+        Advanced modules for search intent, keyword density, readability scoring, and SEO quality rating
+      </p>
+    </div>
+  </div>
+</div>
+
+<div className="mt-20 mb-16 max-w-5xl mx-auto px-6">
+  <div className="rounded-2xl border-2 border-[#2563eb]/20 dark:border-[#2563eb]/30 bg-gradient-to-br from-[#2563eb]/5 to-[#3b82f6]/5 dark:from-[#1a1d27] dark:to-[#1e40af]/20 p-8 lg:p-12 text-center">
+    <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+      Ready to create better content?
+    </h2>
+    <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
+      Start producing SEO-optimized blog posts that rank well and engage your audience
+    </p>
+    <a
+      href="/quickstart"
+      className="inline-flex items-center px-8 py-4 rounded-lg bg-[#2563eb] text-white font-semibold hover:bg-[#1e40af] transition-colors shadow-lg"
+    >
+      Get started now
+      <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+      </svg>
+    </a>
+  </div>
+</div>

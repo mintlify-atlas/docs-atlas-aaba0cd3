@@ -1,0 +1,263 @@
+---
+title: 'Content Scorer'
+description: 'Multi-dimensional content quality scoring: humanity, specificity, structure, SEO, and readability'
+---
+
+## Overview
+
+The `ContentScorer` class provides a comprehensive content quality scoring system that evaluates five dimensions: humanity/voice, specificity, structure balance, SEO compliance, and readability.
+
+## Installation
+
+```python
+from data_sources.modules.content_scorer import ContentScorer
+```
+
+## Scoring Dimensions
+
+The scorer evaluates content across five weighted dimensions:
+
+- **Humanity/Voice (30%)**: Human tone, personality, conversational devices
+- **Specificity (25%)**: Concrete examples vs vague generalizations
+- **Structure Balance (20%)**: Prose-to-list ratio (target 50-75%)
+- **SEO Compliance (15%)**: Keyword density, meta, structure
+- **Readability (10%)**: Flesch score, sentence rhythm, paragraph length
+
+**Pass Threshold**: 70/100 composite score
+
+## Initialization
+
+```python
+scorer = ContentScorer()
+```
+
+## Methods
+
+### score
+
+Score content across all dimensions.
+
+```python
+result = scorer.score(
+    content=article_content,
+    metadata={
+        'meta_title': 'How to Monetize Your Podcast in 2024',
+        'meta_description': 'Learn the best podcast monetization strategies...',
+        'primary_keyword': 'podcast monetization',
+        'secondary_keywords': ['podcast revenue', 'podcast sponsors']
+    }
+)
+```
+
+<ParamField path="content" type="str" required>
+  Full article content (markdown)
+</ParamField>
+
+<ParamField path="metadata" type="dict" optional>
+  Optional metadata dict
+  <ParamField path="meta_title" type="str">
+    Meta title tag
+  </ParamField>
+  <ParamField path="meta_description" type="str">
+    Meta description tag
+  </ParamField>
+  <ParamField path="primary_keyword" type="str">
+    Primary target keyword
+  </ParamField>
+  <ParamField path="secondary_keywords" type="list">
+    Secondary keywords
+  </ParamField>
+</ParamField>
+
+<ResponseField name="result" type="dict">
+  <ResponseField name="composite_score" type="float">
+    Overall weighted score (0-100)
+  </ResponseField>
+  <ResponseField name="passed" type="bool">
+    True if score >= 70
+  </ResponseField>
+  <ResponseField name="threshold" type="int">
+    Pass threshold (70)
+  </ResponseField>
+  <ResponseField name="dimensions" type="dict">
+    Scores and details for each dimension
+  </ResponseField>
+  <ResponseField name="priority_fixes" type="list">
+    Top 5 issues sorted by impact
+  </ResponseField>
+</ResponseField>
+
+### format_report
+
+Format scoring result as readable report.
+
+```python
+report = scorer.format_report(result)
+print(report)
+```
+
+## Dimension Details
+
+### Humanity Score (30%)
+
+Measures human voice and personality.
+
+**Penalties**:
+- AI phrases (-30): "in today's digital", "when it comes to", "let's dive in", "leverage", "utilize", "seamless", "unlock the power"
+- High passive voice (-15): Excessive use of "is/are/was/were + verb-ed"
+- Lack of contractions (-10): No "don't", "can't", "you're", "it's"
+
+**Bonuses**:
+- Conversational devices (+15): Parentheticals, questions, contractions, casual openers
+
+### Specificity Score (25%)
+
+Measures concrete examples vs vague generalizations.
+
+**Penalties**:
+- Vague words (-25): "many", "some", "various", "often", "significant", "great", "very", "important"
+- Lack of numbers/data (-15): Few percentages, dates, or counts
+
+**Bonuses**:
+- Specificity indicators (+30): Percentages ("25%"), dollar amounts ("$1,000"), years ("2024"), dates, counts, quotes with names
+
+### Structure Balance Score (20%)
+
+Measures prose-to-structure ratio.
+
+**Target**: 50-75% prose
+
+**Penalties**:
+- Too structured (less than 50% prose): Needs more narrative
+- Too prose-heavy (more than 75% prose): Needs more lists, tables, or visual breaks
+
+### SEO Score (15%)
+
+Measures SEO compliance.
+
+**Penalties**:
+- Missing meta title (-15)
+- Missing meta description (-15)
+- Keyword not in H1 (-10)
+- Keyword not in first 100 words (-10)
+- Content too short (less than 2,000 words) (-15)
+- Meta title/description wrong length (-5)
+
+### Readability Score (10%)
+
+Measures readability, rhythm, and paragraph length.
+
+**Target**: Flesch Reading Ease 60-70 (fairly easy), Grade 8-10
+
+**Penalties**:
+- Flesch < 50 (-30): Too difficult
+- Grade > 12 (-10): Reading level too high
+- Long paragraphs (-15): Paragraphs with 5+ sentences
+- Monotonous rhythm (-10): Sections with uniform sentence lengths
+
+**Good rhythm**: Mix short punchy (5-10 words) with longer flowing (15-25 words)
+
+## Priority Fixes
+
+The scorer identifies the top 5 issues sorted by impact:
+
+```python
+impact = dimension_weight * (100 - dimension_score)
+```
+
+Example:
+```python
+{
+    'dimension': 'humanity',
+    'dimension_score': 65,
+    'impact': 10.5,  # 0.30 * (100 - 65)
+    'issue': 'AI phrases detected (12 instances)',
+    'fix': 'Remove or rephrase: in today\'s digital, when it comes to, leverage',
+    'severity': 'high'
+}
+```
+
+## Example Usage
+
+```python
+from data_sources.modules.content_scorer import ContentScorer
+
+# Read draft
+with open('drafts/podcast-monetization.md', 'r') as f:
+    content = f.read()
+
+# Score content
+scorer = ContentScorer()
+result = scorer.score(
+    content=content,
+    metadata={
+        'meta_title': 'How to Monetize Your Podcast in 2024',
+        'meta_description': 'Learn proven podcast monetization strategies that work in 2024. From sponsorships to subscriptions, we cover everything you need to know.',
+        'primary_keyword': 'podcast monetization'
+    }
+)
+
+# Print formatted report
+print(scorer.format_report(result))
+
+# Check if passed
+if result['passed']:
+    print("✅ Content passed quality threshold")
+else:
+    print(f"❌ Content below threshold ({result['composite_score']}/100)")
+    print("\nPriority fixes:")
+    for i, fix in enumerate(result['priority_fixes'][:3], 1):
+        print(f"{i}. [{fix['dimension']}] {fix['issue']}")
+        print(f"   Fix: {fix['fix']}")
+```
+
+## Example Report
+
+```
+==================================================
+CONTENT QUALITY SCORE
+==================================================
+
+Composite Score: 73.5/100 (PASSED)
+Threshold: 70
+
+Dimensions:
+  humanity              78/100 (weight: 30%) [OK]
+  specificity           72/100 (weight: 25%) [OK]
+  structure_balance     85/100 (weight: 20%) [OK] (68% prose)
+  seo                   65/100 (weight: 15%) [NEEDS WORK]
+  readability           70/100 (weight: 10%) [OK] (Flesch: 65, Rhythm: 72, Long¶: 3)
+
+Priority Fixes:
+  1. [seo] Content too short (1,850 words)
+     Fix: Expand to at least 2,000 words
+  2. [humanity] AI phrases detected (8 instances)
+     Fix: Remove or rephrase: in today's digital, when it comes to
+  3. [readability] 3 paragraphs exceed 4 sentences (longest: 6)
+     Fix: Break long paragraphs into smaller chunks (2-4 sentences max)
+
+==================================================
+```
+
+## CLI Usage
+
+```bash
+# Score a draft file
+python3 data_sources/modules/content_scorer.py drafts/podcast-monetization.md
+```
+
+## Integration with Workflow
+
+The scorer is used in several commands:
+
+- `/write` - Auto-runs after article creation
+- `/optimize` - Runs as part of optimization
+- `/analyze-existing` - Scores existing content
+
+## Source Code Reference
+
+Location: `data_sources/modules/content_scorer.py:34`
+
+See also:
+- [Readability Scorer](/api/readability-scorer) - Flesch Reading Ease scoring
+- [SEO Quality Rater](/api/seo-quality-rater) - Comprehensive SEO scoring

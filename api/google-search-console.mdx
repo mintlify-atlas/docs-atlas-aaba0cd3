@@ -1,0 +1,370 @@
+---
+title: 'Google Search Console'
+description: 'Fetch search performance, keyword rankings, and SERP data from Google Search Console'
+---
+
+## Overview
+
+The `GoogleSearchConsole` class provides integration with Google Search Console (GSC) to fetch keyword rankings, search performance metrics, and identify SEO opportunities.
+
+## Installation
+
+```python
+from data_sources.modules.google_search_console import GoogleSearchConsole
+```
+
+## Authentication
+
+The module uses Google service account credentials for authentication.
+
+### Environment Variables
+
+```bash
+GSC_SITE_URL=https://yourdomain.com
+GSC_CREDENTIALS_PATH=/path/to/credentials.json
+```
+
+### Service Account Setup
+
+1. Create a service account in Google Cloud Console
+2. Download the credentials JSON file
+3. Add the service account email as a user in Search Console (with at least "Full" permissions)
+4. Set the credentials path in your environment
+
+## Initialization
+
+```python
+gsc = GoogleSearchConsole(
+    site_url="https://castos.com",  # Optional, defaults to env var
+    credentials_path="/path/to/credentials.json"  # Optional, defaults to env var
+)
+```
+
+<ParamField path="site_url" type="str" optional>
+  Site URL (e.g., "https://castos.com"). Defaults to `GSC_SITE_URL` environment variable.
+</ParamField>
+
+<ParamField path="credentials_path" type="str" optional>
+  Path to service account credentials JSON. Defaults to `GSC_CREDENTIALS_PATH` environment variable.
+</ParamField>
+
+## Methods
+
+### get_keyword_positions
+
+Get keyword rankings and performance.
+
+```python
+keywords = gsc.get_keyword_positions(
+    days=30,
+    limit=1000
+)
+```
+
+<ParamField path="days" type="int" default="30">
+  Number of days to analyze
+</ParamField>
+
+<ParamField path="limit" type="int" default="1000">
+  Max number of keywords to return
+</ParamField>
+
+<ResponseField name="results" type="list">
+  <ResponseField name="keyword" type="str">
+    Search query
+  </ResponseField>
+  <ResponseField name="clicks" type="int">
+    Total clicks
+  </ResponseField>
+  <ResponseField name="impressions" type="int">
+    Total impressions
+  </ResponseField>
+  <ResponseField name="ctr" type="float">
+    Click-through rate (0-1)
+  </ResponseField>
+  <ResponseField name="position" type="float">
+    Average position (rounded to 1 decimal)
+  </ResponseField>
+</ResponseField>
+
+### get_quick_wins
+
+Find "quick win" opportunities - keywords ranking 11-20 that are closest to page 1.
+
+```python
+quick_wins = gsc.get_quick_wins(
+    days=30,
+    position_min=11,
+    position_max=20,
+    min_impressions=50,
+    prioritize_commercial=True
+)
+```
+
+<ParamField path="days" type="int" default="30">
+  Number of days to analyze
+</ParamField>
+
+<ParamField path="position_min" type="int" default="11">
+  Minimum position
+</ParamField>
+
+<ParamField path="position_max" type="int" default="20">
+  Maximum position
+</ParamField>
+
+<ParamField path="min_impressions" type="int" default="50">
+  Minimum impressions threshold
+</ParamField>
+
+<ParamField path="prioritize_commercial" type="bool" default="true">
+  Weight score by commercial intent
+</ParamField>
+
+<ResponseField name="results" type="list">
+  <ResponseField name="keyword" type="str">
+    Search query
+  </ResponseField>
+  <ResponseField name="position" type="float">
+    Average position
+  </ResponseField>
+  <ResponseField name="impressions" type="int">
+    Total impressions
+  </ResponseField>
+  <ResponseField name="clicks" type="int">
+    Total clicks
+  </ResponseField>
+  <ResponseField name="commercial_intent" type="float">
+    Commercial intent score (0.1-3.0)
+  </ResponseField>
+  <ResponseField name="commercial_intent_category" type="str">
+    "Transactional", "Commercial Investigation", "Informational (Relevant)", or "Informational (Low Value)"
+  </ResponseField>
+  <ResponseField name="opportunity_score" type="float">
+    Calculated opportunity score
+  </ResponseField>
+  <ResponseField name="priority" type="str">
+    "high" or "medium"
+  </ResponseField>
+</ResponseField>
+
+### get_page_performance
+
+Get search performance for a specific page.
+
+```python
+page_perf = gsc.get_page_performance(
+    url="/blog/podcast-monetization",
+    days=30
+)
+```
+
+<ParamField path="url" type="str" required>
+  Page URL or path
+</ParamField>
+
+<ParamField path="days" type="int" default="30">
+  Number of days to analyze
+</ParamField>
+
+<ResponseField name="page_data" type="dict">
+  <ResponseField name="url" type="str">
+    Page URL
+  </ResponseField>
+  <ResponseField name="clicks" type="int">
+    Total clicks
+  </ResponseField>
+  <ResponseField name="impressions" type="int">
+    Total impressions
+  </ResponseField>
+  <ResponseField name="ctr" type="float">
+    CTR percentage
+  </ResponseField>
+  <ResponseField name="avg_position" type="float">
+    Average position
+  </ResponseField>
+  <ResponseField name="top_keywords" type="list">
+    Top 10 keywords driving traffic to this page
+  </ResponseField>
+</ResponseField>
+
+### get_low_ctr_pages
+
+Find pages with high impressions but low CTR (need better titles/descriptions).
+
+```python
+low_ctr = gsc.get_low_ctr_pages(
+    days=30,
+    ctr_threshold=0.03,  # 3%
+    min_impressions=100,
+    path_filter="/blog/"
+)
+```
+
+<ParamField path="days" type="int" default="30">
+  Number of days to analyze
+</ParamField>
+
+<ParamField path="ctr_threshold" type="float" default="0.03">
+  CTR below this is considered low (0.03 = 3%)
+</ParamField>
+
+<ParamField path="min_impressions" type="int" default="100">
+  Minimum impressions to consider
+</ParamField>
+
+<ParamField path="path_filter" type="str" optional>
+  Filter by path
+</ParamField>
+
+<ResponseField name="results" type="list">
+  <ResponseField name="url" type="str">
+    Page URL
+  </ResponseField>
+  <ResponseField name="impressions" type="int">
+    Total impressions
+  </ResponseField>
+  <ResponseField name="clicks" type="int">
+    Total clicks
+  </ResponseField>
+  <ResponseField name="ctr" type="float">
+    CTR percentage
+  </ResponseField>
+  <ResponseField name="avg_position" type="float">
+    Average position
+  </ResponseField>
+  <ResponseField name="potential_clicks" type="int">
+    Potential clicks at 5% CTR
+  </ResponseField>
+  <ResponseField name="missed_clicks" type="int">
+    Missed clicks per month
+  </ResponseField>
+  <ResponseField name="priority" type="str">
+    "high" or "medium"
+  </ResponseField>
+</ResponseField>
+
+### get_trending_queries
+
+Find queries gaining traction (rising impressions).
+
+```python
+trending = gsc.get_trending_queries(
+    days_recent=7,
+    days_comparison=30,
+    min_impressions=20
+)
+```
+
+<ParamField path="days_recent" type="int" default="7">
+  Recent period to analyze
+</ParamField>
+
+<ParamField path="days_comparison" type="int" default="30">
+  Previous period to compare against
+</ParamField>
+
+<ParamField path="min_impressions" type="int" default="20">
+  Minimum impressions in recent period
+</ParamField>
+
+<ResponseField name="results" type="list">
+  <ResponseField name="query" type="str">
+    Search query
+  </ResponseField>
+  <ResponseField name="recent_impressions" type="int">
+    Impressions in recent period
+  </ResponseField>
+  <ResponseField name="previous_impressions" type="int">
+    Impressions in comparison period
+  </ResponseField>
+  <ResponseField name="change_percent" type="float">
+    Percentage change
+  </ResponseField>
+  <ResponseField name="clicks" type="int">
+    Recent clicks
+  </ResponseField>
+  <ResponseField name="position" type="float">
+    Current average position
+  </ResponseField>
+</ResponseField>
+
+### get_position_changes
+
+Track keyword position changes over time.
+
+```python
+changes = gsc.get_position_changes(
+    days_recent=7,
+    days_comparison=30
+)
+```
+
+<ParamField path="days_recent" type="int" default="7">
+  Recent period
+</ParamField>
+
+<ParamField path="days_comparison" type="int" default="30">
+  Previous period to compare
+</ParamField>
+
+<ResponseField name="results" type="dict">
+  <ResponseField name="improved" type="list">
+    Keywords that improved by 2+ positions
+  </ResponseField>
+  <ResponseField name="declined" type="list">
+    Keywords that declined by 2+ positions
+  </ResponseField>
+  <ResponseField name="stable" type="list">
+    Keywords with minimal position change
+  </ResponseField>
+</ResponseField>
+
+## Commercial Intent Scoring
+
+The module includes built-in commercial intent scoring (`_calculate_commercial_intent`) that categorizes keywords:
+
+- **High Intent (3.0)**: Transactional - pricing, buy, vs, alternatives, reviews
+- **Medium-High Intent (2.0)**: Commercial investigation - how to, guide, strategies
+- **Medium Intent (1.0)**: Informational with potential - what is, features, benefits
+- **Low Intent (0.1)**: Pure informational/celebrity - who is, biography, age
+
+See source code at `data_sources/modules/google_search_console.py:146`
+
+## Example Usage
+
+```python
+from dotenv import load_dotenv
+from data_sources.modules.google_search_console import GoogleSearchConsole
+
+load_dotenv('data_sources/config/.env')
+
+gsc = GoogleSearchConsole()
+
+# Quick Win Opportunities
+quick_wins = gsc.get_quick_wins()
+for i, kw in enumerate(quick_wins[:10], 1):
+    print(f"{i}. {kw['keyword']}")
+    print(f"   Position: {kw['position']} | Impressions: {kw['impressions']:,}")
+    print(f"   Opportunity Score: {kw['opportunity_score']:.1f}")
+    print()
+
+# Low CTR Pages
+low_ctr = gsc.get_low_ctr_pages()
+for page in low_ctr[:5]:
+    print(f"- {page['url']}")
+    print(f"  {page['impressions']:,} impressions | {page['ctr']:.2f}% CTR")
+    print(f"  Missing {page['missed_clicks']} potential clicks")
+    print()
+
+# Trending Queries
+trending = gsc.get_trending_queries()
+for query in trending[:5]:
+    print(f"- {query['query']}")
+    print(f"  +{query['change_percent']:.1f}% impressions")
+    print()
+```
+
+## Source Code Reference
+
+Location: `data_sources/modules/google_search_console.py:16`

@@ -1,0 +1,209 @@
+---
+title: "Python API Overview"
+description: "Overview of SEO Machine Python analysis modules for content optimization and SERP analysis"
+---
+
+The SEO Machine Python API provides powerful analysis modules for SEO content optimization, SERP analysis, and content scoring. These modules are located in `data_sources/modules/` and can be imported and used in your Python scripts.
+
+## Module Categories
+
+### Analysis Modules
+
+Core analysis modules for content optimization:
+
+- **[Search Intent Analyzer](/api/search-intent-analyzer)** - Classify search intent from keywords and SERP data
+- **[Keyword Analyzer](/api/keyword-analyzer)** - Analyze keyword density, distribution, and clustering
+- **[SEO Quality Rater](/api/seo-quality-rater)** - Rate content against SEO best practices (0-100 score)
+- **[Content Length Comparator](/api/content-length-comparator)** - Benchmark content length against top SERP results
+- **[Readability Scorer](/api/readability-scorer)** - Calculate Flesch Reading Ease and readability metrics
+
+### Data Integration Modules
+
+Modules for connecting to external data sources:
+
+- **DataForSEO** - SERP positions and keyword metrics
+- **Google Analytics** - Traffic and engagement data
+- **Google Search Console** - Rankings and impressions
+- **WordPress Publisher** - Publish content with Yoast SEO metadata
+
+## Installation
+
+Install required dependencies:
+
+```bash
+pip install -r data_sources/requirements.txt
+```
+
+Required packages:
+- `requests` - HTTP requests
+- `beautifulsoup4` - HTML parsing
+- `scikit-learn` - Machine learning for clustering
+- `textstat` - Readability metrics
+- `numpy` - Numerical operations
+
+## Basic Usage
+
+All analysis modules follow a consistent pattern:
+
+```python
+from data_sources.modules.keyword_analyzer import analyze_keywords
+
+# Using convenience function
+result = analyze_keywords(
+    content="Your article content here",
+    primary_keyword="your target keyword",
+    secondary_keywords=["related keyword 1", "related keyword 2"]
+)
+
+print(f"Keyword density: {result['primary_keyword']['density']}%")
+print(f"Recommendations: {result['recommendations']}")
+```
+
+Or using the class directly:
+
+```python
+from data_sources.modules.keyword_analyzer import KeywordAnalyzer
+
+analyzer = KeywordAnalyzer()
+result = analyzer.analyze(
+    content="Your article content here",
+    primary_keyword="your target keyword"
+)
+```
+
+## Common Patterns
+
+### Chaining Multiple Analyses
+
+Combine multiple modules for comprehensive content analysis:
+
+```python
+from data_sources.modules.search_intent_analyzer import analyze_intent
+from data_sources.modules.keyword_analyzer import analyze_keywords
+from data_sources.modules.readability_scorer import score_readability
+from data_sources.modules.seo_quality_rater import rate_seo_quality
+
+# Step 1: Analyze search intent
+intent = analyze_intent(
+    keyword="how to start a podcast",
+    serp_features=["featured_snippet", "people_also_ask"]
+)
+
+# Step 2: Analyze keywords
+keywords = analyze_keywords(
+    content=article_content,
+    primary_keyword="how to start a podcast",
+    secondary_keywords=["podcast hosting", "podcast equipment"]
+)
+
+# Step 3: Check readability
+readability = score_readability(article_content)
+
+# Step 4: Get overall SEO quality score
+quality = rate_seo_quality(
+    content=article_content,
+    primary_keyword="how to start a podcast",
+    keyword_density=keywords['primary_keyword']['density'],
+    meta_title="How to Start a Podcast: Complete Guide",
+    meta_description="Learn how to start a podcast from scratch..."
+)
+
+print(f"Intent: {intent['primary_intent']}")
+print(f"SEO Score: {quality['overall_score']}/100")
+print(f"Readability Grade: {readability['reading_level']}")
+```
+
+### Working with SERP Data
+
+Many modules accept SERP data from DataForSEO:
+
+```python
+from data_sources.modules.dataforseo import DataForSEO
+from data_sources.modules.search_intent_analyzer import analyze_intent
+from data_sources.modules.content_length_comparator import compare_content_length
+
+# Get SERP data
+dfs = DataForSEO()
+serp_data = dfs.get_serp_data("your keyword")
+
+# Analyze intent with SERP features
+intent = analyze_intent(
+    keyword="your keyword",
+    serp_features=serp_data['features'],
+    top_results=serp_data['organic_results'][:10]
+)
+
+# Compare content length
+length_comparison = compare_content_length(
+    keyword="your keyword",
+    your_word_count=2500,
+    serp_results=serp_data['organic_results']
+)
+```
+
+## Output Format
+
+All modules return dictionaries with consistent structure:
+
+- **Metrics**: Numerical scores and measurements
+- **Analysis**: Detailed breakdowns and insights
+- **Recommendations**: Actionable suggestions for improvement
+- **Status/Grade**: Quick assessment of quality level
+
+```python
+{
+    'overall_score': 85.2,
+    'grade': 'B (Good)',
+    'metrics': { ... },
+    'analysis': { ... },
+    'recommendations': [
+        'Add 500 more words to match competitors',
+        'Increase keyword density to 1.5%'
+    ],
+    'publishing_ready': True
+}
+```
+
+## Error Handling
+
+All modules include error handling:
+
+```python
+result = analyze_keywords(
+    content="",
+    primary_keyword="test"
+)
+
+if 'error' in result:
+    print(f"Error: {result['error']}")
+else:
+    print(f"Density: {result['primary_keyword']['density']}%")
+```
+
+## Configuration
+
+API credentials are configured in `data_sources/config/.env`:
+
+```bash
+# DataForSEO API
+DATAFORSEO_LOGIN=your_login
+DATAFORSEO_PASSWORD=your_password
+
+# Google Analytics
+GA4_PROPERTY_ID=your_property_id
+
+# WordPress
+WORDPRESS_URL=https://your-site.com
+WORDPRESS_USERNAME=your_username
+WORDPRESS_APP_PASSWORD=your_app_password
+```
+
+## Next Steps
+
+Explore the individual analysis modules:
+
+- [Search Intent Analyzer](/api/search-intent-analyzer) - Classify search intent
+- [Keyword Analyzer](/api/keyword-analyzer) - Optimize keyword usage
+- [SEO Quality Rater](/api/seo-quality-rater) - Get comprehensive SEO scores
+- [Content Length Comparator](/api/content-length-comparator) - Match competitor length
+- [Readability Scorer](/api/readability-scorer) - Improve content readability

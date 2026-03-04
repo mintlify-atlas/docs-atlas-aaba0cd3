@@ -1,0 +1,336 @@
+---
+title: Environment Variables
+description: Configure API credentials and settings for data sources and integrations
+---
+
+SEO Machine requires API credentials for data sources like Google Analytics, Google Search Console, and DataForSEO. Environment variables are configured in the `.env` file.
+
+## Configuration File
+
+**Template:** `~/workspace/source/.env.example`
+
+**Your config:** `~/workspace/source/data_sources/config/.env`
+
+## Quick Setup
+
+### 1. Copy Template
+
+```bash
+cp ~/workspace/source/.env.example ~/workspace/source/data_sources/config/.env
+```
+
+### 2. Fill in Your Credentials
+
+Edit the `.env` file with your actual API credentials:
+
+```bash
+code ~/workspace/source/data_sources/config/.env
+```
+
+### 3. Never Commit Credentials
+
+The `.env` file is gitignored. Never commit credentials to version control.
+
+## Required Environment Variables
+
+### Google Analytics 4 (GA4)
+
+Required for traffic and engagement data.
+
+```bash
+# Your GA4 Property ID (format: 123456789)
+GA4_PROPERTY_ID=your_property_id_here
+
+# Path to your GA4 service account JSON credentials file
+GA4_CREDENTIALS_PATH=./credentials/ga4-credentials.json
+```
+
+**How to get:**
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com)
+2. Create a new project or select existing
+3. Enable Google Analytics Data API
+4. Create service account and download JSON key
+5. Add service account email to GA4 property (Viewer role)
+6. Save JSON file to `~/workspace/source/credentials/ga4-credentials.json`
+7. Find Property ID in GA4 Admin > Property Settings
+
+[Detailed setup guide →](/data-sources/google-analytics)
+
+### Google Search Console (GSC)
+
+Required for search rankings and impressions data.
+
+```bash
+# Your website URL as it appears in Search Console
+# Include https:// and trailing slash
+GSC_SITE_URL=https://yoursite.com/
+
+# Path to your GSC service account JSON credentials file
+# Can be the same file as GA4 if using the same service account
+GSC_CREDENTIALS_PATH=./credentials/gsc-credentials.json
+```
+
+**How to get:**
+
+1. Use same service account as GA4 or create new one
+2. Enable Google Search Console API in Cloud Console
+3. Add service account email as user in [Search Console](https://search.google.com/search-console)
+4. Save credentials to `~/workspace/source/credentials/gsc-credentials.json`
+5. Copy exact site URL from Search Console
+
+[Detailed setup guide →](/data-sources/google-search-console)
+
+### DataForSEO
+
+Required for SERP analysis, keyword research, and competitor data.
+
+```bash
+# Your DataForSEO login email
+DATAFORSEO_LOGIN=your_email@example.com
+
+# Your DataForSEO API password
+DATAFORSEO_PASSWORD=your_api_password_here
+```
+
+**How to get:**
+
+1. Sign up at [dataforseo.com](https://dataforseo.com)
+2. Get API credentials from dashboard
+3. Add $10-20 credit to start (pay-as-you-go pricing)
+4. Copy login email and API password
+
+[Detailed setup guide →](/data-sources/dataforseo)
+
+## Optional Environment Variables
+
+### Blog Path Filter
+
+Define your blog URL structure if not at `/blog/`.
+
+```bash
+# If your blog is not at /blog/, change this to match your URL structure
+# Examples: /articles/, /content/, /resources/
+BLOG_PATH=/blog/
+```
+
+**Why this matters:**
+
+When analyzing GA4 and GSC data, SEO Machine filters for blog posts using this path. If your blog uses a different URL structure, update this variable.
+
+**Examples:**
+- WordPress blog: `/blog/`
+- Ghost blog: `/articles/`
+- Custom blog: `/resources/blog/`
+
+### Company Information
+
+Optional variables to help with context.
+
+```bash
+# These are optional and can help with context
+COMPANY_NAME=Your Company Name
+COMPANY_DOMAIN=yoursite.com
+TARGET_INDUSTRY=your-industry
+```
+
+**When to use:**
+
+These variables help provide context to Claude when generating content. They're optional but can improve relevance.
+
+## Credentials Files
+
+### Service Account JSON Files
+
+Google API credentials are stored as JSON files:
+
+```
+~/workspace/source/credentials/
+├── ga4-credentials.json
+└── gsc-credentials.json
+```
+
+**Example JSON structure:**
+
+```json
+{
+  "type": "service_account",
+  "project_id": "your-project",
+  "private_key_id": "abc123...",
+  "private_key": "-----BEGIN PRIVATE KEY-----\n...",
+  "client_email": "service-account@project.iam.gserviceaccount.com",
+  "client_id": "123456789",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs"
+}
+```
+
+### Security Best Practices
+
+**Do:**
+- Store credentials in `credentials/` directory (gitignored)
+- Use service accounts (not OAuth user credentials)
+- Grant minimum required permissions
+- Rotate credentials periodically
+
+**Don't:**
+- Commit credentials to version control
+- Share credentials files
+- Use personal Google account credentials
+- Grant unnecessary permissions
+
+## Testing Your Configuration
+
+### Test API Connectivity
+
+Verify your credentials work:
+
+```bash
+cd ~/workspace/source
+python3 test_dataforseo.py
+```
+
+This tests DataForSEO API connectivity.
+
+### Test Data Sources
+
+Run a simple data fetch:
+
+```bash
+# Test GA4
+python3 -c "from data_sources.modules.google_analytics import fetch_ga4_blog_performance; print(fetch_ga4_blog_performance(days=30))"
+
+# Test GSC
+python3 -c "from data_sources.modules.google_search_console import fetch_gsc_keyword_data; print(fetch_gsc_keyword_data(days=30))"
+```
+
+Successful output means your credentials are working.
+
+## Troubleshooting
+
+### "Credentials file not found"
+
+**Problem:** Python scripts can't find credentials files.
+
+**Solution:**
+
+1. Verify file exists:
+   ```bash
+   ls ~/workspace/source/credentials/
+   ```
+
+2. Check path in `.env` is correct:
+   ```bash
+   cat ~/workspace/source/data_sources/config/.env | grep CREDENTIALS_PATH
+   ```
+
+3. Ensure path is relative to where scripts run (usually repo root):
+   ```bash
+   GA4_CREDENTIALS_PATH=./credentials/ga4-credentials.json
+   ```
+
+### "Permission denied" errors
+
+**Problem:** Service account doesn't have access.
+
+**Solution:**
+
+1. Verify service account email in credentials file:
+   ```bash
+   cat ~/workspace/source/credentials/ga4-credentials.json | grep client_email
+   ```
+
+2. Add that email to:
+   - GA4 property (Admin > Property Access Management)
+   - Search Console (Settings > Users and Permissions)
+
+3. Grant appropriate permissions:
+   - GA4: Viewer role
+   - GSC: Owner or Full user
+
+### "API not enabled" errors
+
+**Problem:** Required APIs aren't enabled in Google Cloud.
+
+**Solution:**
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com)
+2. Select your project
+3. Navigate to APIs & Services > Library
+4. Enable:
+   - Google Analytics Data API
+   - Google Search Console API
+
+### DataForSEO authentication fails
+
+**Problem:** Invalid login or password.
+
+**Solution:**
+
+1. Verify credentials in [DataForSEO dashboard](https://app.dataforseo.com)
+2. Ensure you're using API password (not account password)
+3. Check for typos in `.env` file
+4. Ensure account has credit (minimum $10)
+
+## Environment Variables by Command
+
+### Research Commands
+
+Commands that use environment variables:
+
+```bash
+/research [topic]           # Uses: DataForSEO
+/research-serp [keyword]    # Uses: DataForSEO
+/research-gaps              # Uses: GA4, GSC, DataForSEO
+/research-performance       # Uses: GA4, GSC
+/research-trending          # Uses: DataForSEO, GA4
+```
+
+### Performance Commands
+
+Commands that use environment variables:
+
+```bash
+/performance-review         # Uses: GA4, GSC, DataForSEO
+/priorities                 # Uses: GA4, GSC, DataForSEO
+```
+
+### Analytics Scripts
+
+Python scripts that use environment variables:
+
+```bash
+python3 seo_baseline_analysis.py           # Uses: GSC, DataForSEO
+python3 seo_competitor_analysis.py         # Uses: DataForSEO
+python3 research_quick_wins.py             # Uses: GA4, GSC, DataForSEO
+python3 research_performance_matrix.py     # Uses: GA4, GSC, DataForSEO
+```
+
+## Security Checklist
+
+Before committing any code:
+
+- [ ] `.env` file is in `.gitignore`
+- [ ] No credentials in source code
+- [ ] Credentials files in gitignored directory
+- [ ] Service accounts have minimum required permissions
+- [ ] No credentials in commit history
+- [ ] `.env.example` has placeholders only, no real values
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Google Analytics Setup" icon="chart-simple" href="/data-sources/google-analytics">
+    Detailed GA4 configuration guide
+  </Card>
+  <Card title="Google Search Console" icon="magnifying-glass" href="/data-sources/google-search-console">
+    Complete GSC setup instructions
+  </Card>
+  <Card title="DataForSEO Setup" icon="database" href="/data-sources/dataforseo">
+    Configure DataForSEO API access
+  </Card>
+  <Card title="Research Commands" icon="flask" href="/commands/research">
+    Start researching with your data sources
+  </Card>
+</CardGroup>

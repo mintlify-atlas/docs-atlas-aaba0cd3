@@ -1,0 +1,546 @@
+---
+title: "Context Files"
+description: "How context files configure and guide all content generation in SEO Machine"
+---
+
+## Overview
+
+Context files are the configuration layer that ensures all generated content matches your brand, follows your style, targets your keywords, and serves your audience. Every command and agent references these files for guidance.
+
+## What Are Context Files?
+
+Context files are markdown documents in the `context/` directory that define:
+
+- Brand voice and messaging
+- Editorial standards and style rules
+- SEO requirements and keyword targets
+- Internal linking strategy
+- Product features and benefits
+- Competitive positioning
+- CRO best practices
+
+**Location:** `~/workspace/source/context/`
+
+## Why Context Files Matter
+
+Without properly configured context files:
+
+- Content won't sound like your brand
+- Keyword targeting will be inconsistent
+- Internal links won't align with strategy
+- Product mentions will feel forced
+- Style will vary across articles
+
+**With well-configured context files:**
+
+- Every article maintains consistent voice
+- Keywords are targeted strategically
+- Internal links support your site architecture
+- Product integration feels natural
+- Quality remains high across all content
+
+## Core Context Files
+
+### brand-voice.md
+
+**Purpose:** Defines your brand voice, tone, and messaging framework
+
+**Used by:** All commands, especially `/write`, `/rewrite`, `/article`
+
+**Must include:**
+
+<AccordionGroup>
+  <Accordion title="Voice Pillars">
+    The core characteristics of your brand voice:
+    
+    - **Expert but approachable** - How to balance authority with accessibility
+    - **Data-driven yet human** - When to use statistics vs. stories
+    - **Empowering and practical** - Focus on actionable advice
+    
+    Example: "We sound like a knowledgeable friend, not a corporate manual."
+  </Accordion>
+  
+  <Accordion title="Tone Guidelines by Content Type">
+    How tone varies based on content:
+    
+    - **How-to guides:** Direct, instructional, step-by-step
+    - **Strategy articles:** Thought leadership, analytical
+    - **News/updates:** Informative, timely, concise
+    - **Product content:** Benefits-focused, solution-oriented
+  </Accordion>
+  
+  <Accordion title="Core Brand Messages">
+    Key themes to reinforce:
+    
+    - Your unique value proposition
+    - Main differentiators from competitors
+    - Problems you solve
+    - Audience benefits
+  </Accordion>
+  
+  <Accordion title="Writing Style Guidelines">
+    Specific style rules:
+    
+    - Use contractions (don't vs. do not)
+    - Second person (you) vs. first person (we)
+    - Sentence length preferences
+    - Paragraph structure
+    - Active vs. passive voice
+  </Accordion>
+  
+  <Accordion title="Terminology Preferences">
+    Your preferred terms:
+    
+    - Industry terminology choices
+    - Product/feature names
+    - Terms to avoid
+    - Competitor references
+  </Accordion>
+</AccordionGroup>
+
+**Example excerpt from brand-voice.md:**
+
+```markdown
+## Voice Pillars
+
+### Expert but Approachable
+
+We're podcast hosting experts who explain technical concepts in plain English.
+
+- ✅ "Your RSS feed is like your podcast's home address"
+- ❌ "The RSS feed protocol enables content syndication"
+
+### Data-Driven Yet Human
+
+We back claims with data but tell stories to make it memorable.
+
+- ✅ "73% of podcast listeners subscribe after the first episode—that's why Sarah's hook strategy worked so well."
+- ❌ "Data shows 73% subscription rate after first episode exposure."
+```
+
+### style-guide.md
+
+**Purpose:** Editorial and formatting standards for consistency
+
+**Used by:** All writing commands and the editor agent
+
+**Must include:**
+
+- **Grammar and mechanics rules** (Oxford comma, em-dash usage)
+- **Capitalization conventions** (title case rules, product names)
+- **Formatting standards** (bold, italics, lists, quotes)
+- **Number and date formatting** ("10 ways" vs. "ten ways")
+- **Abbreviation rules** (when to spell out acronyms)
+- **Link formatting** (when to use inline vs. reference links)
+- **Quote and citation style**
+
+**Example excerpt from style-guide.md:**
+
+```markdown
+## Capitalization
+
+- **Headings:** Sentence case (only capitalize first word)
+- **Product names:** Always capitalize Castos, WordPress, Seriously Simple Podcasting
+- **Features:** Lowercase unless proper noun ("private podcasting," "Castos Insights")
+
+## Numbers
+
+- Spell out one through nine
+- Use numerals for 10 and above
+- Always use numerals in lists and steps
+- Use numerals with percentages, measurements, ages
+```
+
+### seo-guidelines.md
+
+**Purpose:** SEO best practices and requirements for all content
+
+**Used by:** All writing commands, seo-optimizer agent, content-analyzer agent
+
+**Must include:**
+
+- **Content length requirements** (minimum/target word counts)
+- **Keyword optimization rules** (density targets, placement)
+- **Meta element standards** (title/description length, format)
+- **Heading structure requirements** (H1/H2/H3 hierarchy)
+- **Link strategy guidelines** (internal/external link counts)
+- **Readability requirements** (grade level, sentence length)
+- **Image optimization** (alt text, file naming)
+
+**Example excerpt from seo-guidelines.md:**
+
+```markdown
+## Keyword Optimization
+
+### Primary Keyword
+
+- **Density:** 1-2% of total words
+- **Required placements:**
+  - H1 headline
+  - First 100 words
+  - At least 2-3 H2 headings
+  - Conclusion
+  - Meta title
+  - Meta description
+  - URL slug
+
+### Natural Integration
+
+- Keywords must flow naturally in sentences
+- Use semantic variations and LSI keywords
+- NEVER force keywords or sacrifice readability
+- Read content aloud—if it sounds awkward, rewrite it
+```
+
+### target-keywords.md
+
+**Purpose:** Keyword research organized by topic cluster
+
+**Used by:** `/research`, `/write`, keyword-mapper agent
+
+**Must include:**
+
+- **Topic clusters** (pillar topics and subtopics)
+- **Pillar keywords** (main keywords per cluster)
+- **Cluster keywords** (subtopic keywords)
+- **Long-tail variations** (specific phrases)
+- **Search intent classification** (informational/commercial/transactional)
+- **Current rankings** (if tracking existing content)
+- **Priority levels** (high/medium/low importance)
+
+**Example structure:**
+
+```markdown
+## Cluster: Podcast Hosting
+
+### Pillar Keywords
+- podcast hosting (5,400/mo, high competition)
+- podcast hosting platform (1,900/mo, medium)
+
+### Cluster Keywords
+- best podcast hosting (2,400/mo, medium)
+- podcast hosting services (1,300/mo, medium)
+- podcast hosting comparison (880/mo, low)
+- unlimited podcast hosting (720/mo, low)
+
+### Long-Tail Variations
+- podcast hosting for beginners (320/mo, low)
+- podcast hosting with unlimited storage (210/mo, low)
+- podcast hosting for wordpress (170/mo, low)
+
+### Search Intent
+Primarily **commercial** (users comparing options) and **informational** (users learning about hosting)
+
+### Priority
+High - core product topic
+```
+
+### internal-links-map.md
+
+**Purpose:** Catalog of key pages from your site for strategic internal linking
+
+**Used by:** All writing commands, internal-linker agent
+
+**Must include:**
+
+- **Product pages and features** (URLs, descriptions, when to link)
+- **Pillar content URLs** (comprehensive guides)
+- **Top performing blog articles** (high-traffic posts)
+- **Topic cluster mapping** (how content connects)
+- **Recommended anchor text** (for each page)
+- **Priority levels** (must-link vs. optional)
+
+**Example structure:**
+
+```markdown
+## Product Pages
+
+### Main Product Page
+- **URL:** https://castos.com/
+- **Anchor text:** Castos podcast hosting, podcast hosting platform
+- **Link when:** Introducing podcast hosting concepts
+- **Priority:** High
+
+### Features: Private Podcasting
+- **URL:** https://castos.com/private-podcasting/
+- **Anchor text:** private podcasting, internal podcasts, password-protected podcasts
+- **Link when:** Discussing internal communications, training content
+- **Priority:** Medium
+
+## Pillar Content
+
+### The Complete Guide to Starting a Podcast
+- **URL:** https://castos.com/blog/start-a-podcast/
+- **Anchor text:** how to start a podcast, starting a podcast guide
+- **Link when:** Any beginner-focused content
+- **Priority:** High
+- **Topic cluster:** Podcast Basics
+```
+
+### features.md
+
+**Purpose:** Product features and benefits for natural integration
+
+**Used by:** All writing commands when discussing solutions
+
+**Must include:**
+
+- **Feature list** (what your product does)
+- **Benefit statements** (why it matters to users)
+- **Use cases** (when/how to use each feature)
+- **Differentiation** (what makes your features unique)
+- **Integration tips** (how to mention naturally in content)
+
+**Example structure:**
+
+```markdown
+## Feature: Unlimited Storage
+
+### What It Does
+Host unlimited podcast episodes and files with no storage caps.
+
+### Benefits
+- Never delete old episodes
+- No surprise overage charges
+- Grow your back catalog freely
+- Upload video podcasts without worry
+
+### Use Cases
+- Daily show podcasters building large archives
+- Video podcasters with large file sizes
+- Networks hosting multiple shows
+- Creators repurposing old content
+
+### Differentiation
+Most hosts charge by storage used or cap episode counts. Castos includes unlimited storage on all plans.
+
+### Natural Integration
+"If you're planning a daily show, look for podcast hosting with unlimited storage so you can build a comprehensive archive without worrying about hitting caps."
+```
+
+### competitor-analysis.md
+
+**Purpose:** Competitive intelligence and content gap identification
+
+**Used by:** `/research`, `/analyze-existing` commands
+
+**Must include:**
+
+- **Primary competitors** (who you compete against)
+- **Their content strategies** (what they cover, how they position)
+- **Keyword gaps** (terms they rank for that you don't)
+- **Content gaps** (topics they cover that you don't)
+- **Differentiation opportunities** (where you can stand out)
+- **Weakness analysis** (what they're missing)
+
+**Example structure:**
+
+```markdown
+## Competitor: Buzzsprout
+
+### Content Strategy
+- Heavy focus on beginner tutorials
+- Short-form blog posts (800-1200 words)
+- Weekly podcast about podcasting
+- Strong YouTube presence
+
+### Content Gaps
+- Limited advanced technical content
+- Sparse coverage of podcast monetization
+- Few case studies or success stories
+- No private podcasting content
+
+### Our Differentiation Opportunities
+- **Depth:** Create comprehensive 2500+ word guides
+- **Advanced topics:** Cover technical SEO, analytics, growth strategies
+- **Business focus:** More monetization and marketing content
+- **Private podcasting:** We're experts, they barely cover it
+```
+
+### writing-examples.md
+
+**Purpose:** Example articles demonstrating your ideal writing style
+
+**Used by:** `/write`, `/rewrite` commands, editor agent
+
+**Must include:**
+
+- **3-5 exemplary articles** (full content)
+- **What makes each example great** (specific elements)
+- **Key style takeaways** (patterns to emulate)
+- **Voice characteristics** (how brand voice shows through)
+
+**Example structure:**
+
+```markdown
+## Example 1: How to Monetize Your Podcast
+
+[Full article content]
+
+### What Makes This Great
+
+1. **Hook:** Opens with surprising statistic + real scenario
+2. **Structure:** Clear sections with actionable advice in each
+3. **Voice:** Expert but conversational, uses "you" throughout
+4. **Examples:** Every strategy includes real podcast example
+5. **Depth:** Doesn't just list methods, explains implementation
+6. **CTA:** Natural product mention solving specific problem
+
+### Key Takeaways
+
+- Open with data + story, not definition
+- Every section must be actionable
+- Use real names and specific numbers
+- Product mentions solve problems, not sell features
+```
+
+### cro-best-practices.md
+
+**Purpose:** Conversion optimization guidelines for landing pages
+
+**Used by:** `/landing-write`, `/landing-audit` commands, cro-analyst agent
+
+**Must include:**
+
+- **Above-the-fold requirements** (headline, value prop, CTA)
+- **CTA best practices** (placement, copy, design)
+- **Trust signal guidelines** (testimonials, social proof, guarantees)
+- **Page structure standards** (sections, flow, length)
+- **Copy frameworks** (AIDA, PAS, etc.)
+- **Mobile optimization** (responsive considerations)
+
+## How Context Files Are Used
+
+### In Commands
+
+Commands reference context files using `@context/filename.md` syntax:
+
+```markdown
+# Write Command
+
+## Process
+
+### Pre-Writing Review
+- **Brand Voice**: Check @context/brand-voice.md for tone
+- **Style Guide**: Follow @context/style-guide.md formatting
+- **SEO Guidelines**: Apply @context/seo-guidelines.md requirements
+- **Target Keywords**: Integrate from @context/target-keywords.md
+```
+
+When the command runs, it reads and incorporates these files.
+
+### In Agents
+
+Agents reference context files for evaluation criteria:
+
+```markdown
+# Internal Linker Agent
+
+## Process
+
+1. Read article content
+2. Review @context/internal-links-map.md
+3. Identify 3-5 relevant pages to link
+4. Provide exact placement and anchor text
+```
+
+### In Python Modules
+
+Some Python modules can access context files:
+
+```python
+# In keyword_analyzer.py
+def load_target_keywords():
+    """Load keywords from context/target-keywords.md."""
+    with open('context/target-keywords.md', 'r') as f:
+        # Parse and return keywords
+```
+
+## Setting Up Context Files
+
+### Initial Setup
+
+1. **Copy examples** - See `examples/castos/` for complete examples
+2. **Customize for your brand** - Replace with your information
+3. **Start with core files** - Focus on brand-voice, style-guide, seo-guidelines first
+4. **Add as you go** - Build out target-keywords, internal-links-map over time
+
+### Maintenance Schedule
+
+| Frequency | Tasks |
+|-----------|-------|
+| **Weekly** | Update target-keywords.md with new opportunities |
+| **Monthly** | Add new pages to internal-links-map.md |
+| **Monthly** | Update competitor-analysis.md with new insights |
+| **Quarterly** | Review and refresh all context files |
+| **As needed** | Update features.md when product changes |
+| **As needed** | Revise seo-guidelines.md for algorithm updates |
+
+## Best Practices
+
+### Be Specific
+
+<Check>**Do:** "Use contractions in all content except legal/technical docs"</Check>
+<Warning>**Don't:** "Write conversationally"</Warning>
+
+### Provide Examples
+
+<Check>**Do:** Show before/after examples of good vs. bad</Check>
+<Warning>**Don't:** Just list rules without demonstration</Warning>
+
+### Keep Current
+
+<Check>**Do:** Update context files as your brand evolves</Check>
+<Warning>**Don't:** Set and forget—outdated guidelines = inconsistent content</Warning>
+
+### Make Actionable
+
+<Check>**Do:** "Link to pricing page when discussing cost comparisons"</Check>
+<Warning>**Don't:** "Link to relevant pages"</Warning>
+
+## Common Issues
+
+### Issue: Content doesn't match brand voice
+
+**Cause:** Vague guidelines in brand-voice.md
+
+**Fix:** Add specific examples of good vs. bad, voice do's and don'ts
+
+### Issue: Keyword targeting inconsistent
+
+**Cause:** target-keywords.md not organized by priority/cluster
+
+**Fix:** Group keywords by topic cluster, add priority levels
+
+### Issue: Internal links aren't relevant
+
+**Cause:** internal-links-map.md lacks context on when to link
+
+**Fix:** Add "Link when" guidance and topic cluster mapping
+
+### Issue: Product mentions feel forced
+
+**Cause:** features.md focuses on features, not benefits/use cases
+
+**Fix:** Add use case examples and natural integration tips
+
+## Context File Templates
+
+SEO Machine includes template context files:
+
+**Location:** `~/workspace/source/context/`
+
+All files are provided as templates with placeholder content. **You must customize them** with your actual:
+
+- Brand voice and messaging
+- Product features and benefits
+- Target keywords and clusters
+- Internal pages and URLs
+- Competitor information
+- Style preferences
+
+**Quick start:** See `examples/castos/` for fully filled-out examples.
+
+<Info>
+Well-configured context files are the difference between generic AI content and on-brand, strategic content that serves your business goals.
+</Info>

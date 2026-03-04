@@ -1,0 +1,504 @@
+---
+title: Updating Existing Content
+description: Workflow for analyzing, rewriting, and refreshing existing blog posts to improve SEO performance and rankings
+---
+
+Updating existing content is often more effective than creating new content. The workflow involves analyzing current performance, identifying improvement opportunities, and rewriting with fresh data and optimization.
+
+## Overview
+
+The content update workflow has two main commands:
+
+1. **Analyze Existing** - Audit current content and identify opportunities
+2. **Rewrite** - Update and improve based on analysis findings
+
+<Tip>
+Focus on updating content that already has traffic but could rank higher. These "quick win" opportunities often provide the best ROI.
+</Tip>
+
+## When to Update Content
+
+Update existing content when:
+
+- Content is ranking on page 2-3 (positions 11-30)
+- Statistics or examples are outdated
+- Competitors have passed you in rankings
+- You've added new features or capabilities
+- Search intent has shifted
+- Content gaps exist compared to current top-ranking articles
+- Performance is declining over time
+
+## Step 1: Analyze Existing Content
+
+Start by analyzing your existing post to understand what needs improvement.
+
+### Command Usage
+
+```bash
+/analyze-existing [URL or file path]
+```
+
+### Examples
+
+```bash
+# Analyze a live URL
+/analyze-existing https://yoursite.com/blog/marketing-guide
+
+# Analyze a local file
+/analyze-existing published/marketing-guide-2024-01-15.md
+```
+
+### What It Does
+
+<Steps>
+  <Step title="Fetches Content">
+    Retrieves the article from the URL or reads the local file
+  </Step>
+  
+  <Step title="SEO Audit">
+    Analyzes current SEO optimization using 5 specialized modules:
+    - Search intent classification
+    - Keyword density & clustering analysis
+    - Content length comparison vs top 10-20 SERP competitors
+    - Readability scoring (Flesch scores, sentence structure)
+    - SEO quality rating (0-100 with category breakdowns)
+  </Step>
+  
+  <Step title="Competitive Context">
+    Compares your content against top-ranking competitors to identify gaps
+  </Step>
+  
+  <Step title="Identifies Issues">
+    Detects outdated statistics, missing keywords, weak structure, or competitive disadvantages
+  </Step>
+  
+  <Step title="Provides Recommendations">
+    Creates prioritized list of improvements with estimated impact
+  </Step>
+  
+  <Step title="Saves Analysis Report">
+    Outputs comprehensive report to `research/analysis-[post-slug]-[date].md`
+  </Step>
+</Steps>
+
+### Analysis Output
+
+The analysis report includes:
+
+#### Content Health Score (0-100)
+
+Enhanced scoring using 5 analysis modules:
+
+- **SEO Quality Rating**: Overall score with breakdowns for content, keywords, meta, structure, links, and readability
+- **Search Intent Alignment**: How well content matches search intent (informational/commercial/transactional/navigational)
+- **Keyword Optimization**: Density, distribution, clustering, and stuffing risk detection
+- **Content Length Competitiveness**: Word count position vs SERP competitors with optimal length recommendation
+- **Readability Score**: Flesch Reading Ease, Flesch-Kincaid Grade Level, passive voice ratio
+- **Relevance & Freshness**: Outdated content detection
+- **User Experience**: Flow, structure, actionability
+
+#### Quick Wins
+
+Top 3-5 immediate improvements (5-15 minutes each):
+
+- Update specific statistics or dates
+- Add missing keywords to headings with exact density recommendations
+- Optimize meta description
+- Add internal links to specific pages
+- Fix readability issues (sentence length, passive voice)
+
+#### Strategic Improvements
+
+Longer-term enhancements for maximum impact:
+
+- **Content Expansion**: Based on competitor length analysis (e.g., "Add 800 words to match top performers at 2,500 words")
+- **Intent Alignment**: Adjust content type to match search intent
+- **Topic Clustering**: Add missing semantic keywords and related topics
+- **New Sections**: Based on competitive gap analysis
+- **SEO Optimization Priorities**: From quality rating breakdown
+
+#### Detailed Analysis Reports
+
+- Search intent classification with confidence scores
+- Keyword density heatmap by section
+- Topic cluster visualization
+- Competitive length benchmarks (min, median, 75th percentile, optimal target)
+- Readability metrics with specific improvement suggestions
+- SEO quality breakdown by category (0-100 for each)
+
+#### Rewrite Recommendations
+
+- **Priority Level**: Low / Medium / High / Critical
+- **Estimated Effort**: Light edit / Moderate update / Major rewrite / Complete refresh
+- **Expected Impact**: Potential traffic increase, ranking improvement, engagement boost
+- **Specific Improvements**: Exact word count targets, keyword density adjustments, readability fixes
+
+<Info>
+The analysis automatically creates an initial research brief if a rewrite is recommended, including updated target keywords, competitor benchmarks, and optimal content length.
+</Info>
+
+### Example Analysis Output
+
+```markdown
+**Content Health Score**: 62/100
+
+**Quick Wins**:
+- Update 2022 statistics with 2025 data (3 instances found)
+- Add primary keyword "email marketing" to 2 more H2 headings
+- Expand meta description from 142 to 155-160 characters
+- Add internal link to /features/analytics in Performance section
+- Reduce passive voice from 18% to under 10%
+
+**Strategic Improvements**:
+- Expand content from 1,800 to 2,500 words (competitors average 2,600)
+- Add "Email Segmentation Best Practices" section (all top 5 competitors cover this)
+- Shift focus from informational to commercial intent (search intent changed)
+- Integrate 8 missing semantic keywords from topic cluster
+- Restructure introduction with stronger hook
+
+**Rewrite Priority**: High
+**Estimated Effort**: Major rewrite (60-70% changes)
+**Expected Impact**: +40% organic traffic based on competitive gap closure
+```
+
+## Step 2: Rewrite the Content
+
+Once you've reviewed the analysis, use the `/rewrite` command to update the content.
+
+### Command Usage
+
+```bash
+/rewrite [topic or analysis file]
+```
+
+### Example
+
+```bash
+/rewrite marketing guide
+```
+
+### What It Does
+
+<Steps>
+  <Step title="Reviews Analysis">
+    Reads the analysis report to understand improvement priorities
+  </Step>
+  
+  <Step title="Reads Original Content">
+    Loads the existing article to identify what to keep, update, or remove
+  </Step>
+  
+  <Step title="Determines Rewrite Scope">
+    Classifies the update level:
+    - Light Update (20-30% changes)
+    - Moderate Refresh (40-60% changes)
+    - Major Rewrite (70-90% changes)
+    - Complete Overhaul (90%+ changes)
+  </Step>
+  
+  <Step title="Applies Updates">
+    - **Keeps**: Effective sections that are still accurate
+    - **Updates**: Refreshes stats, examples, and references
+    - **Adds**: New sections to fill content gaps
+    - **Removes**: Outdated or redundant information
+    - **Optimizes**: Improves keyword integration and SEO
+  </Step>
+  
+  <Step title="Saves Updated Content">
+    Saves to `rewrites/[topic-slug]-rewrite-[date].md` with change summary
+  </Step>
+  
+  <Step title="Automatic Scrubbing">
+    Removes AI watermarks using `/scrub` command
+  </Step>
+  
+  <Step title="Triggers Optimization Agents">
+    Runs SEO Optimizer, Meta Creator, Internal Linker, and Keyword Mapper agents
+  </Step>
+</Steps>
+
+### Rewrite Strategy
+
+#### What to Keep
+
+- Sections that are still accurate and comprehensive
+- Unique insights or perspectives that remain valuable
+- Well-performing structure or formatting
+- Examples or case studies that are still relevant
+- Internal links that remain appropriate
+
+#### What to Update
+
+- Outdated statistics with current data (note date/source)
+- Old screenshots or examples with current versions
+- Deprecated terminology or processes
+- Missing keywords in headings and body
+- Weak or missing meta title/description
+- Insufficient internal links
+
+#### What to Add
+
+- New sections to fill competitive content gaps
+- Recent industry trends or developments
+- Additional examples or use cases
+- Better introduction hook if current one is weak
+- Stronger conclusion and CTA
+- Missing SEO elements (keywords, links, structure)
+
+#### What to Remove
+
+- Deprecated information that's no longer accurate
+- Redundant or repetitive sections
+- Overly promotional language (if inconsistent with current brand)
+- Outdated examples or references
+- Fluff or filler that doesn't add value
+
+### Change Summary
+
+Every rewrite includes a change summary with:
+
+```markdown
+---
+Original Publication Date: [if known]
+Rewrite Date: 2025-03-04
+Rewrite Scope: Major
+Word Count Change: 1,800 → 2,550 (+750 words)
+Primary Keyword: email marketing strategies
+SEO Score Improvement: 62 → 85 (estimated)
+
+Major Changes:
+- Added "Email Segmentation Best Practices" section (450 words)
+- Added "Automation Workflows" section (300 words)
+- Restructured introduction with scenario-based hook
+- Updated 12 statistics with 2025 data
+
+SEO Improvements:
+- Increased keyword density from 0.8% to 1.5%
+- Added keyword to 3 additional H2 headings
+- Added 4 new internal links to product pages
+- Optimized meta description (142 → 158 chars)
+
+Content Updates:
+- Refreshed 12 statistics with 2025 data
+- Updated 3 examples with current platform screenshots
+- Added AI-powered email marketing trends
+---
+```
+
+## Step 3: Optimize the Rewrite
+
+After rewriting, run a final optimization pass.
+
+### Command Usage
+
+```bash
+/optimize rewrites/marketing-guide-rewrite-2025-03-04.md
+```
+
+### What It Does
+
+Same as the optimize step in the [Creating Content workflow](/workflows/creating-content):
+
+- Comprehensive SEO audit
+- Advanced analysis with 5 Content Analyzer modules
+- Overall SEO score (0-100)
+- Priority fixes and quick wins
+- Publishing readiness assessment
+
+## Complete Workflow Example
+
+<Steps>
+  <Step title="Identify Content to Update">
+    Use `/performance-review` or `/priorities` to identify high-impact update opportunities
+  </Step>
+  
+  <Step title="Analyze Existing Content">
+    ```bash
+    /analyze-existing https://yoursite.com/blog/email-marketing-guide
+    ```
+    Review the analysis report in `research/analysis-email-marketing-guide-[date].md`
+  </Step>
+  
+  <Step title="Check Priority and Scope">
+    - **Priority**: High (content health score 62/100)
+    - **Scope**: Major rewrite (70% changes recommended)
+    - **Expected Impact**: +40% organic traffic
+  </Step>
+  
+  <Step title="Rewrite Content">
+    ```bash
+    /rewrite email marketing guide
+    ```
+    Article saved to `rewrites/email-marketing-guide-rewrite-[date].md`
+  </Step>
+  
+  <Step title="Review Changes">
+    Read the change summary and verify all improvements align with the analysis recommendations
+  </Step>
+  
+  <Step title="Review Agent Feedback">
+    Read agent reports and make any additional improvements
+  </Step>
+  
+  <Step title="Final Optimization">
+    ```bash
+    /optimize rewrites/email-marketing-guide-rewrite-[date].md
+    ```
+    Address any remaining priority fixes
+  </Step>
+  
+  <Step title="Publish">
+    Replace the original post on your site (note URL to ensure proper replacement/redirect)
+  </Step>
+</Steps>
+
+## Rewrite Scope Guidelines
+
+### Light Update (20-30% changes)
+
+**Best for**: Content with minor issues or recent posts that need a refresh
+
+**Typical changes**:
+- Update 3-5 statistics
+- Add 200-400 words
+- Optimize meta elements
+- Add 1-2 internal links
+- Fix keyword placement issues
+
+**Time**: 30-60 minutes
+
+### Moderate Refresh (40-60% changes)
+
+**Best for**: Content with good foundation but needs expansion and SEO improvements
+
+**Typical changes**:
+- Update 5-10 statistics
+- Add 500-800 words
+- Add 1-2 new sections
+- Restructure 2-3 existing sections
+- Refresh introduction and conclusion
+- Add 3-5 internal links
+
+**Time**: 1-2 hours
+
+### Major Rewrite (70-90% changes)
+
+**Best for**: Content with significant gaps, outdated information, or SEO issues
+
+**Typical changes**:
+- Update 10+ statistics
+- Add 800-1,500 words
+- Add 2-4 new sections
+- Restructure entire article
+- New introduction hook and conclusion
+- Comprehensive SEO optimization
+
+**Time**: 2-4 hours
+
+### Complete Overhaul (90%+ changes)
+
+**Best for**: Content that's fundamentally outdated or search intent has changed
+
+**Typical changes**:
+- Essentially a new article on the same topic
+- New outline and structure
+- Fresh angle or perspective
+- All new examples and data
+- Complete SEO rebuild
+
+**Time**: 3-5 hours (similar to writing new content)
+
+## Tips for Effective Rewrites
+
+### Before Rewriting
+
+- **Review Original Performance**: Check analytics to understand what worked and what didn't
+- **Study Competitors**: Look at what changed in top-ranking articles since your original publication
+- **Check for New Developments**: Research industry trends or changes that affect the topic
+- **Verify URL Strategy**: Decide if you'll keep the same URL (recommended for SEO) or redirect
+
+### During Rewriting
+
+- **Preserve What Works**: Don't throw away effective sections just to make changes
+- **Focus on Gaps**: Use competitive analysis to guide where you add content
+- **Update Everything**: When you reference dates, make sure "recent" actually means recent
+- **Maintain Voice**: Ensure updated sections match your current brand voice
+- **Track Changes**: Keep notes on major updates for your change summary
+
+### After Rewriting
+
+- **Compare Before/After**: Verify the rewrite is actually better than the original
+- **Check All Links**: Ensure internal and external links still work and are relevant
+- **Update Publish Date**: Indicate when the content was last updated
+- **Monitor Performance**: Track rankings and traffic after republishing
+- **Update Internal Links**: Make sure other articles linking to this content still make sense
+
+## Common Update Scenarios
+
+### Scenario 1: Quick Win Update
+
+**Situation**: Ranking position 11-15, content is 80% good
+
+**Strategy**: Light update (30 minutes)
+- Fix keyword placement issues
+- Add 2-3 internal links
+- Update meta description
+- Refresh 2-3 outdated stats
+
+**Expected Result**: Move to page 1 (positions 8-10)
+
+### Scenario 2: Declining Performance
+
+**Situation**: Previously ranked well, now dropping
+
+**Strategy**: Moderate refresh (1-2 hours)
+- Analyze what changed in SERP
+- Add missing sections competitors now cover
+- Update all statistics and examples
+- Improve SEO optimization
+
+**Expected Result**: Recover previous rankings or improve
+
+### Scenario 3: Competitive Gap
+
+**Situation**: Competitors have surpassed you with more comprehensive content
+
+**Strategy**: Major rewrite (3-4 hours)
+- Expand content to match or exceed competitor length
+- Add all sections competitors cover
+- Provide unique insights they don't have
+- Comprehensive SEO overhaul
+
+**Expected Result**: Competitive positioning restored, potential to outrank
+
+### Scenario 4: Search Intent Shift
+
+**Situation**: Search intent has changed from informational to commercial
+
+**Strategy**: Complete overhaul (4-5 hours)
+- Restructure content to match new intent
+- Change focus from education to conversion
+- Add product comparisons or buying guides
+- Update CTAs for commercial intent
+
+**Expected Result**: Align with current search intent, improve rankings
+
+## Measuring Rewrite Success
+
+Track these metrics after republishing:
+
+- **Rankings**: Monitor position changes for target keywords (2-4 weeks)
+- **Organic Traffic**: Compare traffic before/after rewrite (4-8 weeks)
+- **Engagement**: Check bounce rate, time on page, scroll depth
+- **Conversions**: Track goal completions or conversions from the page
+- **Impressions & CTR**: Monitor in Google Search Console
+
+<Tip>
+Set a calendar reminder to check performance 30 days after republishing. This gives search engines time to re-crawl and re-rank your content.
+</Tip>
+
+## Next Steps
+
+- Learn about [Creating Content](/workflows/creating-content) from scratch
+- Explore [Landing Pages](/workflows/landing-pages) for conversion-focused updates
+- Understand [Publishing](/workflows/publishing) to WordPress

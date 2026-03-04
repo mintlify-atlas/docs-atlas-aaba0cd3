@@ -1,0 +1,857 @@
+---
+title: Best Practices
+description: Best practices for creating high-quality SEO content with SEO Machine
+---
+
+Best practices for maximizing content quality and SEO performance with SEO Machine.
+
+## Before Writing
+
+### 1. Research First
+
+**Always run `/research` before `/write`**
+
+Why:
+- Understand what Google wants
+- Identify content gaps vs competitors
+- Determine optimal word count
+- Find related keywords to target
+- Create comprehensive outline
+
+Example workflow:
+```
+/research content marketing strategies
+# Review research/brief-content-marketing-strategies-YYYY-MM-DD.md
+/write content marketing strategies
+```
+
+### 2. Review Context Files
+
+Before writing, read relevant context:
+
+- **`brand-voice.md`**: Voice pillars, tone guidelines
+- **`writing-examples.md`**: Examples of your best work
+- **`target-keywords.md`**: Keyword clusters and priorities
+- **`internal-links-map.md`**: Pages to link to
+
+**Tip**: Keep context files open while writing
+
+### 3. Check Keyword Strategy
+
+Verify in `target-keywords.md`:
+- Primary keyword identified
+- Search intent clear
+- Related LSI keywords listed
+- Topic cluster mapped
+
+**Questions to answer**:
+- What is user's search intent?
+- What questions are they asking?
+- What problem are they solving?
+- Where do they go next?
+
+### 4. Plan Internal Links
+
+Review `internal-links-map.md`:
+- Identify 3-5 relevant pages
+- Note natural places to link
+- Plan anchor text
+- Map user journey
+
+**Rule**: Know where you'll link before you write
+
+## During Writing
+
+### 1. Follow the Research Brief
+
+Use the research brief as your outline:
+- Follow recommended structure
+- Hit target word count
+- Cover all identified gaps
+- Answer "People Also Ask" questions
+- Target SERP features
+
+**Don't deviate** without good reason
+
+### 2. Integrate Keywords Naturally
+
+**Primary keyword**:
+- In H1 (naturally, not forced)
+- In first 100 words
+- In 2-3 H2 headings
+- In meta title and description
+- Throughout body (1-2% density)
+
+**LSI keywords**:
+- Sprinkle 5-10 related terms
+- Use semantic variations
+- Don't force them
+
+**Test**: Read aloud. If keywords sound unnatural, rewrite.
+
+### 3. Add Value Beyond Competitors
+
+Every section should provide:
+- Actionable advice (not just information)
+- Specific examples (not generic statements)
+- Real data and statistics
+- Unique insights from your experience
+- Visual elements (images, tables, lists)
+
+**Ask**: "Would I share this with a colleague?" If no, improve it.
+
+### 4. Use Examples Liberally
+
+Types of examples:
+- Real brand names and companies
+- Specific numbers and data
+- Case studies and success stories
+- Screenshots and visuals
+- Step-by-step walkthroughs
+
+**Bad**: "Many companies have success with content marketing."
+
+**Good**: "HubSpot increased organic traffic by 240% in 12 months using a topic cluster strategy, creating 47 blog posts around 3 pillar pages."
+
+### 5. Cite All Sources
+
+For every statistic:
+- Link to original source
+- Use credible sources (.gov, .edu, industry leaders)
+- Include year of data
+- Verify accuracy
+
+**Format**: "According to [HubSpot's 2026 State of Marketing Report](link), 73% of marketers..."
+
+## After Writing
+
+### 1. Review Agent Output
+
+After `/write`, review all agent reports:
+
+**SEO Optimizer**:
+- Check SEO score (target 80+)
+- Address CRITICAL issues first
+- Review keyword placement
+- Fix structural issues
+
+**Meta Creator**:
+- Choose best meta title/description
+- Verify character counts
+- Test for clarity and CTR appeal
+
+**Internal Linker**:
+- Review 3-5 link suggestions
+- Verify relevance
+- Check anchor text
+- Ensure natural placement
+
+**Keyword Mapper**:
+- Check density (should be 1-2%)
+- Review distribution map
+- Identify gaps
+- Fix keyword stuffing
+
+**Priority order**: CRITICAL → HIGH → MEDIUM → LOW
+
+### 2. Make Improvements
+
+Don't skip this step!
+
+**Address high-priority issues** before optimizing:
+- Missing meta elements
+- Keyword density problems
+- Heading structure issues
+- Missing internal links
+- Readability problems
+
+**Workflow**:
+1. Read all agent reports
+2. Make a list of improvements
+3. Edit article
+4. Re-run `/optimize` to verify
+
+### 3. Run `/optimize`
+
+Final polish pass:
+
+```
+/optimize drafts/your-article-YYYY-MM-DD.md
+```
+
+Reviews:
+- Complete SEO audit
+- All elements validated
+- Final recommendations
+- Publishing readiness score
+
+**Requirements before publishing**:
+- Content score: 80+
+- SEO score: 80+
+- All CRITICAL issues: 0
+- All HIGH issues: addressed
+
+### 4. Self-Edit
+
+**Read as the target reader**:
+- Is it clear and easy to follow?
+- Does it answer their question completely?
+- Would you keep reading?
+- Is there fluff you can cut?
+- Are examples specific and helpful?
+
+**Read aloud**:
+- Does it sound natural?
+- Are sentences too long?
+- Does it flow well?
+- Any awkward phrasing?
+
+**Check scannability**:
+- Can you understand it by reading headings only?
+- Are paragraphs short (2-4 sentences)?
+- Enough lists and formatting?
+- Clear visual hierarchy?
+
+### 5. Verify Quality Checklist
+
+Use the pre-publishing checklist:
+
+**Content** (5/5):
+- [ ] 2,000+ words
+- [ ] Unique value
+- [ ] Accurate and current
+- [ ] Actionable advice
+- [ ] Brand voice maintained
+
+**SEO** (8/8):
+- [ ] Keyword density 1-2%
+- [ ] Keyword placement correct
+- [ ] 3-5 internal links
+- [ ] 2-3 external links
+- [ ] Meta title 50-60 chars
+- [ ] Meta description 150-160 chars
+- [ ] Heading hierarchy correct
+- [ ] URL slug optimized
+
+**Readability** (5/5):
+- [ ] 8th-10th grade level
+- [ ] Sentences 15-20 words average
+- [ ] Paragraphs 2-4 sentences
+- [ ] Subheadings every 300-400 words
+- [ ] Lists for scannability
+
+**Structure** (4/4):
+- [ ] Compelling introduction
+- [ ] Logical flow
+- [ ] Clear conclusion with CTA
+- [ ] Examples throughout
+
+**If any unchecked**: Fix before publishing
+
+## Workflow Optimization
+
+### For Rewrites
+
+#### 1. Analyze First
+
+**Run `/analyze-existing` to understand scope**:
+
+```
+/analyze-existing https://yoursite.com/blog/marketing-guide
+```
+
+Reviews:
+- Content health score (0-100)
+- What's outdated
+- What's missing vs competitors
+- Update priority and scope
+- Quick wins vs major rewrite
+
+#### 2. Determine Strategy
+
+Based on health score:
+
+**90-100**: Light touch
+- Update statistics (current year)
+- Refresh 1-2 examples
+- Minor SEO improvements
+- Est. time: 30 mins
+
+**70-89**: Moderate update
+- Update all statistics
+- Add 300-500 words
+- Refresh 3-5 examples
+- Improve SEO
+- Est. time: 2 hours
+
+**50-69**: Significant rewrite
+- Rewrite introduction and conclusion
+- Add 500-1000 words
+- Update structure
+- Add new sections
+- Full SEO optimization
+- Est. time: 4 hours
+
+**less than 50**: Complete rewrite
+- Start from scratch
+- Use `/research` for new brief
+- Create new outline
+- Treat as new content
+- Est. time: 6+ hours
+
+#### 3. Preserve What Works
+
+Don't throw away the good parts:
+- Keep sections that rank well
+- Maintain successful structure
+- Preserve strong examples
+- Keep effective formatting
+
+**Update**:
+- Statistics and dates
+- Screenshots and images
+- Examples and case studies
+- Current year in title
+- Links (internal and external)
+
+#### 4. Focus on Gaps
+
+From analysis, address:
+- Content gaps vs competitors
+- Missing "People Also Ask" answers
+- Outdated information
+- Weak sections
+- SEO issues
+
+**Add**:
+- New sections competitors have
+- Updated data and research
+- Better examples
+- Visual content
+- Improved formatting
+
+#### 5. Update Everything
+
+**Checklist**:
+- [ ] Current year in title and meta
+- [ ] All statistics updated
+- [ ] All examples refreshed
+- [ ] All links checked (no 404s)
+- [ ] All images updated
+- [ ] Meta title/description optimized
+- [ ] Internal links current
+- [ ] Heading structure improved
+
+## Maximizing Content Quality
+
+### Study Examples
+
+**Before each writing session**:
+1. Read 2-3 articles from `writing-examples.md`
+2. Note what makes them effective
+3. Identify patterns in voice and structure
+4. Emulate style (not content)
+
+**Create your own reference**:
+- Bookmark your best-performing articles
+- Note what made them successful
+- Use as templates for structure
+- Reference for voice consistency
+
+### Use Data Heavily
+
+**Replace generic statements with specific data**:
+
+❌ Bad:
+- "Many people use social media"
+- "Content marketing is effective"
+- "SEO takes time"
+
+✅ Good:
+- "4.9 billion people use social media globally (Datareportal, 2026)"
+- "Content marketing generates 3x more leads than traditional marketing at 62% lower cost (Demand Metric, 2026)"
+- "New content takes 3-6 months to reach peak rankings (Ahrefs Study, 2026)"
+
+**Sources for data**:
+- Industry reports (HubSpot, Gartner, Forrester)
+- Research studies
+- Government data (.gov)
+- Academic research (.edu)
+- Your own analytics
+
+### Be Specific
+
+**Use concrete details**:
+
+❌ Generic:
+- "Significant improvement"
+- "Most experts agree"
+- "Best practices suggest"
+
+✅ Specific:
+- "40% increase in organic traffic"
+- "87% of marketers surveyed by Content Marketing Institute"
+- "Google's Search Quality Guidelines recommend"
+
+**Ask**: Can I be more precise?
+
+### Show, Don't Tell
+
+**Use examples and stories**:
+
+❌ Tell:
+"Email marketing is cost-effective for small businesses."
+
+✅ Show:
+"Sarah's yoga studio increased class bookings by 35% using a weekly email newsletter. Her monthly email costs: $29. Her monthly new revenue from emails: $1,200+. That's a 4,000% ROI."
+
+**Elements of good examples**:
+- Real name/company (or detailed scenario)
+- Specific numbers
+- Clear outcome
+- Relatable context
+
+### Answer Questions
+
+**Address "People Also Ask"**:
+- Check research brief for PAA questions
+- Create FAQ section
+- Answer concisely (2-3 sentences each)
+- Use FAQ schema markup
+
+**Anticipate follow-up questions**:
+- "How long does this take?"
+- "How much does it cost?"
+- "What if I don't have X?"
+- "Can I do this without Y?"
+
+## SEO Optimization Tips
+
+### Keywords Early
+
+**Get primary keyword in first 100 words**:
+
+✅ Good:
+"Content marketing strategies have evolved dramatically in 2026. If you're looking to improve your content marketing, this guide covers 15 proven strategies that..."
+
+❌ Bad:
+"Marketing has changed a lot recently. Digital approaches are now more important than ever. In this guide, we'll cover some strategies including content marketing that..."
+
+**Also early**:
+- H1 title (required)
+- First H2 heading
+- Meta title and description
+
+### Natural Integration
+
+**Read content aloud**:
+- Do keywords sound natural?
+- Would you speak this way?
+- Any awkward repetition?
+
+**If keywords feel forced**:
+- Use synonyms
+- Rephrase sentences
+- Use pronouns (it, this, that)
+- Focus on semantic variations
+
+**Example**:
+
+❌ Forced:
+"Content marketing strategies are important. Many content marketing strategies can help. Using content marketing strategies properly..."
+
+✅ Natural:
+"Content marketing strategies are essential for growth. These approaches can significantly impact your results. When implemented properly, they..."
+
+### Vary Anchor Text
+
+**For internal links**:
+
+❌ Bad:
+```markdown
+Learn more about [content marketing].
+Read our [content marketing] guide.
+Check out [content marketing] tips.
+```
+
+✅ Good:
+```markdown
+Learn more about [creating a content strategy].
+Read our [complete guide to content marketing].
+Check out these [proven content distribution tactics].
+```
+
+**Mix types**:
+- Exact match: "content marketing guide"
+- Partial match: "guide to content marketing"
+- Branded: "HubSpot's content marketing tool"
+- Generic: "learn more about content strategy"
+- Naked URL: https://yoursite.com/content-marketing
+
+### Link Strategically
+
+**Internal linking strategy**:
+
+1. **Link to pillar content** from cluster articles
+2. **Link between cluster articles** when relevant
+3. **Link from high-authority pages** to new content
+4. **Link early** (first 300 words)
+5. **Link contextually** (within content, not just end)
+
+**Types of internal links**:
+- Navigational: Related content, next steps
+- Definitional: "Learn what content marketing is"
+- Supporting: Data, research, case studies
+- Conversion: Product pages, pricing, demos
+
+### Update Regularly
+
+**Refresh schedule**:
+
+**Every 6 months**: Top 10 performing articles
+- Update statistics
+- Refresh examples
+- Check links
+- Update year in title
+
+**Every 12 months**: All content
+- Comprehensive review
+- Rewrite if needed
+- Add new sections
+- Full SEO audit
+
+**When rankings drop**: Immediately
+- Analyze what changed
+- Update to match search intent
+- Improve to beat competitors
+- Add fresh content
+
+**Indicators to update**:
+- Rankings dropped >5 positions
+- Traffic down >20%
+- Statistics >1 year old
+- Examples outdated
+- Competitor content better
+
+## Avoiding Common Mistakes
+
+### Don't Skip Research
+
+❌ Mistake: Writing without research
+
+**Consequences**:
+- Wrong search intent
+- Miss content gaps
+- Incorrect word count
+- Poor structure
+- Low rankings
+
+✅ Solution: Always `/research` first
+
+### Don't Ignore Brand Voice
+
+❌ Mistake: Generic, robotic content
+
+**Consequences**:
+- Doesn't sound like your brand
+- Lacks personality
+- Low engagement
+- Poor conversion
+
+✅ Solution:
+- Study `brand-voice.md`
+- Read `writing-examples.md`
+- Use `/scrub` to remove AI patterns
+- Add human touches
+
+### Don't Force Keywords
+
+❌ Mistake: Keyword stuffing
+
+**Consequences**:
+- Penalty from Google
+- Unreadable content
+- Low user engagement
+- Poor rankings
+
+✅ Solution:
+- Target 1-2% density
+- Read aloud to check naturalness
+- Use synonyms and variations
+- Focus on semantic relevance
+
+### Don't Forget Internal Links
+
+❌ Mistake: No or few internal links
+
+**Consequences**:
+- Poor site architecture
+- Missed SEO value
+- Low page depth
+- Poor user journey
+
+✅ Solution:
+- 3-5 internal links minimum
+- Use `internal-links-map.md`
+- Link early and contextually
+- Descriptive anchor text
+
+### Don't Copy Competitors
+
+❌ Mistake: Replicating competitor content
+
+**Consequences**:
+- Duplicate content issues
+- No differentiation
+- Low rankings
+- No unique value
+
+✅ Solution:
+- Study competitors for gaps
+- Provide unique insights
+- Add original data/examples
+- Better formatting/visuals
+- Superior depth
+
+### Don't Publish Without Optimization
+
+❌ Mistake: Skipping `/optimize` step
+
+**Consequences**:
+- Missed SEO issues
+- Preventable ranking problems
+- Lower quality score
+- More revisions later
+
+✅ Solution:
+- Always run `/optimize`
+- Address CRITICAL/HIGH issues
+- Verify score >80
+- Complete pre-publishing checklist
+
+### Don't Ignore Analytics
+
+❌ Mistake: Never checking performance
+
+**Consequences**:
+- Don't know what works
+- Can't improve strategy
+- Miss opportunities
+- Waste effort on wrong content
+
+✅ Solution:
+- Run `/performance-review` monthly
+- Track rankings in GSC
+- Monitor traffic in GA4
+- Use research scripts regularly
+
+## Advanced Techniques
+
+### Topic Cluster Strategy
+
+**Build topical authority**:
+
+1. **Identify weak clusters**: Run `research_topic_clusters.py`
+2. **Create pillar page**: 3,000+ word comprehensive guide
+3. **Create cluster content**: 8-12 supporting articles
+4. **Internal link strategy**:
+   - All cluster articles link to pillar
+   - Pillar links to all cluster articles
+   - Cluster articles link to each other
+5. **Monitor authority**: Track average position for cluster
+
+**Result**: Dominate a topic, rank for 50+ related keywords
+
+### Content Refresh Strategy
+
+**Systematic approach**:
+
+1. **Identify candidates**: Run `research_performance_matrix.py`
+2. **Prioritize**:
+   - Stars declining: CRITICAL
+   - Underperformers: HIGH
+   - Declining content: MEDIUM
+3. **Batch updates**: 
+   - Week 1: Underperformer titles/meta
+   - Week 2-3: Declining content refresh
+   - Week 4+: Star expansion
+4. **Track impact**: Monitor ranking/traffic changes
+
+**Expected results**: 20-40% traffic increase in 3 months
+
+### Competitive Differentiation
+
+**Stand out from competitors**:
+
+1. **Better data**: Include proprietary research
+2. **Better examples**: Real customer success stories
+3. **Better visuals**: Custom graphics and diagrams
+4. **Better depth**: More comprehensive coverage
+5. **Better tools**: Include templates, calculators, checklists
+6. **Better writing**: More engaging and readable
+
+**Test**: Compare side-by-side with top 3 competitors. Are you clearly better?
+
+### Conversion Optimization
+
+**For high-intent content**:
+
+1. **Strong introduction**: Hook → Problem → Promise (first 100 words)
+2. **Value demonstration**: Prove expertise with examples
+3. **Strategic CTAs**:
+   - Soft CTA: Mid-article (subscribe, download)
+   - Hard CTA: End (demo, trial, pricing)
+4. **Trust signals**:
+   - Customer logos
+   - Statistics
+   - Case studies
+   - Testimonials
+5. **Clear next step**: Don't leave readers wondering
+
+**Measure**: Track conversions, not just rankings
+
+## Maintenance & Iteration
+
+### Weekly
+
+- [ ] Add new topic ideas to `topics/`
+- [ ] Review `drafts/` for stalled articles
+- [ ] Run `research_trending.py` for hot topics
+- [ ] Check GSC for ranking changes
+- [ ] Update `target-keywords.md` with new opportunities
+
+### Monthly
+
+- [ ] Run `/performance-review` or `research_performance_matrix.py`
+- [ ] Update top 10 performing articles
+- [ ] Check for broken links
+- [ ] Add new published content to `internal-links-map.md`
+- [ ] Review and update `writing-examples.md` if better examples emerge
+- [ ] Track competitor activity
+
+### Quarterly
+
+- [ ] Full audit of all context files
+- [ ] Update SEO guidelines based on algorithm changes
+- [ ] Comprehensive competitor analysis refresh
+- [ ] Review and update topic clusters
+- [ ] Strategic planning for next quarter
+- [ ] Analyze what worked, what didn't
+
+### Annually
+
+- [ ] Complete content audit (all pages)
+- [ ] Refresh brand voice if needed
+- [ ] Update style guide
+- [ ] Review and revise keyword strategy
+- [ ] Comprehensive competitive analysis
+- [ ] Set goals for next year
+
+## Success Metrics
+
+### Track These Metrics
+
+**Rankings** (Google Search Console):
+- Average position for target keywords
+- Keywords on page 1
+- Keywords on page 2 (quick wins)
+- Position changes month-over-month
+
+**Traffic** (Google Analytics):
+- Organic sessions
+- Pages per session
+- Average time on page
+- Bounce rate
+- Conversion rate
+
+**Engagement**:
+- Comments
+- Social shares
+- Backlinks acquired
+- Email signups
+- Download/template requests
+
+**Content Quality**:
+- Content scores (from analyzer)
+- SEO scores
+- Publishing frequency
+- Time to publish
+
+### Set Goals
+
+**Example goals**:
+
+**90 days**:
+- Move 10 quick wins to page 1
+- Increase organic traffic 25%
+- Publish 12 optimized articles
+- Build 1 topic cluster (10 articles)
+
+**6 months**:
+- 40% of target keywords on page 1
+- 50% increase in organic traffic
+- Publish 24 articles
+- Build 3 topic clusters
+- Reduce bounce rate 15%
+
+**12 months**:
+- 60% of target keywords on page 1
+- Double organic traffic
+- Publish 48 articles
+- Build 6 topic clusters
+- Achieve #1 ranking for 10 target keywords
+
+### Measure ROI
+
+**Content investment**:
+- Time spent writing
+- Tool costs (APIs, software)
+- Resources used
+
+**Content return**:
+- Organic traffic value
+- Leads generated
+- Customers acquired
+- Brand awareness lift
+
+**Calculate**:
+```
+ROI = (Revenue from Organic Traffic - Content Investment) / Content Investment × 100%
+```
+
+## Quick Reference
+
+**Before writing**:
+1. ✅ `/research [topic]`
+2. ✅ Review context files
+3. ✅ Check keyword strategy
+4. ✅ Plan internal links
+
+**During writing**:
+1. ✅ Follow research brief
+2. ✅ Integrate keywords naturally
+3. ✅ Add specific examples
+4. ✅ Cite all sources
+5. ✅ Provide unique value
+
+**After writing**:
+1. ✅ Review agent reports
+2. ✅ Address CRITICAL/HIGH issues
+3. ✅ Run `/optimize`
+4. ✅ Self-edit (read aloud)
+5. ✅ Verify quality checklist
+
+**Publishing requirements**:
+- ✅ Content score: 80+
+- ✅ SEO score: 80+
+- ✅ All CRITICAL issues: 0
+- ✅ Checklist: 100% complete
+
+**Post-publishing**:
+1. ✅ Submit to GSC
+2. ✅ Share on social
+3. ✅ Track rankings weekly
+4. ✅ Update quarterly
+5. ✅ Measure ROI
+
+Follow these practices consistently for best results! 🚀

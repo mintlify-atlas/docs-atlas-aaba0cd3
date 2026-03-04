@@ -1,0 +1,382 @@
+---
+title: "Keyword Mapper"
+description: "Analyze keyword distribution, calculate density, identify gaps, and get specific placement recommendations with heat maps"
+---
+
+The Keyword Mapper agent maps where keywords appear throughout an article, evaluates integration quality, and provides specific recommendations for optimal keyword placement without sacrificing readability.
+
+## What It Analyzes
+
+The Keyword Mapper examines:
+- **Primary keyword density** (target: 1-2%)
+- **Keyword distribution** across all sections
+- **Critical placement** in H1, first 100 words, H2s, conclusion
+- **Semantic variations** and LSI keywords
+- **Keyword stuffing risk** detection
+- **Cannibalization** with other content
+
+## Analysis Framework
+
+### 1. Keyword Identification
+
+**Primary Keyword**:
+- Identifies main target keyword (usually in title/H1)
+- Notes exact phrase and common variations
+- Confirms search intent
+- Verifies presence in meta title and description
+
+**Secondary Keywords**:
+- Identifies 3-5 related keywords or variations
+- Maps long-tail variations (3-5 word phrases)
+- Documents semantic relationships to primary keyword
+
+**LSI Keywords**:
+- Identifies topically related terms
+- Common terms in top-ranking content
+- Natural language variations searchers use
+
+### 2. Critical Placement Checklist
+
+Maps primary keyword presence in:
+
+```
+✓/✗ H1 Headline (Required)
+✓/✗ First 100 Words (Required - high SEO value)
+✓/✗ First H2 (Recommended)
+X/7 H2 Headings (Target: 2-3 out of 4-7 total)
+X   H3 Subheadings (Natural variations)
+✓/✗ Last Paragraph (Reinforces relevance)
+✓/✗ Meta Title (Required)
+✓/✗ Meta Description (Required)
+✓/✗ URL Slug (Required)
+X   Image Alt Text (If applicable)
+```
+
+### 3. Density Analysis
+
+**Primary Keyword Density**:
+```
+Total instances: 23
+Total word count: 2,100
+Density: (23 / 2,100) × 100 = 1.1%
+Target: 1-2%
+Status: ✓ Optimal
+```
+
+**Secondary Keywords**:
+Target: 0.5-1% density each
+
+**LSI Coverage**:
+Number of related terms found and integrated naturally
+
+### 4. Distribution Pattern
+
+Maps keyword appearances by section:
+
+```
+Introduction (0-200 words):     ████░░░░░░ 3 instances (Good)
+Section 1 (200-600 words):      ██░░░░░░░░ 1 instance  (Low)
+Section 2 (600-1000 words):     ████░░░░░░ 2 instances (Good)
+Section 3 (1000-1500 words):    ░░░░░░░░░░ 0 instances (Missing!)
+Section 4 (1500-2000 words):    ████░░░░░░ 2 instances (Good)
+Conclusion (2400-2600 words):   ████░░░░░░ 2 instances (Good)
+
+Total: 11 instances across 2,600 words = 0.42% density (TOO LOW)
+```
+
+**Ideal**: Relatively even distribution with slight concentration in intro/conclusion
+
+## Integration Quality Assessment
+
+### Natural Language Evaluation
+
+For each keyword instance:
+- **Natural Flow**: Reads naturally or feels forced?
+- **Context**: Used in meaningful context?
+- **Variation**: Different forms used (singular/plural)?
+- **Sentence Quality**: Makes sense without keyword?
+
+### Red Flags
+
+- ❌ Awkward phrasing to force keyword in
+- ❌ Repetitive usage in same paragraph
+- ❌ Keyword stuffing (unnatural density)
+- ❌ Exact match overuse (no variations)
+- ❌ Keyword in every heading
+- ❌ Interrupts readability
+
+### Green Flags
+
+- ✅ Natural conversational tone
+- ✅ Varied phrasing and word forms
+- ✅ Contextually relevant placement
+- ✅ Enhances readability
+- ✅ Matches how people talk about topic
+
+## Output Format
+
+```markdown
+### Keyword Profile
+
+Primary Keyword: "grow podcast audience"
+- Search Volume: 2,900/month
+- Search Intent: Informational
+- Current Density: 0.42%
+- Target Density: 1-2%
+- Status: ⚠ Too Low (need +28 instances)
+
+Secondary Keywords: podcast growth, audience building, listener growth
+- Current Coverage: 2/3 well-integrated
+
+LSI Keywords Found: podcast downloads, listener engagement,
+audience retention, content strategy, podcast marketing
+
+### Keyword Placement Map
+
+#### Critical Elements Status
+```
+✓ H1 Headline: "How to Grow Your Podcast Audience in 2025"
+✓ First 100 Words: Appears at word 47
+✓ Meta Title: "How to Grow Your Podcast Audience | 12 Proven Strategies"
+✓ Meta Description: Present
+✗ URL Slug: Missing (current: /blog/audience-growth-tips)
+```
+
+#### Heading Analysis
+```
+H1: ✓ "How to Grow Your Podcast Audience in 2025"
+H2 (Section 1): ✗ "Understanding Your Listeners"
+H2 (Section 2): ✓ "Content Strategies to Grow Podcast Audience"
+H2 (Section 3): ✗ "Promotion and Distribution Tactics"
+H2 (Section 4): ✓ "Engaging Your Podcast Audience"
+H2 (Section 5): ✗ "Measuring Growth and Success"
+
+Status: 2/5 H2s contain keyword (Target: 3/5)
+Recommendation: Add keyword to Section 1 heading
+```
+
+#### Distribution Heat Map
+```
+Introduction (0-200):        ████░░░░░░ 3 instances (Good)
+Section 1 (200-600):         ██░░░░░░░░ 1 instance  (Low)
+Section 2 (600-1000):        ████░░░░░░ 2 instances (Good)
+Section 3 (1000-1500):       ░░░░░░░░░░ 0 instances (Missing!)
+Section 4 (1500-2000):       ████░░░░░░ 2 instances (Good)
+Section 5 (2000-2400):       ██░░░░░░░░ 1 instance  (Low)
+Conclusion (2400-2600):      ████░░░░░░ 2 instances (Good)
+
+Total: 11 instances / 2,600 words = 0.42% (NEED: 1.5% = 39 instances)
+```
+
+### Priority Recommendations
+
+#### Critical Fixes (Must Address)
+
+1. **Increase Overall Density to 1-2%**
+   - Current: 0.42% (11 instances)
+   - Target: 1.5% (39 instances)
+   - Need: +28 instances across 2,600 words
+   - Priority: CRITICAL
+
+2. **Add to Section 3 (Currently Zero)**
+   - Location: "Promotion and Distribution Tactics" section
+   - After paragraph: Social media discussion
+   - Suggested revision: "Effective social media promotion is
+     key to growing your podcast audience beyond your current
+     listener base."
+   - Added: 1 instance, natural integration
+   - Priority: HIGH
+
+3. **Update H2 to Include Keyword**
+   - Current: "Understanding Your Listeners"
+   - Revised: "Understanding Your Podcast Audience"
+   - Benefit: Adds keyword to heading, maintains readability
+   - Priority: HIGH
+
+#### Quick Wins (High Impact, Low Effort)
+
+1. **Update URL Slug**
+   - Current: /blog/audience-growth-tips
+   - Recommended: /blog/grow-podcast-audience
+   - Impact: Keyword in URL structure
+   - Time: 2 minutes
+
+2. **First 100 Words Enhancement**
+   - Current: Keyword appears once at word 47
+   - Add variation: "podcast audience growth" in paragraph 2
+   - Location: After hook sentence
+   - Time: 3 minutes
+
+3. **Section 1 Addition**
+   - Current: Only 1 instance in 400 words
+   - Add after: Listener persona discussion
+   - Revision: "Understanding your target podcast audience
+     helps you create content that resonates and drives growth."
+   - Added: 1 instance
+   - Time: 2 minutes
+
+#### Strategic Enhancements
+
+1. **LSI Keyword Integration**
+   - Add "listener growth" (appears in top 5 SERP results)
+   - Add "podcast downloads" (related success metric)
+   - Add "audience engagement" (quality over quantity)
+   - Locations: Sections 2, 4, and 5
+
+2. **Semantic Variations**
+   - Use "growing your audience" more frequently
+   - Include "podcast listeners" as variation
+   - Add "expand your reach" as natural alternative
+
+3. **Natural Language Optimization**
+   - Replace exact matches with conversational variations
+   - Use question format: "How do you grow your podcast audience?"
+   - Include common search variations in subheadings
+
+### Specific Text Revisions
+
+#### Revision 1: Section 3 Addition
+Location: After paragraph on social media promotion
+
+Current Text:
+"Share episode snippets on social media platforms where your
+target audience spends time."
+
+Revised Text:
+"Share episode snippets on social media platforms where your
+target podcast audience spends time. Consistent promotion helps
+grow your podcast audience organically."
+
+Added: 2 keyword instances, both natural
+Density Impact: +0.08%
+
+#### Revision 2: H2 Heading Update
+Location: Section 1 heading
+
+Current: "Understanding Your Listeners"
+Revised: "Understanding Your Podcast Audience"
+
+Benefit: Adds keyword to heading, maintains readability
+Density Impact: +0.04%
+
+#### Revision 3: Conclusion Enhancement
+Location: Conclusion paragraph 2
+
+Current:
+"Implementing these strategies will help you build a loyal
+listener base."
+
+Revised:
+"Implementing these strategies will help you grow your podcast
+audience and build a loyal listener base that keeps coming back."
+
+Added: 1 keyword instance, enhances conclusion
+Density Impact: +0.04%
+
+[5-7 more specific revisions to reach target density...]
+
+### Keyword Density Projection
+
+If all recommendations implemented:
+- Current Density: 0.42% (11 instances)
+- Projected Density: 1.5% (39 instances)
+- Added Instances: +28
+- Status: ✓ Within optimal 1-2% range
+- Time to Implement: ~45 minutes
+
+### Integration Quality Score: 72/100
+
+- Natural Language Flow: 20/25 (good, few forced instances)
+- Even Distribution: 15/25 (section 3 gap, uneven spread)
+- Variation Usage: 18/25 (decent variations, could add more)
+- Readability Maintained: 19/25 (no stuffing, flows well)
+
+### Cannibalization Check
+
+Related Castos Content:
+- "Podcast Growth Strategies for 2025": Targets "podcast growth
+  strategies" (different enough - broader strategies vs audience-specific)
+- "How to Increase Podcast Downloads": Targets "increase podcast
+  downloads" (overlapping - monitor both, may need differentiation)
+
+Recommendation: ✓ No significant cannibalization risk
+Note: Monitor "downloads" article - ensure clear differentiation
+between audience growth (broad) vs downloads (specific metric)
+
+### Final Checklist
+- [x] Primary keyword in H1
+- [x] Primary keyword in first 100 words
+- [ ] Primary keyword in 2-3 H2 headings (currently 2/5)
+- [ ] Keyword density 1-2% (currently 0.42%)
+- [x] Even distribution across article (section 3 gap)
+- [x] Natural variations used
+- [x] LSI keywords present
+- [x] No keyword stuffing
+- [x] Meta elements optimized
+- [ ] URL slug includes keyword
+- [x] Readability maintained
+```
+
+## When It Runs
+
+The Keyword Mapper runs automatically after:
+- `/write [topic]` - Maps keywords in generated articles
+- `/optimize [file]` - Reviews and improves keyword distribution
+
+You can also invoke manually:
+```
+Use the @keyword-mapper agent to analyze keyword distribution
+```
+
+## Integration with Other Agents
+
+The Keyword Mapper works with:
+- **SEO Optimizer** - Provides keyword data for optimization
+- **Content Analyzer** - Uses density analysis from keyword module
+- **Editor** - Ensures keyword additions maintain natural voice
+
+## Quality Standards
+
+Every recommendation must:
+
+1. **Preserve Readability**: Never sacrifice user experience
+2. **Sound Natural**: Must read conversationally
+3. **Add Value**: Keywords should enhance clarity
+4. **Be Specific**: Exact location and revision provided
+5. **Be Realistic**: Achievable density without stuffing
+6. **Respect Intent**: Match how people discuss topic
+
+## Best Practices
+
+**Natural first**: If keyword doesn't fit naturally, don't force it
+
+**Use variations**: Different forms and related terms
+
+**Even distribution**: Spread throughout, don't cluster
+
+**Context matters**: Keywords should enhance topic discussion
+
+**Quality over quantity**: 10 natural instances > 20 forced ones
+
+**User-centric**: Write for humans, optimize for search engines
+
+**Monitor density**: Stay within 1-2% range
+
+**Check critical placements**: H1, first 100 words, H2s, conclusion
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="SEO Optimizer" icon="magnifying-glass" href="/agents/seo-optimizer">
+    Comprehensive on-page SEO analysis
+  </Card>
+  <Card title="Internal Linker" icon="link" href="/agents/internal-linker">
+    Strategic internal linking
+  </Card>
+  <Card title="Content Analyzer" icon="chart-mixed" href="/agents/content-analyzer">
+    Data-driven content analysis
+  </Card>
+  <Card title="Editor" icon="pen" href="/agents/editor">
+    Make content sound human
+  </Card>
+</CardGroup>

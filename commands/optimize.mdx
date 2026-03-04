@@ -1,0 +1,491 @@
+---
+title: /optimize Command
+description: Perform comprehensive SEO audit and final optimization pass before publishing
+---
+
+The `/optimize` command performs a final SEO optimization pass on completed articles, validating all elements meet best practices.
+
+## Usage
+
+```bash
+/optimize [article file]
+```
+
+<ParamField path="article file" type="string" required>
+  Path to the article file to optimize (in `drafts/` or `rewrites/`)
+</ParamField>
+
+## Examples
+
+```bash
+/optimize drafts/content-marketing-strategies-2025-03-04.md
+```
+
+```bash
+/optimize rewrites/podcast-guide-rewrite-2025-03-04.md
+```
+
+## What It Does
+
+### Comprehensive SEO Audit
+
+<Tabs>
+  <Tab title="Keyword Analysis">
+    **Primary Keyword Density**: 1-2% throughout article
+    
+    **Keyword Placement Check**:
+    - In H1 headline ✓
+    - In first 100 words ✓
+    - In 2-3 H2 headings ✓
+    - In meta title ✓
+    - In meta description ✓
+    - In URL slug ✓
+    
+    **Semantic Variations**: Related keywords used naturally
+    
+    **Keyword Stuffing**: No over-optimization detected
+    
+    **LSI Keywords**: Latent semantic keywords present
+  </Tab>
+  
+  <Tab title="Heading Structure">
+    **H1**: Only one H1, includes primary keyword
+    
+    **H2s**: 4-7 H2 sections, at least 2-3 with keyword variations
+    
+    **H3s**: Proper nesting under H2s, descriptive and keyword-rich
+    
+    **Hierarchy**: Logical progression, no skipped levels
+    
+    **Length**: Headings descriptive but concise
+  </Tab>
+  
+  <Tab title="Content Quality">
+    **Word Count**: 2000+ words (2500-3000+ preferred)
+    
+    **Paragraph Length**: Average 2-4 sentences
+    
+    **Sentence Length**: Varied, averaging under 25 words
+    
+    **Readability Score**: 8th-10th grade level (Flesch-Kincaid)
+    
+    **Active Voice**: Predominantly active voice
+    
+    **Transition Words**: Smooth flow between sections
+    
+    **Formatting**: Bold, italics, lists used appropriately
+  </Tab>
+</Tabs>
+
+### Link Optimization
+
+<Steps>
+  <Step title="Internal Links (3-5+ required)">
+    - Count current internal links
+    - Verify contextual relevance
+    - Check keyword-rich anchor text
+    - Ensure natural integration
+    - Validate variety (pillar, blog, product, resources)
+    - Cross-reference `context/internal-links-map.md`
+    - Test for broken links
+  </Step>
+  
+  <Step title="External Links (2-3+ required)">
+    - Count external authority links
+    - Verify authoritative sources
+    - Ensure relevance to content
+    - Check link freshness
+    - Test all external links
+    - Verify appropriate nofollow usage
+  </Step>
+</Steps>
+
+### Meta Element Optimization
+
+<ParamField path="Meta Title" type="string">
+  **Requirements**:
+  - Length: 50-60 characters
+  - Primary keyword included naturally
+  - Compelling and click-worthy
+  - Consider adding brand name
+  - Distinct from other page titles
+  
+  **Output**: 3-5 optimized alternatives with recommendations
+</ParamField>
+
+<ParamField path="Meta Description" type="string">
+  **Requirements**:
+  - Length: 150-160 characters
+  - Primary keyword included
+  - Clear value proposition
+  - Call-to-action phrase
+  - Encourages SERP click
+  - Doesn't cut off mid-sentence
+  
+  **Output**: 3-5 optimized alternatives with recommendations
+</ParamField>
+
+<ParamField path="URL Slug" type="string">
+  **Requirements**:
+  - Concise but descriptive
+  - Primary keyword included
+  - Lowercase, hyphens between words
+  - 3-5 words ideal
+  - No stop words unless necessary
+  
+  **Output**: Evaluation and alternative if needed
+</ParamField>
+
+## Advanced SEO Analysis
+
+The optimize command includes comprehensive analysis from specialized modules:
+
+<CardGroup cols={2}>
+  <Card title="Search Intent" icon="compass">
+    Verifies content matches user search intent (informational/commercial/transactional/navigational)
+  </Card>
+  
+  <Card title="Keyword Density & Clustering" icon="map-pin">
+    Detailed density analysis, keyword stuffing detection, topic clustering with TF-IDF
+  </Card>
+  
+  <Card title="Content Length Comparison" icon="ruler">
+    Compares word count against top 10-20 SERP competitors for optimal length
+  </Card>
+  
+  <Card title="Readability Score" icon="book-open">
+    Flesch Reading Ease, Flesch-Kincaid Grade Level, sentence structure analysis
+  </Card>
+  
+  <Card title="SEO Quality Rating" icon="star">
+    Overall score (0-100) with category breakdowns and specific recommendations
+  </Card>
+  
+  <Card title="Featured Snippet" icon="sparkles">
+    Identifies snippet opportunities (question, list, table formats)
+  </Card>
+</CardGroup>
+
+## Output
+
+Creates comprehensive optimization report saved to:
+
+```
+drafts/optimization-report-[topic-slug]-[YYYY-MM-DD].md
+```
+
+### SEO Score (0-100)
+
+<Tabs>
+  <Tab title="Score Breakdown">
+    - **Keyword Optimization**: /25
+    - **Technical SEO**: /25
+    - **Content Quality**: /25
+    - **User Experience**: /25
+    - **Overall Score**: /100
+  </Tab>
+  
+  <Tab title="Publishing Decision">
+    - **90-100**: Excellent - publish immediately
+    - **80-89**: Good - minor tweaks recommended but publishable
+    - **70-79**: Fair - address priority fixes before publishing
+    - **Below 70**: Needs work - significant improvements required
+  </Tab>
+</Tabs>
+
+### Priority Fixes
+
+List of critical issues:
+
+```markdown
+## Priority Fixes
+
+- [ ] Fix 1 (High Priority) - Add primary keyword to 2 more H2 headings
+- [ ] Fix 2 (High Priority) - Increase word count to 2,200 (currently 1,850)
+- [ ] Fix 3 (Medium Priority) - Add 2 more internal links
+```
+
+### Optimization Recommendations
+
+<AccordionGroup>
+  <Accordion title="Quick Wins (5-10 minutes)">
+    - Specific keyword placement adjustments
+    - Meta element tweaks
+    - Internal link additions
+    - Heading optimizations
+  </Accordion>
+  
+  <Accordion title="Strategic Improvements (30+ minutes)">
+    - Content expansion opportunities
+    - Structural reorganization
+    - Additional research needed
+    - Competitive gap filling
+  </Accordion>
+</AccordionGroup>
+
+### Optimized Meta Options
+
+<CodeGroup>
+```markdown Meta Title Options
+**Meta Title Options** (pick one):
+
+1. Content Marketing Strategies for B2B SaaS | YourBrand (58 chars)
+   ✓ Keyword front-loaded
+   ✓ Clear target audience
+   ✓ Brand included
+
+2. 15 Content Marketing Strategies That Drive B2B SaaS Growth (59 chars)
+   ✓ Number creates curiosity
+   ✓ Benefit-focused
+   - No brand name
+
+3. B2B SaaS Content Marketing: 15 Strategies That Work (54 chars)
+   ✓ Keyword present
+   ✓ Specific and actionable
+   - Shorter (could expand)
+```
+
+```markdown Meta Description Options
+**Meta Description Options** (pick one):
+
+1. Discover 15 proven content marketing strategies for B2B SaaS companies. Learn how to attract, engage, and convert your ideal customers with data-driven tactics. (157 chars)
+   ✓ Keyword included
+   ✓ Clear value prop
+   ✓ Action-oriented
+
+2. Learn the content marketing strategies used by top B2B SaaS companies to generate qualified leads and drive growth. Practical tips and real examples included. (160 chars)
+   ✓ Social proof element
+   ✓ Benefit clear
+   ✓ "Real examples" adds value
+
+3. Complete guide to B2B SaaS content marketing: 15 strategies with examples, metrics, and templates. Start attracting your ideal customers today. (158 chars)
+   ✓ Comprehensive positioning
+   ✓ Includes "templates" bonus
+   ✓ Urgency in CTA
+```
+</CodeGroup>
+
+### Link Enhancement
+
+<Tabs>
+  <Tab title="Internal Links to Add">
+    ```markdown
+    ## Internal Links to Add
+    
+    1. Link to "Complete Guide to B2B Marketing" in Section 2
+       - Anchor text: "comprehensive B2B marketing strategy"
+       - Location: After mentioning broader marketing context
+    
+    2. Link to "Content Calendar Templates" in Section 5
+       - Anchor text: "download our free content calendar template"
+       - Location: When discussing planning process
+    
+    3. Link to "SEO for SaaS Companies" in Section 4
+       - Anchor text: "optimizing content for search engines"
+       - Location: In SEO content strategy subsection
+    ```
+  </Tab>
+  
+  <Tab title="External Links to Add">
+    ```markdown
+    ## External Links to Add
+    
+    1. Add source for statistic in Section 1
+       - Claim: "72% of B2B marketers say content marketing increases engagement"
+       - Missing source: Content Marketing Institute 2024 Report
+       - URL: https://contentmarketinginstitute.com/research/
+    
+    2. Add authority link in Section 3
+       - Topic: Email marketing benchmarks
+       - Suggested source: Mailchimp Email Marketing Benchmarks
+       - URL: https://mailchimp.com/resources/email-marketing-benchmarks/
+    ```
+  </Tab>
+</Tabs>
+
+### Keyword Distribution Map
+
+Visual representation of keyword placement:
+
+```markdown
+## Keyword Distribution Map
+
+Primary Keyword: "content marketing strategies"
+Target Density: 1-2%
+Current Density: 1.6% ✓
+
+**Placement Checklist**:
+- H1: ✓ Present
+- First 100 words: ✓ Present
+- H2 sections: 2/5 (need 1-2 more) ⚠️
+- Body paragraphs: 18 instances ✓
+- Conclusion: ✓ Present
+- Meta title: ✓ Present
+- Meta description: ✓ Present
+
+**Recommendation**: Add keyword to "Planning Your Content" H2 (Section 4)
+and "Measuring Content Success" H2 (Section 6)
+```
+
+### Final Checklist
+
+```markdown
+## Final Checklist
+
+### Content
+- [ ] Primary keyword in H1
+- [ ] Primary keyword in first 100 words
+- [ ] Primary keyword in 2+ H2 headings
+- [ ] Keyword density 1-2%
+- [ ] Article 2000+ words
+- [ ] Proper H1/H2/H3 hierarchy
+- [ ] 2-3 mini-stories with specific details
+- [ ] 2-3 contextual CTAs throughout
+
+### Links
+- [ ] 3-5+ internal links included
+- [ ] 2-3+ external authority links
+- [ ] No broken links
+- [ ] Descriptive anchor text
+
+### Meta
+- [ ] Meta title 50-60 characters
+- [ ] Meta description 150-160 characters
+- [ ] URL slug optimized
+
+### Quality
+- [ ] Readability optimized (8th-10th grade)
+- [ ] Images have alt text
+- [ ] CTA included
+- [ ] Brand voice maintained
+- [ ] Ready to publish
+```
+
+## Agent Integration
+
+The optimize command triggers final review from all agents:
+
+<CardGroup cols={2}>
+  <Card title="Content Analyzer" icon="chart-mixed">
+    Comprehensive analysis: search intent, keyword clustering, length comparison, readability, SEO quality (0-100)
+  </Card>
+  
+  <Card title="SEO Optimizer" icon="magnifying-glass-chart">
+    Technical SEO final check with specific recommendations
+  </Card>
+  
+  <Card title="Meta Creator" icon="tags">
+    Best meta title/description options with testing recommendations
+  </Card>
+  
+  <Card title="Internal Linker" icon="link">
+    Last opportunity internal linking suggestions with placement
+  </Card>
+  
+  <Card title="Keyword Mapper" icon="map">
+    Final keyword distribution analysis with heatmap
+  </Card>
+</CardGroup>
+
+## Real Example
+
+<Accordion title="Example: Optimizing a Content Marketing Article">
+  ```markdown
+  # Optimization Report: Content Marketing Strategies
+  Date: 2025-03-04
+  File: drafts/content-marketing-strategies-2025-03-04.md
+  
+  ## SEO Score: 82/100
+  
+  - Keyword Optimization: 21/25 ⚠️
+  - Technical SEO: 23/25 ✓
+  - Content Quality: 22/25 ✓
+  - User Experience: 16/25 ⚠️
+  
+  **Status**: Good - Minor fixes recommended
+  **Publishing Readiness**: 90%
+  **Estimated Time to Publish**: 15 minutes
+  
+  ## Priority Fixes (High)
+  
+  1. Add primary keyword to 1 more H2 heading
+     - Current: 2/7 H2s have keyword
+     - Target: 3/7 H2s (minimum)
+     - Suggestion: Change "Planning Your Strategy" to "Planning Your Content Marketing Strategy"
+  
+  2. Improve meta description
+     - Current: 148 characters (too short)
+     - Target: 155-160 characters
+     - Add benefit statement to end
+  
+  ## Quick Wins (Medium)
+  
+  3. Add 1 more internal link
+     - Currently: 4 internal links
+     - Target: 5+ links
+     - Suggestion: Link to "SaaS Marketing Guide" in Section 3
+  
+  4. Expand conclusion
+     - Currently: 120 words
+     - Target: 150-200 words
+     - Add 2-3 more key takeaways
+  
+  ## Keyword Distribution: 1.6% ✓
+  
+  Target keyword "content marketing strategies" appears 18 times in 2,450 words.
+  Distribution is natural and well-balanced across sections.
+  
+  ## Publishing Recommendation
+  
+  ✓ Address 2 high-priority fixes (10 minutes)
+  ✓ Apply quick wins (5 minutes)
+  ✓ Ready to publish
+  
+  **Next Step**: Move to `published/` folder after fixes
+  ```
+</Accordion>
+
+## Next Steps
+
+After optimization:
+
+1. **Review the report** - Read all recommendations
+2. **Address priority fixes** - Fix high-priority issues
+3. **Apply quick wins** - Make fast improvements
+4. **Publish** - Move to WordPress or `published/` folder
+
+```bash
+/publish-draft drafts/content-marketing-strategies-2025-03-04.md
+```
+
+## Tips
+
+<CardGroup cols={2}>
+  <Card title="Run Before Publishing" icon="shield-check">
+    Always optimize before publishing to catch final issues.
+  </Card>
+  
+  <Card title="Fix Priority Items" icon="list-check">
+    Address high-priority fixes first for maximum impact.
+  </Card>
+  
+  <Card title="Test All Links" icon="link">
+    Verify all internal and external links work.
+  </Card>
+  
+  <Card title="Review Meta Options" icon="tags">
+    Test meta titles/descriptions in SERP preview tool.
+  </Card>
+</CardGroup>
+
+## Related Commands
+
+<CardGroup cols={2}>
+  <Card title="/write" icon="pen-to-square" href="/commands/write">
+    Create articles to optimize
+  </Card>
+  
+  <Card title="/publish-draft" icon="upload" href="/commands/publish-draft">
+    Publish optimized articles to WordPress
+  </Card>
+</CardGroup>

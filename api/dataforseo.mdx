@@ -1,0 +1,371 @@
+---
+title: 'DataForSEO'
+description: 'Fetch SERP data, competitor rankings, keyword research, and domain metrics from DataForSEO API'
+---
+
+## Overview
+
+The `DataForSEO` class provides integration with DataForSEO API to fetch SERP data, check rankings, analyze competitors, and perform keyword research.
+
+## Installation
+
+```python
+from data_sources.modules.dataforseo import DataForSEO
+```
+
+## Authentication
+
+The module uses basic authentication with API credentials.
+
+### Environment Variables
+
+```bash
+DATAFORSEO_LOGIN=your-login
+DATAFORSEO_PASSWORD=your-password
+DATAFORSEO_BASE_URL=https://api.dataforseo.com
+```
+
+### Getting API Credentials
+
+1. Sign up at [DataForSEO](https://dataforseo.com)
+2. Generate API credentials from your dashboard
+3. Set credentials in your environment
+
+## Initialization
+
+```python
+dfs = DataForSEO(
+    login="your-login",  # Optional, defaults to env var
+    password="your-password"  # Optional, defaults to env var
+)
+```
+
+<ParamField path="login" type="str" optional>
+  API login. Defaults to `DATAFORSEO_LOGIN` environment variable.
+</ParamField>
+
+<ParamField path="password" type="str" optional>
+  API password. Defaults to `DATAFORSEO_PASSWORD` environment variable.
+</ParamField>
+
+## Methods
+
+### get_rankings
+
+Get ranking positions for specific keywords.
+
+```python
+rankings = dfs.get_rankings(
+    domain="castos.com",
+    keywords=["podcast hosting", "podcast analytics"],
+    location_code=2840,  # USA
+    language_code="en"
+)
+```
+
+<ParamField path="domain" type="str" required>
+  Your domain (e.g., "castos.com")
+</ParamField>
+
+<ParamField path="keywords" type="list" required>
+  List of keywords to check
+</ParamField>
+
+<ParamField path="location_code" type="int" default="2840">
+  DataForSEO location code (2840 = USA)
+</ParamField>
+
+<ParamField path="language_code" type="str" default="en">
+  Language code
+</ParamField>
+
+<ResponseField name="results" type="list">
+  <ResponseField name="keyword" type="str">
+    Search keyword
+  </ResponseField>
+  <ResponseField name="domain" type="str">
+    Your domain
+  </ResponseField>
+  <ResponseField name="position" type="int">
+    Ranking position (None if not ranking)
+  </ResponseField>
+  <ResponseField name="url" type="str">
+    Ranking URL
+  </ResponseField>
+  <ResponseField name="ranking" type="bool">
+    Whether domain is ranking
+  </ResponseField>
+  <ResponseField name="search_volume" type="int">
+    Monthly search volume
+  </ResponseField>
+  <ResponseField name="cpc" type="float">
+    Cost per click
+  </ResponseField>
+</ResponseField>
+
+### get_serp_data
+
+Get complete SERP data for a keyword.
+
+```python
+serp = dfs.get_serp_data(
+    keyword="podcast monetization",
+    location_code=2840,
+    limit=100
+)
+```
+
+<ParamField path="keyword" type="str" required>
+  Search keyword
+</ParamField>
+
+<ParamField path="location_code" type="int" default="2840">
+  DataForSEO location code
+</ParamField>
+
+<ParamField path="limit" type="int" default="100">
+  Number of results to return
+</ParamField>
+
+<ResponseField name="serp_data" type="dict">
+  <ResponseField name="keyword" type="str">
+    Search keyword
+  </ResponseField>
+  <ResponseField name="search_volume" type="int">
+    Monthly search volume
+  </ResponseField>
+  <ResponseField name="cpc" type="float">
+    Cost per click
+  </ResponseField>
+  <ResponseField name="competition" type="float">
+    Competition level
+  </ResponseField>
+  <ResponseField name="organic_results" type="list">
+    List of organic search results
+  </ResponseField>
+  <ResponseField name="features" type="list">
+    SERP features present (featured_snippet, people_also_ask, etc.)
+  </ResponseField>
+  <ResponseField name="total_results" type="int">
+    Total number of results
+  </ResponseField>
+</ResponseField>
+
+### analyze_competitor
+
+Analyze competitor rankings vs yours.
+
+```python
+comparison = dfs.analyze_competitor(
+    competitor_domain="anchor.fm",
+    keywords=["podcast hosting", "podcast analytics"],
+    your_domain="castos.com"
+)
+```
+
+<ParamField path="competitor_domain" type="str" required>
+  Competitor's domain
+</ParamField>
+
+<ParamField path="keywords" type="list" required>
+  Keywords to compare
+</ParamField>
+
+<ParamField path="your_domain" type="str" optional>
+  Your domain (optional)
+</ParamField>
+
+<ResponseField name="comparison" type="dict">
+  <ResponseField name="competitor" type="str">
+    Competitor domain
+  </ResponseField>
+  <ResponseField name="your_domain" type="str">
+    Your domain
+  </ResponseField>
+  <ResponseField name="comparison" type="list">
+    List of keyword comparisons
+  </ResponseField>
+</ResponseField>
+
+### get_keyword_ideas
+
+Get related keyword ideas.
+
+```python
+ideas = dfs.get_keyword_ideas(
+    seed_keyword="podcast hosting",
+    location_code=2840,
+    limit=100
+)
+```
+
+<ParamField path="seed_keyword" type="str" required>
+  Starting keyword
+</ParamField>
+
+<ParamField path="location_code" type="int" default="2840">
+  Location code
+</ParamField>
+
+<ParamField path="limit" type="int" default="100">
+  Number of ideas to return
+</ParamField>
+
+<ResponseField name="keywords" type="list">
+  <ResponseField name="keyword" type="str">
+    Keyword phrase
+  </ResponseField>
+  <ResponseField name="search_volume" type="int">
+    Monthly search volume
+  </ResponseField>
+  <ResponseField name="cpc" type="float">
+    Cost per click
+  </ResponseField>
+  <ResponseField name="competition" type="float">
+    Competition level
+  </ResponseField>
+  <ResponseField name="avg_position" type="int">
+    Average position in SERPs
+  </ResponseField>
+</ResponseField>
+
+### get_questions
+
+Get question-based queries related to keyword.
+
+```python
+questions = dfs.get_questions(
+    keyword="podcast monetization",
+    location_code=2840,
+    limit=50
+)
+```
+
+<ParamField path="keyword" type="str" required>
+  Seed keyword
+</ParamField>
+
+<ParamField path="location_code" type="int" default="2840">
+  Location code
+</ParamField>
+
+<ParamField path="limit" type="int" default="50">
+  Number of questions to return
+</ParamField>
+
+<ResponseField name="questions" type="list">
+  <ResponseField name="question" type="str">
+    Question query
+  </ResponseField>
+  <ResponseField name="search_volume" type="int">
+    Monthly search volume
+  </ResponseField>
+  <ResponseField name="cpc" type="float">
+    Cost per click
+  </ResponseField>
+</ResponseField>
+
+### get_domain_metrics
+
+Get domain overview metrics.
+
+```python
+metrics = dfs.get_domain_metrics(
+    domain="castos.com"
+)
+```
+
+<ParamField path="domain" type="str" required>
+  Domain to analyze
+</ParamField>
+
+<ResponseField name="metrics" type="dict">
+  <ResponseField name="domain" type="str">
+    Domain name
+  </ResponseField>
+  <ResponseField name="organic_keywords" type="int">
+    Number of organic keywords ranking
+  </ResponseField>
+  <ResponseField name="organic_traffic" type="int">
+    Estimated monthly organic traffic
+  </ResponseField>
+  <ResponseField name="domain_rank" type="int">
+    Domain authority rank
+  </ResponseField>
+  <ResponseField name="backlinks" type="dict">
+    Backlink metrics
+  </ResponseField>
+</ResponseField>
+
+### check_ranking_history
+
+Get ranking history for a keyword (requires historical data setup).
+
+```python
+history = dfs.check_ranking_history(
+    domain="castos.com",
+    keyword="podcast hosting",
+    months_back=3
+)
+```
+
+<ParamField path="domain" type="str" required>
+  Your domain
+</ParamField>
+
+<ParamField path="keyword" type="str" required>
+  Keyword to track
+</ParamField>
+
+<ParamField path="months_back" type="int" default="3">
+  Months of history
+</ParamField>
+
+<ResponseField name="history" type="list">
+  List of historical rankings
+</ResponseField>
+
+## Example Usage
+
+```python
+from dotenv import load_dotenv
+from data_sources.modules.dataforseo import DataForSEO
+
+load_dotenv('data_sources/config/.env')
+
+dfs = DataForSEO()
+
+# Check rankings
+rankings = dfs.get_rankings(
+    domain="castos.com",
+    keywords=["podcast hosting", "podcast analytics", "private podcast"]
+)
+
+for rank in rankings:
+    print(f"\nKeyword: {rank['keyword']}")
+    print(f"Position: {rank['position'] or 'Not ranking'}")
+    if rank['search_volume']:
+        print(f"Search Volume: {rank['search_volume']:,}")
+
+# Get SERP data
+serp = dfs.get_serp_data("podcast monetization")
+print(f"\nSearch Volume: {serp['search_volume']:,}")
+print(f"SERP Features: {', '.join(serp['features'])}")
+print(f"\nTop 10 Results:")
+for result in serp['organic_results'][:10]:
+    print(f"{result['position']}. {result['domain']}")
+    print(f"   {result['url']}")
+
+# Related questions
+questions = dfs.get_questions("podcast monetization")
+for q in questions[:10]:
+    print(f"- {q['question']}")
+    if q['search_volume']:
+        print(f"  Volume: {q['search_volume']:,}")
+```
+
+## Source Code Reference
+
+Location: `data_sources/modules/dataforseo.py:14`
+
+The module uses DataForSEO's REST API with basic authentication. All requests are made via POST to the appropriate endpoints.

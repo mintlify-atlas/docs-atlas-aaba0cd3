@@ -1,0 +1,589 @@
+---
+title: /analyze-existing Command
+description: Audit existing blog posts for SEO opportunities, content gaps, and improvement areas with data-driven analysis
+---
+
+The `/analyze-existing` command analyzes existing blog posts to identify improvement opportunities using advanced SEO analysis modules.
+
+## Usage
+
+```bash
+/analyze-existing [URL or file path]
+```
+
+<ParamField path="URL or file path" type="string" required>
+  Either a live URL or local file path to the article to analyze
+</ParamField>
+
+## Examples
+
+```bash
+/analyze-existing https://yoursite.com/blog/marketing-guide
+```
+
+```bash
+/analyze-existing published/marketing-guide-2024-01-15.md
+```
+
+## What It Does
+
+### Content Analysis
+
+<Steps>
+  <Step title="Content Extraction">
+    - Accepts live URL or local file path
+    - Pulls full article text, headings, and structure
+    - Extracts metadata and formatting
+  </Step>
+  
+  <Step title="Publication Date Check">
+    - Notes when content was originally published
+    - Calculates content age
+    - Identifies freshness decay
+  </Step>
+  
+  <Step title="Relevance Assessment">
+    - Identifies outdated information
+    - Flags old statistics or references
+    - Detects deprecated terminology
+  </Step>
+  
+  <Step title="Completeness Evaluation">
+    - Assesses topic coverage depth
+    - Identifies content gaps vs competitors
+    - Checks for missing sections
+  </Step>
+</Steps>
+
+### Advanced SEO Audit
+
+Uses 5 specialized analysis modules:
+
+<CardGroup cols={2}>
+  <Card title="Search Intent Analysis" icon="compass">
+    Determines if content matches user search intent:
+    - Informational
+    - Commercial
+    - Transactional
+    - Navigational
+    
+    Provides confidence scores and alignment recommendations.
+  </Card>
+  
+  <Card title="Keyword Density & Clustering" icon="map-pin">
+    Deep analysis of keyword usage:
+    - Exact keyword density calculation
+    - Distribution heatmap by section
+    - Topic clustering using TF-IDF
+    - Keyword stuffing risk detection
+    - LSI keyword identification
+  </Card>
+  
+  <Card title="Content Length Comparison" icon="ruler">
+    Benchmarks against SERP competitors:
+    - Fetches top 10-20 competitor word counts
+    - Calculates median and 75th percentile
+    - Determines optimal target length
+    - Shows competitive positioning
+    - Provides expansion recommendations
+  </Card>
+  
+  <Card title="Readability Scoring" icon="book-open">
+    Multiple readability metrics:
+    - Flesch Reading Ease score
+    - Flesch-Kincaid Grade Level
+    - Sentence structure analysis
+    - Passive voice detection
+    - Complex word identification
+    - Overall readability score (0-100)
+  </Card>
+  
+  <Card title="SEO Quality Rating" icon="star">
+    Comprehensive 0-100 SEO score:
+    - Content quality breakdown
+    - Keyword optimization score
+    - Meta elements score
+    - Structure and formatting score
+    - Link quality score
+    - Readability score
+    
+    Identifies critical issues, warnings, and suggestions.
+  </Card>
+  
+  <Card title="Competitive Context" icon="magnifying-glass">
+    Competitor positioning:
+    - Current SERP position (if known)
+    - Top 3-5 ranking articles analysis
+    - Content gap identification
+    - Differentiation opportunities
+  </Card>
+</CardGroup>
+
+### Traditional SEO Elements
+
+Also checks:
+- **Target Keyword**: Primary keyword identification and variations
+- **Keyword Placement**: H1, H2, first 100 words, meta elements
+- **Heading Structure**: H1-H6 hierarchy and keyword integration
+- **Meta Elements**: Title (50-60 chars) and description (150-160 chars)
+- **Internal Links**: Count and quality (aim for 3-5+)
+- **External Links**: Authoritative source verification
+
+## Output
+
+Creates comprehensive analysis report saved to:
+
+```
+research/analysis-[post-slug]-[YYYY-MM-DD].md
+```
+
+### Content Health Score (0-100)
+
+Enhanced scoring with multiple dimensions:
+
+<Tabs>
+  <Tab title="SEO Quality (0-100)">
+    Category breakdowns:
+    - Content: /20
+    - Keywords: /20
+    - Meta: /15
+    - Structure: /15
+    - Links: /15
+    - Readability: /15
+    
+    **Total**: /100
+  </Tab>
+  
+  <Tab title="Search Intent Alignment">
+    - Intent classification
+    - Confidence score
+    - Alignment assessment
+    - Recommendations for improvement
+  </Tab>
+  
+  <Tab title="Competitive Positioning">
+    - Word count vs competitors
+    - Topic coverage completeness
+    - Unique value assessment
+    - Differentiation opportunities
+  </Tab>
+  
+  <Tab title="Content Freshness">
+    - Publication date impact
+    - Outdated content detection
+    - Update urgency level
+    - Estimated traffic impact of refresh
+  </Tab>
+</Tabs>
+
+### Quick Wins
+
+Top 3-5 immediate improvements:
+
+```markdown
+## Quick Wins (15-30 minutes)
+
+1. **Update statistics in Section 2**
+   - Current: "2022 data shows..."
+   - Action: Replace with 2025 statistics
+   - Impact: Immediate freshness improvement
+
+2. **Add keyword to H2 headings**
+   - Current density: 0.8% (below target)
+   - Action: Add primary keyword to 2 H2 headings
+   - Target: 1.5% density
+   - Impact: +8 SEO score points
+
+3. **Optimize meta description**
+   - Current: 142 characters (too short)
+   - Action: Expand to 155-160 characters
+   - Add benefit statement
+   - Impact: Improved CTR from SERP
+
+4. **Add 2 internal links**
+   - Current: 2 internal links
+   - Target: 4-5 internal links
+   - Suggestions: Link to pillar page in intro, related article in Section 4
+   - Impact: Better internal linking structure
+
+5. **Fix readability issues**
+   - Current: 4 sentences over 30 words
+   - Action: Break into shorter sentences
+   - Impact: Flesch score from 52 to 62
+```
+
+### Strategic Improvements
+
+Longer-term enhancements:
+
+<AccordionGroup>
+  <Accordion title="Content Expansion">
+    Based on competitor analysis:
+    
+    ```markdown
+    **Current Word Count**: 1,850
+    **Competitor Median**: 2,400
+    **75th Percentile**: 2,800
+    **Recommendation**: Add 800-950 words
+    
+    **Sections to Add**:
+    - "Common Mistakes" section (300 words)
+    - "Advanced Strategies" section (400 words)
+    - More examples throughout (250 words)
+    ```
+  </Accordion>
+  
+  <Accordion title="Intent Alignment">
+    Adjust content to match search intent:
+    
+    ```markdown
+    **Current Intent**: Mixed (60% informational, 40% commercial)
+    **Target Intent**: Commercial investigation
+    **Actions**:
+    - Add product comparison section
+    - Include pricing context
+    - Add "How to Choose" decision framework
+    - Strengthen CTAs for trial/demo
+    ```
+  </Accordion>
+  
+  <Accordion title="Topic Clustering">
+    Add missing semantic keywords:
+    
+    ```markdown
+    **Missing Related Topics** (found in competitor analysis):
+    - "ROI measurement" (appears in 7/10 top articles)
+    - "Implementation timeline" (appears in 6/10)
+    - "Team requirements" (appears in 5/10)
+    
+    **Action**: Add H2 or H3 sections covering these subtopics
+    ```
+  </Accordion>
+  
+  <Accordion title="SEO Quality Priorities">
+    From quality rating breakdown:
+    
+    ```markdown
+    **Category Scores**:
+    - Content: 16/20 ✓
+    - Keywords: 12/20 ⚠️ (Primary issue)
+    - Meta: 11/15 ⚠️
+    - Structure: 14/15 ✓
+    - Links: 9/15 ⚠️
+    - Readability: 11/15 ⚠️
+    
+    **Priority Order**:
+    1. Improve keyword optimization (Keywords: 12→18)
+    2. Strengthen link profile (Links: 9→13)
+    3. Enhance readability (Readability: 11→14)
+    4. Polish meta elements (Meta: 11→14)
+    ```
+  </Accordion>
+</AccordionGroup>
+
+### Detailed Analysis Reports
+
+The Content Analyzer provides:
+
+<Tabs>
+  <Tab title="Search Intent Report">
+    ```markdown
+    ## Search Intent Analysis
+    
+    **Primary Intent**: Informational (72% confidence)
+    **Secondary Intent**: Commercial (28% confidence)
+    
+    **Content Alignment**: Partial match
+    
+    **Recommendations**:
+    - Current content focuses heavily on "what" and "why"
+    - Top-ranking articles include more "how to choose" content
+    - Add decision framework section for commercial intent
+    - Consider split: Ultimate guide (informational) + Comparison (commercial)
+    ```
+  </Tab>
+  
+  <Tab title="Keyword Density Heatmap">
+    ```markdown
+    ## Keyword Distribution by Section
+    
+    **Primary Keyword**: "podcast analytics" (Target: 1.5%)
+    
+    | Section | Word Count | Keyword Count | Density |
+    |---------|------------|---------------|----------|
+    | Introduction | 180 | 3 | 1.7% ✓ |
+    | What Are Metrics | 420 | 4 | 0.95% ⚠️ |
+    | Essential Metrics | 580 | 7 | 1.2% ✓ |
+    | Tools Comparison | 390 | 2 | 0.5% ❌ |
+    | How to Interpret | 480 | 6 | 1.25% ✓ |
+    | Conclusion | 150 | 2 | 1.3% ✓ |
+    
+    **Overall Density**: 1.1% (Target: 1.5%)
+    
+    **Actions**:
+    - Add keyword 2x in "What Are Metrics" section
+    - Add keyword 4x in "Tools Comparison" section
+    - Total needed: 6 additional instances
+    ```
+  </Tab>
+  
+  <Tab title="Competitive Benchmarks">
+    ```markdown
+    ## Content Length Comparison
+    
+    **Your Article**: 1,850 words
+    
+    **Top 10 SERP Competitors**:
+    - Minimum: 1,600 words
+    - Median: 2,400 words
+    - 75th Percentile: 2,800 words
+    - Maximum: 3,500 words
+    
+    **Your Position**: Below median (-550 words)
+    
+    **Recommendation**: Add 550-950 words to reach competitive length
+    - Target: 2,400 words (match median)
+    - Stretch: 2,800 words (75th percentile)
+    
+    **Where to Expand**:
+    - "Essential Metrics" section (add 300 words)
+    - New "Advanced Analytics" section (add 400 words)
+    - More examples throughout (add 250 words)
+    ```
+  </Tab>
+  
+  <Tab title="Readability Metrics">
+    ```markdown
+    ## Readability Analysis
+    
+    **Flesch Reading Ease**: 58.3 (Standard)
+    - Target: 60-70 (Easily understood)
+    - Gap: +1.7-11.7 points needed
+    
+    **Flesch-Kincaid Grade Level**: 10.2
+    - Target: 8-10
+    - Status: ✓ Within range (high end)
+    
+    **Sentence Structure**:
+    - Average sentence length: 18.5 words ✓
+    - Longest sentence: 34 words ⚠️
+    - Sentences over 25 words: 8 (6% of total)
+    
+    **Passive Voice**: 12% of sentences ⚠️
+    - Target: <10%
+    - Action: Convert 3-4 passive sentences to active
+    
+    **Complex Words**: 18% of total words
+    - Target: <15% for grade 8-10
+    - Action: Simplify technical jargon where possible
+    
+    **Overall Readability Score**: 72/100
+    - Status: Good (above 70 threshold)
+    - Room for improvement: +8-18 points
+    ```
+  </Tab>
+</Tabs>
+
+### Rewrite Recommendations
+
+<Tabs>
+  <Tab title="Priority Level">
+    Based on SEO score and competitive analysis:
+    
+    - **Critical (Score 0-40)**: Immediate rewrite needed
+    - **High (Score 41-60)**: Rewrite within 1-2 months
+    - **Medium (Score 61-75)**: Refresh within 3-6 months
+    - **Low (Score 76-100)**: Light updates or no action needed
+  </Tab>
+  
+  <Tab title="Estimated Effort">
+    - **Light Edit**: 1-2 hours (update stats, add keywords)
+    - **Moderate Update**: 3-4 hours (add sections, rewrite intro)
+    - **Major Rewrite**: 6-8 hours (significant expansion, new angle)
+    - **Complete Refresh**: 10+ hours (essentially new article)
+  </Tab>
+  
+  <Tab title="Expected Impact">
+    Data-driven estimates:
+    
+    ```markdown
+    **Current Performance** (if known):
+    - Monthly pageviews: 450
+    - SERP position: #8
+    - CTR: 2.1%
+    
+    **Projected Impact** (after rewrite):
+    - Monthly pageviews: 900-1,200 (+100-167%)
+    - SERP position: #4-6 (move up 2-4 spots)
+    - CTR: 3.5-4.2% (+67-100%)
+    
+    **Confidence**: Medium (based on competitive analysis)
+    ```
+  </Tab>
+</Tabs>
+
+### Research Brief for Rewrite
+
+If rewrite is recommended:
+
+```markdown
+## Research Brief for Rewrite
+
+**Target Keywords**:
+- Primary: "podcast analytics" (2,400/mo)
+- Secondary: "podcast metrics" (720/mo), "podcast performance tracking" (320/mo)
+
+**Optimal Keyword Density**: 1.5% (currently 1.1%)
+
+**Competitor Benchmarks**:
+- Top 3 URLs to review: [URLs with word counts]
+- Common sections: [list]
+- Unique angles: [opportunities]
+
+**Search Intent Strategy**:
+- Primary: Informational (comprehensive guide)
+- Secondary: Commercial (tool comparison)
+- Action: Expand tool comparison, add decision framework
+
+**Optimal Content Length**: 2,400-2,800 words (currently 1,850)
+- Add 550-950 words
+- Focus areas: Advanced analytics, more examples, tool comparison
+
+**Readability Target**:
+- Flesch Reading Ease: 60-70 (currently 58.3)
+- Actions: Break long sentences, reduce passive voice from 12% to <10%
+
+**Internal Linking Opportunities**:
+- Link to "How to Start a Podcast" (intro)
+- Link to "Podcast Hosting Comparison" (tools section)
+- Link to "Podcast Marketing Guide" (growth section)
+
+**Missing Topics** (found in top competitors):
+- "Common analytics mistakes"
+- "How to set benchmarks for your show"
+- "Using analytics for monetization"
+```
+
+## Real Example
+
+<Accordion title="Example: Analyzing a Podcast Hosting Guide">
+  ```markdown
+  # Analysis Report: Podcast Hosting Platforms Guide
+  Date: 2025-03-04
+  URL: https://yoursite.com/blog/podcast-hosting-platforms
+  
+  ## Content Health Score: 62/100
+  
+  **Status**: Medium Priority - Moderate rewrite recommended
+  
+  ### Score Breakdown
+  - SEO Quality Rating: 62/100
+    - Content: 14/20 ⚠️
+    - Keywords: 10/20 ❌ (Critical)
+    - Meta: 9/15 ⚠️
+    - Structure: 13/15 ✓
+    - Links: 7/15 ⚠️
+    - Readability: 9/15 ⚠️
+  
+  ## Quick Wins (30 minutes)
+  
+  1. **Update title**: "Best Podcast Hosting Platforms 2023" → "2025"
+  2. **Add keyword to H2s**: Currently 1/6, need 3/6
+  3. **Update pricing**: All platform prices from 2023
+  4. **Add 2 internal links**: To Castos features, podcast setup guide
+  5. **Extend meta description**: 145 chars → 158 chars
+  
+  ## Strategic Improvements (4-6 hours)
+  
+  ### Content Expansion Needed
+  - Current: 1,850 words
+  - Competitor median: 2,600 words
+  - Gap: -750 words
+  
+  **Add These Sections**:
+  - "AI Features in Modern Hosting" (350 words) - Found in 8/10 top articles
+  - "Migration Guide" (250 words) - Found in 6/10
+  - More platform comparisons (150 words)
+  
+  ### Search Intent Alignment
+  - Current: 80% informational, 20% commercial
+  - Should be: 50% informational, 50% commercial
+  - Action: Expand comparison table, add "How to Choose" section
+  
+  ### Keyword Optimization
+  - Current density: 0.9% (below target)
+  - Target: 1.5%
+  - Need: 12 more instances of "podcast hosting"
+  - Distribute across new sections
+  
+  ## Rewrite Recommendation
+  
+  **Priority**: High
+  **Scope**: Moderate Refresh (50% changes)
+  **Effort**: 4-6 hours
+  **Expected Impact**: 
+  - Traffic: +80-120% (450 → 800-1,000/month)
+  - SERP: #9 → #4-6
+  
+  **Next Step**: Run `/rewrite podcast hosting platforms`
+  ```
+</Accordion>
+
+## Next Steps
+
+Based on the analysis:
+
+<Steps>
+  <Step title="Review Analysis Report">
+    Read through all sections and scores
+  </Step>
+  
+  <Step title="Decide on Action">
+    - **Score 76-100**: Light updates only
+    - **Score 61-75**: Run `/optimize` for improvements
+    - **Score 41-60**: Run `/rewrite` for moderate refresh
+    - **Score 0-40**: Run `/rewrite` for major overhaul
+  </Step>
+  
+  <Step title="Execute Rewrite (if needed)">
+    ```bash
+    /rewrite [topic]
+    ```
+  </Step>
+  
+  <Step title="Track Results">
+    Monitor traffic and rankings after update
+  </Step>
+</Steps>
+
+## Tips
+
+<CardGroup cols={2}>
+  <Card title="Batch Analysis" icon="layer-group">
+    Analyze multiple posts in one session to prioritize updates.
+  </Card>
+  
+  <Card title="Focus on Score" icon="star">
+    Prioritize rewrites for articles with scores below 65.
+  </Card>
+  
+  <Card title="Check Competitors" icon="magnifying-glass">
+    Manually verify top 3 competitor URLs for accuracy.
+  </Card>
+  
+  <Card title="Track Changes" icon="chart-line">
+    Save analysis reports to compare before/after rewrite.
+  </Card>
+</CardGroup>
+
+## Related Commands
+
+<CardGroup cols={2}>
+  <Card title="/rewrite" icon="rotate" href="/commands/rewrite">
+    Rewrite content based on analysis
+  </Card>
+  
+  <Card title="/optimize" icon="wand-magic-sparkles" href="/commands/optimize">
+    Light updates for higher-scoring content
+  </Card>
+</CardGroup>

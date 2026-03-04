@@ -1,80 +1,474 @@
 ---
-title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+title: Quick Start
+description: Create your first SEO-optimized article with SEO Machine in 10 minutes
 ---
 
-## Get started in three steps
+# Quick Start Guide
 
-Get your documentation site running locally and make your first customization.
+Get SEO Machine running and create your first article in **10 minutes** ⚡
 
-### Step 1: Set up your local environment
+## Step 1: Install Dependencies (2 minutes)
 
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
-    
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
-    
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
+Install the Python dependencies for analysis modules:
 
-### Step 2: Deploy your changes
+```bash
+pip install -r data_sources/requirements.txt
+```
 
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
-    
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
+<Tip>
+  If you haven't completed the full installation yet, see the [Installation Guide](/installation) for detailed setup instructions.
+</Tip>
 
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
+## Step 2: Configure Context Files (5 minutes)
 
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
+SEO Machine needs to understand your brand before creating content. Fill out these **3 essential files**:
 
-### Step 3: Go live
+### 1. Brand Voice (`context/brand-voice.md`)
 
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
+Define how your brand communicates:
 
-## Next steps
+<CodeGroup>
+```markdown Example: Brand Voice Pillars
+# Brand Voice
 
-Now that you have your docs running, explore these key features:
+## Voice Pillars
 
-<CardGroup cols={2}>
+1. **Authentic & Honest**: We speak plainly about challenges and solutions
+2. **Empowering**: We help creators take control of their content
+3. **Technical but Accessible**: We explain complex topics in simple terms
 
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
-</Card>
+## Tone Guidelines
 
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
-</Card>
+- **Educational Content**: Informative, supportive, patient
+- **Product Content**: Confident, clear, benefit-focused
+- **Comparison Content**: Objective, data-driven, fair
 
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
-</Card>
+## Do's and Don'ts
 
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
-</Card>
+✅ Use "you" and "your" (direct address)
+✅ Use contractions (we're, you'll, it's)
+✅ Include real examples and scenarios
 
-</CardGroup>
+❌ Avoid jargon without explanation
+❌ Don't make unsubstantiated claims
+❌ Never speak negatively about competitors
+```
+</CodeGroup>
 
 <Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
+  **Quick Start Tip**: Check `examples/castos/brand-voice.md` in the repository for a complete real-world example from a podcast hosting SaaS company.
 </Note>
+
+### 2. Features (`context/features.md`)
+
+List your product or service features:
+
+<CodeGroup>
+```markdown Example: Product Features
+# Product Features
+
+## Core Features
+
+- **Unlimited Uploads**: Upload unlimited audio files of any length
+- **Private Podcasting**: Create password-protected private shows
+- **Built-in Website**: Customizable podcast website included
+- **Advanced Analytics**: Detailed listener analytics and insights
+- **Distribution Tools**: Publish to all major podcast directories
+
+## Key Differentiators
+
+- Unlimited everything (no hidden limits on bandwidth or storage)
+- Superior audio quality (320kbps vs industry standard 128kbps)
+- White-glove migration service included
+- 24/7 support with real humans
+```
+</CodeGroup>
+
+### 3. Writing Examples (`context/writing-examples.md`)
+
+Copy 3-5 of your best existing blog posts:
+
+<CodeGroup>
+```markdown Example: Writing Examples
+# Writing Examples
+
+## Example 1: [Article Title]
+
+**URL**: https://yoursite.com/blog/article-name
+
+**What makes this great**:
+- Opens with a compelling scenario, not a definition
+- Uses specific numbers and data throughout
+- Includes real customer examples
+- Natural product mentions without being salesy
+
+**Full Content**:
+
+[Paste the complete article here]
+
+---
+
+## Example 2: [Article Title]
+
+...
+```
+</CodeGroup>
+
+<Warning>
+  Include the **full content** of each example article, not just excerpts. The AI learns your style by reading complete pieces.
+</Warning>
+
+### Optional But Recommended
+
+<Accordion title="Internal Links Map (context/internal-links-map.md)">
+  Map your key pages for strategic internal linking:
+  
+  ```markdown
+  # Internal Links Map
+  
+  ## Product Pages
+  - [Podcast Hosting](https://yoursite.com/hosting) - Main hosting service
+  - [Private Podcasting](https://yoursite.com/private) - Private podcast feature
+  - [Pricing](https://yoursite.com/pricing) - Pricing plans
+  
+  ## Pillar Content
+  - [Complete Podcasting Guide](https://yoursite.com/blog/podcasting-guide)
+  - [How to Start a Podcast](https://yoursite.com/blog/start-podcast)
+  
+  ## Topic Clusters
+  
+  ### Podcast Growth
+  - Growing Your Audience
+  - Podcast Marketing Strategies
+  - Monetization Guide
+  ```
+</Accordion>
+
+<Accordion title="Target Keywords (context/target-keywords.md)">
+  Organize your keyword research by topic cluster:
+  
+  ```markdown
+  # Target Keywords
+  
+  ## Cluster: Podcast Hosting
+  
+  **Pillar Keyword**: podcast hosting (12,000/mo, Medium)
+  
+  **Cluster Keywords**:
+  - best podcast hosting (5,400/mo, High)
+  - podcast hosting platforms (2,900/mo, Medium)
+  - podcast hosting comparison (1,600/mo, Medium)
+  
+  **Long-tail Variations**:
+  - best podcast hosting for beginners (720/mo, Low)
+  - unlimited podcast hosting (480/mo, Low)
+  ```
+</Accordion>
+
+## Step 3: Create Your First Article (3 minutes)
+
+Now you're ready to create content!
+
+### Open Claude Code
+
+```bash
+claude-code .
+```
+
+### Research a Topic
+
+Start with comprehensive research:
+
+```
+/research [your topic]
+```
+
+<CodeGroup>
+```bash Example
+/research podcast editing software
+```
+</CodeGroup>
+
+**What this does**:
+- Performs keyword research for the topic
+- Analyzes top 10 competitors in search results
+- Identifies content gaps and opportunities
+- Creates a comprehensive research brief
+- Saves to `/research/brief-[topic]-[date].md`
+
+<Tip>
+  Review the research brief before writing. It contains the outline, competitor insights, and SEO strategy for your article.
+</Tip>
+
+### Write the Article
+
+Create a complete, SEO-optimized article:
+
+```
+/write [your topic]
+```
+
+<CodeGroup>
+```bash Example
+/write podcast editing software
+```
+</CodeGroup>
+
+**What this does**:
+- Creates a 2,000-3,000+ word article
+- Maintains your brand voice (from `brand-voice.md`)
+- Integrates keywords naturally
+- Includes internal and external links
+- Provides meta elements (title, description, keywords)
+- Automatically triggers optimization agents
+- Saves to `/drafts/[topic]-[date].md`
+
+<Note>
+  The `/write` command automatically invokes several specialized agents after creating the article:
+  - **Content Analyzer**: Search intent, keyword density, length comparison
+  - **SEO Optimizer**: On-page SEO recommendations
+  - **Meta Creator**: Multiple meta title/description options
+  - **Internal Linker**: Specific internal linking suggestions
+  - **Keyword Mapper**: Keyword placement and density analysis
+  
+  All agent reports are saved to the `/drafts/` directory alongside your article.
+</Note>
+
+### Check Your Results
+
+Your `/drafts/` directory now contains:
+
+```
+drafts/
+├── podcast-editing-software-2025-03-04.md          # Main article
+├── content-analysis-podcast-editing-software-2025-03-04.md
+├── seo-report-podcast-editing-software-2025-03-04.md
+├── meta-options-podcast-editing-software-2025-03-04.md
+├── link-suggestions-podcast-editing-software-2025-03-04.md
+└── keyword-analysis-podcast-editing-software-2025-03-04.md
+```
+
+## That's It! 🎉
+
+You now have:
+
+<CardGroup cols={2}>
+  <Card title="Complete Article" icon="file-lines">
+    2,000+ words of SEO-optimized content in your brand voice
+  </Card>
+  <Card title="Meta Elements" icon="tags">
+    Optimized title, description, and keywords ready for publishing
+  </Card>
+  <Card title="SEO Analysis" icon="chart-line">
+    Comprehensive SEO optimization report with recommendations
+  </Card>
+  <Card title="Multiple Options" icon="list">
+    Multiple meta title/description variations to choose from
+  </Card>
+</CardGroup>
+
+## Next Steps
+
+### To Publish Your Article
+
+<Steps>
+  <Step title="Review the Article">
+    Open the article in `/drafts/[topic]-[date].md` and read through it
+  </Step>
+  
+  <Step title="Review Agent Feedback">
+    Check the analysis reports for any high-priority recommendations
+  </Step>
+  
+  <Step title="Make Edits">
+    Apply any necessary improvements based on agent feedback
+  </Step>
+  
+  <Step title="Final Optimization">
+    Run `/optimize [file]` for a final SEO audit:
+    ```
+    /optimize drafts/podcast-editing-software-2025-03-04.md
+    ```
+  </Step>
+  
+  <Step title="Publish">
+    Copy to your CMS or use `/publish-draft [file]` to publish directly to WordPress
+  </Step>
+</Steps>
+
+### To Improve Content Quality
+
+The more context you provide, the better your content will be:
+
+<AccordionGroup>
+  <Accordion title="Add More Writing Examples">
+    Add 2-3 more examples to `context/writing-examples.md`. The AI learns your style by studying real examples.
+  </Accordion>
+  
+  <Accordion title="Refine Your Brand Voice">
+    Update `context/brand-voice.md` with more specific guidance about tone, terminology, and messaging.
+  </Accordion>
+  
+  <Accordion title="Map Internal Links">
+    Fill out `context/internal-links-map.md` with your key pages. This enables strategic internal linking in every article.
+  </Accordion>
+  
+  <Accordion title="Add Target Keywords">
+    Organize your keyword research in `context/target-keywords.md` by topic cluster for better content planning.
+  </Accordion>
+  
+  <Accordion title="Configure SEO Guidelines">
+    Adjust `context/seo-guidelines.md` to match your specific SEO requirements.
+  </Accordion>
+</AccordionGroup>
+
+## Common Commands Reference
+
+Here are the most frequently used commands:
+
+### Core Workflow
+
+<CodeGroup>
+```bash Research & Writing
+/research [topic]           # Research before writing
+/write [topic]              # Create new article
+/optimize [file]            # Final SEO polish
+/scrub [file]               # Remove AI watermarks
+```
+
+```bash Content Updates
+/analyze-existing [URL]     # Analyze existing post
+/rewrite [topic]            # Update old content
+/article [topic]            # Simplified article creation
+```
+
+```bash Publishing
+/publish-draft [file]       # Publish to WordPress
+```
+</CodeGroup>
+
+### Research Commands
+
+<CodeGroup>
+```bash Deep Research
+/research-serp [keyword]    # SERP analysis for keyword
+/research-gaps              # Competitor content gaps
+/research-trending          # Trending topic opportunities
+/research-topics            # Topic cluster research
+/research-performance       # Performance-based priorities
+```
+</CodeGroup>
+
+### Landing Page Commands
+
+<CodeGroup>
+```bash Landing Pages
+/landing-write [topic]      # Create landing page
+/landing-audit [file]       # Audit for CRO issues
+/landing-research [topic]   # Research positioning
+/landing-competitor [URL]   # Analyze competitor landing page
+```
+</CodeGroup>
+
+### Analysis & Strategy
+
+<CodeGroup>
+```bash Analytics & Strategy
+/performance-review         # Analytics-driven priorities
+/priorities                 # Content prioritization matrix
+```
+</CodeGroup>
+
+## Real-World Example
+
+Want to see a complete example? Check the `examples/castos/` directory in the repository:
+
+```
+examples/castos/
+├── brand-voice.md          # Complete brand voice guide
+├── features.md             # Product features
+├── writing-examples.md     # 5 real blog post examples
+├── internal-links-map.md   # Internal linking strategy
+└── target-keywords.md      # Keyword research by cluster
+```
+
+This shows how a real podcast hosting SaaS company uses SEO Machine for their content.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Content doesn't sound like my brand">
+    **Problem**: Articles don't match your brand voice
+    
+    **Solution**:
+    1. Add more specific guidance to `context/brand-voice.md`
+    2. Include more diverse examples in `context/writing-examples.md`
+    3. Reference specific examples when using commands: `/write [topic] using style from example 2`
+  </Accordion>
+  
+  <Accordion title="Keywords feel forced or unnatural">
+    **Problem**: Keyword integration sounds robotic
+    
+    **Solution**:
+    1. Review `context/seo-guidelines.md` and adjust target density (1-2% recommended)
+    2. Use `/optimize [file]` to get specific keyword placement suggestions
+    3. Run the Keyword Mapper agent for distribution analysis
+  </Accordion>
+  
+  <Accordion title="Internal links aren't relevant">
+    **Problem**: Suggested internal links don't fit the content
+    
+    **Solution**:
+    1. Update `context/internal-links-map.md` with your current pages
+    2. Organize pages by topic cluster for easier matching
+    3. Provide more context about what each page covers
+  </Accordion>
+  
+  <Accordion title="Articles too similar to competitors">
+    **Problem**: Content doesn't stand out from competitors
+    
+    **Solution**:
+    1. Update `context/competitor-analysis.md` with differentiation opportunities
+    2. Add your unique advantages to `context/features.md`
+    3. Use the research phase to identify content gaps: `/research [topic]`
+  </Accordion>
+</AccordionGroup>
+
+## Pro Tips
+
+<Tip>
+  **Always research first**: Run `/research [topic]` before `/write [topic]`. Research briefs provide the foundation for high-quality, competitive content.
+</Tip>
+
+<Tip>
+  **Review agent feedback**: The automated agents provide valuable insights. Don't skip reading the analysis reports in your `/drafts/` directory.
+</Tip>
+
+<Tip>
+  **Iterate on context files**: Your context files are living documents. Update them regularly as your brand voice evolves and you publish more content.
+</Tip>
+
+<Tip>
+  **Use the examples directory**: Study `examples/castos/` to see how a real company configured their context files for production content.
+</Tip>
+
+## Need Help?
+
+<CardGroup cols={2}>
+  <Card title="Full Documentation" icon="book" href="/">
+    Read the complete README for advanced features
+  </Card>
+  <Card title="Configuration Guide" icon="gear" href="/configuration">
+    Deep dive into context files and settings
+  </Card>
+  <Card title="API Setup" icon="plug" href="/installation#step-5-configure-api-integrations-optional">
+    Configure Google Analytics and Search Console
+  </Card>
+  <Card title="Report Issues" icon="bug">
+    Found a bug? Report it on GitHub Issues
+  </Card>
+</CardGroup>
+
+---
+
+**Ready to scale your content?** With SEO Machine configured, you can create high-quality, SEO-optimized articles in a fraction of the time it takes manually. Happy writing! 📝

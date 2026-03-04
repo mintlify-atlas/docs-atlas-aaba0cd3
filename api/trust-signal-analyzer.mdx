@@ -1,0 +1,313 @@
+---
+title: 'Trust Signal Analyzer'
+description: 'Analyze trust signals: testimonials, social proof, authority, risk reversals, and security'
+---
+
+## Overview
+
+The `TrustSignalAnalyzer` class analyzes trust signals in landing page content, detecting testimonials, social proof, authority signals, risk reversals, and security indicators.
+
+## Installation
+
+```python
+from data_sources.modules.trust_signal_analyzer import TrustSignalAnalyzer, analyze_trust_signals
+```
+
+## Initialization
+
+```python
+analyzer = TrustSignalAnalyzer()
+```
+
+## Methods
+
+### analyze
+
+Analyze trust signals in landing page content.
+
+```python
+result = analyzer.analyze(content)
+```
+
+<ParamField path="content" type="str" required>
+  Landing page content (markdown)
+</ParamField>
+
+<ResponseField name="result" type="dict">
+  <ResponseField name="overall_score" type="int">
+    Overall trust signal score (0-100)
+  </ResponseField>
+  <ResponseField name="grade" type="str">
+    Letter grade (A-F)
+  </ResponseField>
+  <ResponseField name="summary" type="dict">
+    High-level summary
+    <ResponseField name="testimonials_found" type="int">
+      Number of testimonials detected
+    </ResponseField>
+    <ResponseField name="has_social_proof" type="bool">
+      Has customer counts or specific results
+    </ResponseField>
+    <ResponseField name="has_risk_reversal" type="bool">
+      Has risk reversal elements
+    </ResponseField>
+    <ResponseField name="authority_signals" type="int">
+      Number of authority signals
+    </ResponseField>
+    <ResponseField name="security_present" type="bool">
+      Has security indicators
+    </ResponseField>
+  </ResponseField>
+  <ResponseField name="details" type="dict">
+    Detailed analysis by category
+  </ResponseField>
+  <ResponseField name="recommendations" type="list">
+    Prioritized recommendations
+  </ResponseField>
+  <ResponseField name="strengths" type="list">
+    Identified strengths
+  </ResponseField>
+  <ResponseField name="weaknesses" type="list">
+    Identified weaknesses
+  </ResponseField>
+</ResponseField>
+
+## Trust Signal Categories
+
+### Testimonials (up to 35 points)
+
+Detected patterns:
+- Quoted text (20-300 characters): `"This product changed my business"`
+- Attribution with name: `— Sarah M.`, `**John D.**`
+- With company: `Sarah M., The Creative Hour`
+
+Quality levels:
+- **Strong**: Has specifics (numbers, results) + attribution
+- **Moderate**: Has attribution only
+- **Weak**: Quote without attribution
+
+### Social Proof (up to 30 points)
+
+**Customer counts**:
+- "50,000+ customers"
+- "trusted by thousands"
+- "join 10K+ podcasters"
+
+**Specific results**:
+- "300% growth"
+- "$5,000 saved"
+- "10,000 downloads"
+- "3x more engagement"
+
+**Time results**:
+- "in just 5 minutes"
+- "launched in 1 hour"
+- "set up in 30 seconds"
+
+### Risk Reversals (up to 25 points)
+
+**Free trial**:
+- "free 14-day trial"
+- "try free for 30 days"
+- "start free"
+
+**No credit card**:
+- "no credit card required"
+- "no credit card needed"
+- "credit card not required"
+
+**Cancel anytime**:
+- "cancel anytime"
+- "no commitment"
+- "no contract"
+- "month-to-month"
+
+**Guarantee**:
+- "money-back guarantee"
+- "30-day guarantee"
+- "risk-free"
+- "full refund"
+
+Strong risk reversal: 3+ categories present
+
+### Authority Signals (up to 10 points)
+
+**Media mentions**:
+- "as seen in TechCrunch"
+- "featured on Forbes"
+- "mentioned in Wired"
+
+**Awards**:
+- "award-winning"
+- "2024 winner"
+- "best podcast platform"
+- "rated #1"
+
+**Certifications**:
+- "SOC 2 certified"
+- "GDPR compliant"
+- "ISO certified"
+
+**Partnerships**:
+- "official Spotify partner"
+- "integrated with Apple Podcasts"
+- "authorized reseller"
+
+**Experience**:
+- "since 2017"
+- "10+ years experience"
+- "trusted since 2015"
+
+### Security Signals (informational)
+
+**Privacy**:
+- "privacy policy"
+- "your data is safe"
+- "we never sell your data"
+
+**Encryption**:
+- "SSL encrypted"
+- "256-bit encryption"
+- "secure connection"
+
+**Compliance**:
+- "GDPR compliant"
+- "SOC 2 certified"
+- "HIPAA compliant"
+
+## Scoring Breakdown
+
+```python
+# Testimonials (up to 35 points)
+if testimonials >= 3:    score += 25
+elif testimonials >= 2:  score += 20
+elif testimonials >= 1:  score += 10
+
+if has_strong_testimonials:     score += 10
+elif has_attributed_testimonials: score += 5
+
+# Social Proof (up to 30 points)
+if has_customer_count:    score += 15
+if has_specific_results:  score += 15
+
+# Risk Reversals (up to 25 points)
+if strong_risk_reversal (3+ categories):  score += 25
+elif 2 categories:                        score += 20
+elif 1 category:                          score += 10
+
+# Authority (up to 10 points)
+if authority_count >= 3:  score += 10
+elif authority_count >= 1: score += 5
+```
+
+## Recommendations
+
+### High Priority
+- Add 2-3 testimonials with names
+- Add customer count ("Join 50,000+ customers")
+- Add risk reversal near CTAs
+
+### Medium Priority
+- Add specific customer results with numbers
+- Strengthen risk reversal (add more categories)
+- Include authority signals
+
+### Low Priority
+- Consider adding security indicators
+- Add media mentions or awards
+- Include years in business
+
+## Convenience Function
+
+```python
+from data_sources.modules.trust_signal_analyzer import analyze_trust_signals
+
+result = analyze_trust_signals(content)
+```
+
+## Example Usage
+
+```python
+from data_sources.modules.trust_signal_analyzer import TrustSignalAnalyzer
+
+# Read landing page
+with open('landing-pages/podcast-hosting.md', 'r') as f:
+    content = f.read()
+
+# Analyze trust signals
+analyzer = TrustSignalAnalyzer()
+result = analyzer.analyze(content)
+
+print("=== Trust Signal Analysis ===")
+print(f"\nOverall Score: {result['overall_score']}/100")
+print(f"Grade: {result['grade']}")
+
+print(f"\nSummary:")
+for key, value in result['summary'].items():
+    print(f"  {key}: {value}")
+
+print(f"\nStrengths:")
+for s in result['strengths']:
+    print(f"  ✓ {s}")
+
+print(f"\nWeaknesses:")
+for w in result['weaknesses']:
+    print(f"  ✗ {w}")
+
+if result['recommendations']:
+    print(f"\nRecommendations:")
+    for rec in result['recommendations'][:3]:
+        print(f"  [{rec['priority'].upper()}] {rec['recommendation']}")
+
+# Detailed breakdown
+print(f"\nDetailed Analysis:")
+details = result['details']
+
+if details['testimonials']['count'] > 0:
+    print(f"\nTestimonials: {details['testimonials']['count']}")
+    for t in details['testimonials']['testimonials']:
+        print(f"  - \"{t['quote']}\"")
+        if t['attribution']:
+            print(f"    — {t['attribution']}")
+        print(f"    Quality: {t['quality']}")
+
+if details['social_proof']['customer_counts']:
+    print(f"\nCustomer Counts:")
+    for cc in details['social_proof']['customer_counts']:
+        print(f"  - {cc['context']}")
+
+if details['social_proof']['specific_results']:
+    print(f"\nSpecific Results:")
+    for sr in details['social_proof']['specific_results'][:3]:
+        print(f"  - {sr['context']}")
+```
+
+## Example Trust Signals
+
+```markdown
+# Good Trust Signal Examples
+
+## Testimonials
+"Castos helped me grow my audience by 300% in the first year. The analytics alone are worth it."
+— **Sarah M., The Creative Hour**
+
+"I launched in one afternoon and had 10,000 users within 3 months."
+— **Marcus T., Tech Talk Daily**
+
+## Social Proof
+Join 50,000+ podcasters who trust Castos.
+
+## Risk Reversal
+14-day free trial. No credit card required. Cancel anytime.
+
+## Authority
+As featured in TechCrunch, Forbes, and Wired. Since 2017.
+```
+
+## Source Code Reference
+
+Location: `data_sources/modules/trust_signal_analyzer.py:17`
+
+See also:
+- [Landing Page Scorer](/api/landing-page-scorer) - Overall landing page scoring
+- [CTA Analyzer](/api/cta-analyzer) - CTA quality analysis

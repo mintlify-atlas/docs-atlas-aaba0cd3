@@ -1,0 +1,565 @@
+---
+title: Style Guide Configuration
+description: Define grammar, formatting, and editorial standards for consistent content quality
+---
+
+The `style-guide.md` context file establishes grammar, formatting, and editorial standards for all content. It ensures consistency across articles and provides clear guidelines for writing and editing.
+
+## Location
+
+**Template:** `~/workspace/source/context/style-guide.md`
+
+**Example:** `~/workspace/source/examples/castos/` (contains Castos-specific style guide)
+
+## What It Defines
+
+The style guide file contains:
+
+- **Grammar & Mechanics** - Capitalization, numbers, punctuation rules
+- **Word Choice & Usage** - Preferred terms, words to avoid, inclusive language
+- **Formatting Standards** - Text formatting, lists, links, code elements
+- **Content Structure** - Introduction, section, and conclusion templates
+- **SEO-Specific Style** - Meta elements, URL slugs, alt text
+- **Dates & Statistics** - How to format dates, times, and data
+- **Accessibility** - Screen reader and plain language standards
+
+## Grammar & Mechanics
+
+### Capitalization
+
+Define capitalization rules for:
+
+**Headlines & Subheadings:**
+```markdown
+**Decision**: Title Case for H1, Sentence case for H2-H6
+
+**Examples:**
+- H1: "How to Start a Podcast in 2025"
+- H2: "Choose your podcast hosting platform"
+- H3: "Evaluate hosting features"
+```
+
+**Product Names:**
+```markdown
+- Castos: Always capitalized
+- Seriously Simple Podcasting: Title case
+- podcast RSS feed: lowercase "podcast", uppercase "RSS"
+```
+
+**Industry Terms:**
+```markdown
+- podcast / Podcast: lowercase (common noun)
+- RSS: Always uppercase (acronym)
+- SEO: Always uppercase (acronym)
+- WordPress: Capital P (official brand style)
+```
+
+### Numbers
+
+Establish when to spell out numbers vs. use numerals:
+
+```markdown
+**When to Spell Out:**
+- Spell out: One through nine
+- Use numerals: 10 and above
+
+**Exceptions:**
+- Percentages: Always numerals (5%, 50%)
+- Money: Always numerals ($5, $500)
+- Measurements: Always numerals (5 GB, 50 MB)
+- Lists/stats: Always numerals for scannability
+
+**Large Numbers:**
+- Use commas: 1,000+ 
+- Spell out millions: 1 million, 5 billion
+```
+
+### Punctuation
+
+**Oxford Comma:**
+```markdown
+**Decision**: Yes, always use Oxford comma
+
+**Examples:**
+- ✅ "A, B, and C"
+- ❌ "A, B and C"
+```
+
+**Em Dashes:**
+```markdown
+**Style**: — (em dash, no spaces)
+
+**Usage**: For parenthetical statements or emphasis
+
+**Example**: "Podcast analytics—when used correctly—drive better content decisions."
+```
+
+**Quotation Marks:**
+```markdown
+**Decision**: "Straight quotes" for simplicity
+
+**Usage**:
+- Direct quotes from sources
+- Titles of episodes or articles
+- Avoid air quotes for emphasis (use italics instead)
+```
+
+### Abbreviations & Acronyms
+
+```markdown
+**First Use Rule:**
+Spell out on first use with acronym in parentheses
+
+**Example**: "Really Simple Syndication (RSS) feeds distribute your podcast to all major platforms. Your RSS feed updates automatically..."
+
+**Exceptions for universally known:**
+- SEO (Search Engine Optimization)
+- URL (Uniform Resource Locator)
+- CTA (Call-to-Action)
+- API (Application Programming Interface)
+
+**Common Podcasting Acronyms:**
+- RSS: Really Simple Syndication
+- DAI: Dynamic Ad Insertion
+- IAB: Interactive Advertising Bureau
+- CPM: Cost Per Mille (thousand impressions)
+```
+
+## Word Choice & Usage
+
+### Preferred Terms
+
+Document your terminology preferences:
+
+```markdown
+**Say This** → **Not That** (Reason)
+
+- podcast creators → podcasters (more inclusive, not all identify as "podcasters")
+- listeners → subscribers (listeners is more accurate)
+- podcast hosting → podcast storage (hosting is the industry term)
+- analytics → stats (analytics is more professional/comprehensive)
+- show notes → episode description (show notes is the industry standard)
+- monetize → monetise (US English spelling)
+```
+
+### Words to Avoid
+
+List words and phrases to eliminate:
+
+```markdown
+**Avoid:**
+- "Very", "really", "actually" (usually unnecessary)
+- "Click here" or "Read more" (use descriptive links)
+- "Utilize" (say "use")
+- "Leverage" (unless referring to actual leverage)
+- "Best practices" (overused; be specific)
+- "Cutting-edge" or "innovative" (show, don't tell)
+- Passive voice when active is clearer
+```
+
+### Inclusive Language
+
+```markdown
+**Guidelines:**
+- Use gender-neutral language ("they" instead of "he/she")
+- "Podcast creator" instead of gendered terms
+- Avoid idioms that may not translate globally
+- Be mindful of accessibility in descriptions
+- Use people-first language when discussing disabilities
+```
+
+## Formatting Standards
+
+### Text Formatting
+
+**Bold:**
+```markdown
+**Use for:**
+- Key concepts first mentioned
+- Important takeaways
+- Terms being defined
+
+**Don't overuse:** If everything is bold, nothing stands out
+
+**Example:** "**Keyword density** refers to how often your target keyword appears in your content."
+```
+
+**Italics:**
+```markdown
+**Use for:**
+- Emphasis (sparingly)
+- Titles of podcasts/books/articles
+- Foreign phrases
+
+**Example:** "The term *podcast* combines 'iPod' and 'broadcast'."
+```
+
+**Underline:**
+```markdown
+**Decision:** Generally avoid (reserve for links)
+```
+
+**ALL CAPS:**
+```markdown
+**Decision:** Avoid except for standard acronyms (RSS, SEO, API)
+```
+
+### Lists
+
+**Bulleted Lists:**
+```markdown
+**Use for:** Non-sequential items, features, benefits
+
+**Style:**
+- Capitalize first word
+- Period if complete sentence, no period if fragment
+- Parallel structure (all sentences or all fragments)
+
+**Example:**
+- Choose your podcast topic
+- Set up hosting
+- Record your first episode
+```
+
+**Numbered Lists:**
+```markdown
+**Use for:** Sequential steps, rankings, ordered priorities
+
+**Format:** 1. 2. 3. (with period after number)
+
+**Example:**
+1. Research your target keyword
+2. Analyze top-ranking competitors
+3. Create comprehensive content
+4. Optimize for featured snippets
+```
+
+### Links
+
+**Anchor Text:**
+```markdown
+**Guidelines:**
+- Descriptive (tell reader where they're going)
+- Keyword-rich when possible
+- 2-5 words typically
+
+**Examples:**
+- ✅ "Learn more about podcast SEO"
+- ✅ "our complete guide to podcast analytics"
+- ❌ "Click here"
+- ❌ "Read more"
+```
+
+**Link Formatting:**
+```markdown
+**Internal links:** No special attributes
+**External links:** No special attributes (search engines ignore nofollow on editorial links)
+**Affiliate links:** Use rel="sponsored"
+```
+
+### Code & Technical Elements
+
+**Inline Code:**
+```markdown
+**Use backticks for:**
+- URLs
+- File names
+- Code snippets
+- Terminal commands
+
+**Example:** "Your RSS feed URL is `https://feeds.castos.com/your-show`"
+```
+
+**Code Blocks:**
+```markdown
+**Use for:** Multi-line code, configuration examples
+
+**Include language identifier:**
+
+\`\`\`bash
+cp .env.example .env
+\`\`\`
+```
+
+## Content Structure
+
+### Article Introduction
+
+Define standard introduction structure:
+
+```markdown
+**Standard Structure** (150-250 words):
+
+1. **Hook** (1-2 sentences): Grab attention
+   - Question, statistic, or bold statement
+   
+2. **Problem** (2-3 sentences): What challenge does this address?
+   - Articulate reader pain point
+   
+3. **Promise** (2-3 sentences): What will reader learn/achieve?
+   - Clear benefit and outcome
+   
+4. **Credibility** (optional, 1-2 sentences): Why trust this source?
+   - Data, experience, or authority
+
+**Keyword Placement:**
+- Must include primary keyword in first 100 words
+- Natural integration, not forced
+```
+
+### Section Length
+
+```markdown
+**Guidelines:**
+- Minimum: 150 words per section
+- Maximum: 500 words per section (break into subsections if longer)
+- Ideal: 250-350 words per main section
+```
+
+### Conclusion
+
+```markdown
+**Standard Structure** (150-250 words):
+
+1. **Recap** (3-5 bullet points or paragraph): Key takeaways
+2. **Action** (1-2 sentences): What should reader do next?
+3. **CTA** (1-2 sentences): Call-to-action
+4. **Forward-looking** (optional, 1 sentence): Encouraging final thought
+```
+
+## SEO-Specific Style
+
+### Meta Titles
+
+```markdown
+**Requirements:**
+- 50-60 characters including spaces
+- Include primary keyword
+- Include "| Castos" if space allows
+- No ending punctuation
+
+**Examples:**
+- ✅ "How to Start a Podcast in 2025 | Complete Guide"
+- ❌ "Podcast Tips and Tricks" (too vague, no keyword)
+```
+
+### Meta Descriptions
+
+```markdown
+**Requirements:**
+- 150-160 characters including spaces
+- Include primary keyword
+- Include call-to-action
+- End with complete thought
+
+**Formula:**
+[Problem/Question]? [Solution/Benefit]. [Unique angle]. [CTA].
+
+**Example:**
+"Learn how to start a podcast with our step-by-step guide. Everything from equipment to launch strategy. Perfect for beginners. Start today." (159 chars)
+```
+
+### URL Slugs
+
+```markdown
+**Requirements:**
+- Lowercase only
+- Hyphens between words
+- Include primary keyword
+- 3-5 words ideal
+
+**Format:** /blog/primary-keyword-phrase
+
+**Examples:**
+- ✅ /blog/start-podcast-guide
+- ✅ /blog/podcast-analytics
+- ❌ /blog/how-to-start-a-podcast-in-2025-the-complete-guide (too long)
+```
+
+### Alt Text
+
+```markdown
+**Requirements:**
+- Describe what image shows
+- Include keyword naturally if relevant
+- 125 characters or less
+- No "image of" or "picture of" (implied)
+
+**Examples:**
+- ✅ "Podcast editing software interface showing waveform and timeline"
+- ❌ "Image"
+- ❌ "Picture of podcast editing software"
+```
+
+## Dates & Statistics
+
+### Date Format
+
+```markdown
+**Decision:** Month DD, YYYY
+
+**Examples:**
+- January 15, 2025
+- March 4, 2026
+```
+
+### Time Format
+
+```markdown
+**Decision:** 12-hour format with a.m./p.m.
+
+**Examples:**
+- 3:00 p.m. EST
+- 9:00 a.m. Pacific
+```
+
+### Presenting Statistics
+
+```markdown
+**Guidelines:**
+- Always cite sources
+- Link to original source when possible
+- Include year of data
+- Round large numbers for readability
+
+**Format:**
+"According to [Source], [statistic]."
+
+**Examples:**
+- Use % symbol: 15% (not "percent")
+- Use $ for money: $500 (not "dollars")
+- Include commas: 10,000 (not 10000)
+- Round large numbers: "1.2 million" (not "1,234,567")
+```
+
+## Accessibility
+
+### Screen Reader Friendly
+
+```markdown
+**Requirements:**
+- Descriptive link text (not "click here")
+- Image alt text for all images
+- Proper heading hierarchy (H1→H2→H3, no skipping)
+- Descriptive table headers
+```
+
+### Plain Language
+
+```markdown
+**Guidelines:**
+- Write at 8th-10th grade level
+- Define technical terms on first use
+- Use short sentences and paragraphs
+- Break complex ideas into digestible chunks
+```
+
+## Configuration Steps
+
+### 1. Copy the Template
+
+```bash
+cp ~/workspace/source/context/style-guide.md ~/workspace/source/context/my-style-guide.md
+```
+
+### 2. Make Decisions
+
+Work through each section and make choices:
+
+- Oxford comma: Yes or no?
+- Headline capitalization: Title case or sentence case?
+- Date format: Month DD, YYYY or DD Month YYYY?
+- Number rules: Spell out which numbers?
+
+### 3. Document Terminology
+
+Create your "Say This → Not That" list:
+
+- Industry-specific terms
+- Product names
+- Competitive references
+- Technical terminology
+
+### 4. Define Formatting Standards
+
+Establish rules for:
+
+- When to use bold vs. italics
+- List formatting and punctuation
+- Link anchor text guidelines
+- Code formatting
+
+### 5. Create Templates
+
+Write templates for:
+
+- Article introductions
+- Article conclusions
+- Section structures
+- Common content patterns
+
+### 6. Test Consistency
+
+Generate content and check:
+
+```bash
+/write "Test Article Topic"
+```
+
+Review for consistent application of style rules.
+
+## Quality Checklist
+
+Before finalizing your style guide:
+
+- [ ] **All decisions documented** - No ambiguous rules
+- [ ] **Examples provided** - Show correct and incorrect usage
+- [ ] **Comprehensive coverage** - Grammar, formatting, structure, SEO
+- [ ] **Industry-specific terms** - Your terminology preferences
+- [ ] **Consistent with brand voice** - Style supports voice guidelines
+- [ ] **Accessibility considered** - Plain language and screen reader standards
+- [ ] **Templates included** - Standard structures for common content
+- [ ] **Tested with content** - Style rules apply correctly in practice
+
+## Common Mistakes
+
+### Making No Decisions
+
+❌ **Bad:** Leaving template checkboxes empty
+
+✅ **Good:** Making clear choices and documenting them
+
+### Being Too Rigid
+
+❌ **Bad:** "Never use passive voice"
+
+✅ **Good:** "Prefer active voice; use passive when subject is unknown or unimportant"
+
+### No Examples
+
+❌ **Bad:** "Use descriptive link text"
+
+✅ **Good:** "Use descriptive link text: 'our guide to podcast SEO' not 'click here'"
+
+### Inconsistent with Voice
+
+❌ **Bad:** Formal style guide with casual brand voice
+
+✅ **Good:** Style rules that support your brand voice
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="SEO Guidelines" icon="chart-line" href="/reference/seo-guidelines">
+    Configure SEO optimization standards
+  </Card>
+  <Card title="Brand Voice" icon="microphone" href="/reference/brand-voice">
+    Define your brand voice and tone
+  </Card>
+  <Card title="Write Content" icon="pencil" href="/commands/write">
+    Generate content with consistent style
+  </Card>
+  <Card title="Context Files Overview" icon="folder" href="/reference/context-files">
+    Learn about all context files
+  </Card>
+</CardGroup>

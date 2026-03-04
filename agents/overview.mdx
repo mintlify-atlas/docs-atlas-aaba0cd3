@@ -1,0 +1,155 @@
+---
+title: "Agents Overview"
+description: "Learn how specialized agents in SEO Machine analyze, optimize, and enhance your content automatically"
+---
+
+SEO Machine uses **specialized agents** to automate content optimization. Each agent is an expert in a specific domain—from keyword analysis to readability editing—and runs automatically as part of your content workflow.
+
+## What Are Agents?
+
+Agents are specialized AI assistants with deep expertise in specific SEO and content tasks. When you run commands like `/write` or `/optimize`, multiple agents work together to analyze and improve your content.
+
+Think of agents as your content team:
+- **Content Analyzer** is your data scientist who runs the numbers
+- **SEO Optimizer** is your on-page SEO specialist
+- **Meta Creator** is your conversion copywriter
+- **Internal Linker** is your site architect
+- **Keyword Mapper** is your keyword strategist
+- **Editor** is your content editor who makes it human
+- **Performance Agent** is your analytics strategist
+
+## How Agents Work
+
+Agents are defined in `.claude/agents/` and invoked by commands:
+
+1. **Command triggers workflow** - You run `/write [topic]`
+2. **Article is generated** - Initial draft is created
+3. **Agents run automatically** - Multiple agents analyze and optimize
+4. **You receive recommendations** - Each agent provides specific feedback
+
+## Agent Pipeline
+
+After `/write` creates a draft, these agents run in sequence:
+
+```
+1. SEO Optimizer → On-page optimization analysis
+2. Meta Creator → Title and description variations
+3. Internal Linker → Link placement recommendations
+4. Keyword Mapper → Keyword distribution analysis
+5. Editor → Readability and human voice improvements
+```
+
+Each agent saves its output to help you refine the article before publishing.
+
+## Core Agents
+
+### Analysis Agents
+
+<Card title="Content Analyzer" icon="chart-mixed" href="/agents/content-analyzer">
+  Runs 5 Python modules to analyze search intent, keyword density, content length vs competitors, readability scores, and overall SEO quality (0-100).
+</Card>
+
+<Card title="Performance" icon="chart-line" href="/agents/performance">
+  Uses GA4, Google Search Console, and DataForSEO to identify quick wins, declining content, low CTR pages, and trending opportunities.
+</Card>
+
+### Optimization Agents
+
+<Card title="SEO Optimizer" icon="magnifying-glass" href="/agents/seo-optimizer">
+  Analyzes keyword placement, content structure, link strategy, technical SEO elements, and provides scored recommendations with quick wins.
+</Card>
+
+<Card title="Keyword Mapper" icon="location-dot" href="/agents/keyword-mapper">
+  Maps keyword distribution throughout the article, calculates density, identifies gaps, and recommends specific placements.
+</Card>
+
+<Card title="Internal Linker" icon="link" href="/agents/internal-linker">
+  Recommends 3-5 internal links with exact placement locations, descriptive anchor text, and topic cluster awareness.
+</Card>
+
+### Content Enhancement Agents
+
+<Card title="Meta Creator" icon="tag" href="/agents/meta-creator">
+  Generates 5 variations each of meta titles and descriptions optimized for CTR, with character counts and SERP preview.
+</Card>
+
+<Card title="Editor" icon="pen" href="/agents/editor">
+  Transforms robotic AI content into human-sounding writing with personality, specific examples, and natural flow while preserving SEO value.
+</Card>
+
+## When Agents Run
+
+### Automatic Invocation
+
+Agents run automatically after these commands:
+- `/write [topic]` → SEO Optimizer, Meta Creator, Internal Linker, Keyword Mapper
+- `/optimize [file]` → All optimization agents
+- `/analyze-existing [URL]` → Content Analyzer
+- `/performance-review` → Performance Agent
+
+### Manual Invocation
+
+You can also invoke agents manually:
+```
+Use the @content-analyzer agent to analyze this article
+```
+
+## Agent Output
+
+Each agent creates a detailed report with:
+- **Scores and metrics** - Quantified analysis
+- **Specific recommendations** - Exact changes with locations
+- **Priority levels** - Critical, high, medium, low
+- **Example revisions** - Before/after text samples
+- **Actionable checklists** - Steps to implement
+
+## Integration with Commands
+
+Agents work seamlessly with the command system:
+
+| Command | Agents Invoked |
+|---------|---------------|
+| `/write` | SEO Optimizer, Meta Creator, Internal Linker, Keyword Mapper |
+| `/optimize` | All optimization agents |
+| `/analyze-existing` | Content Analyzer |
+| `/performance-review` | Performance Agent |
+| `/article` | Simplified agent pipeline |
+
+## Customizing Agent Behavior
+
+Agents are defined in Markdown files in `.claude/agents/`. You can:
+- Modify agent instructions
+- Add new analysis modules
+- Adjust scoring criteria
+- Customize output formats
+
+See individual agent documentation for specific customization options.
+
+## Best Practices
+
+**Trust the data**: Agents use real analytics and competitor data, not guesswork.
+
+**Review all recommendations**: Agents provide suggestions—you make final decisions.
+
+**Start with quick wins**: Prioritize high-impact, low-effort recommendations first.
+
+**Preserve SEO value**: When editing based on agent feedback, maintain keyword optimization.
+
+**Iterate**: Run agents multiple times as you refine content.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Content Analyzer" icon="chart-mixed" href="/agents/content-analyzer">
+    Deep dive into the 5-module analysis pipeline
+  </Card>
+  <Card title="SEO Optimizer" icon="magnifying-glass" href="/agents/seo-optimizer">
+    Learn about on-page SEO recommendations
+  </Card>
+  <Card title="Performance Agent" icon="chart-line" href="/agents/performance">
+    Discover data-driven prioritization
+  </Card>
+  <Card title="Editor" icon="pen" href="/agents/editor">
+    Make AI content sound human
+  </Card>
+</CardGroup>

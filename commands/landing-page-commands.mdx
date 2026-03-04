@@ -1,0 +1,418 @@
+---
+title: Landing Page Commands
+description: Create, audit, and optimize high-converting landing pages for SEO and PPC campaigns
+---
+
+Landing page commands help you create conversion-optimized pages tailored for organic SEO traffic or paid PPC campaigns. These commands integrate CRO best practices, competitive analysis, and automated scoring to ensure publish-ready pages.
+
+## Available Landing Page Commands
+
+### /landing-write
+
+Create high-converting landing pages optimized for either organic SEO or paid PPC traffic.
+
+**Usage:**
+```bash
+/landing-write [topic or research brief] --type [seo|ppc] --goal [trial|demo|lead]
+```
+
+**Examples:**
+```bash
+/landing-write "podcast hosting for beginners" --type seo --goal trial
+/landing-write "research/landing-brief-private-podcasting.md" --type ppc --goal demo
+/landing-write "podcast monetization guide" --type seo --goal lead
+```
+
+**Defaults:**
+- `--type seo` (if not specified)
+- `--goal trial` (if not specified)
+
+**Page type specifications:**
+
+| Aspect | SEO Landing Page | PPC Landing Page |
+|--------|------------------|------------------|
+| **Word count** | 1500-2500 words | 400-800 words |
+| **CTAs** | 3-5 distributed | 2-3 prominent (same goal) |
+| **Internal links** | 2-3 strategic | 0-1 (minimize distractions) |
+| **SEO focus** | High (rankings) | Low (ad match) |
+| **Structure** | Educational flow | Conversion flow |
+
+**Conversion goals:**
+
+**Trial Goal:**
+- CTAs: "Start Your Free Trial →", "Try Free for 14 Days →"
+- Supporting copy: "No credit card required", "Cancel anytime"
+- Trust signals: User count, ease of setup
+
+**Demo Goal:**
+- CTAs: "Book Your Demo →", "Schedule a Call →"
+- Supporting copy: "15-minute walkthrough", "No pressure, no hard sell"
+- Trust signals: Enterprise logos, custom solutions
+
+**Lead Goal:**
+- CTAs: "Download the Free Guide →", "Get Instant Access →"
+- Supporting copy: "Instant download", "No spam, ever"
+- Trust signals: Community size, author credibility
+
+**Output:** `landing-pages/[topic-slug]-[YYYY-MM-DD].md`
+
+**Automatic processes:**
+1. Content scrubbed for AI watermarks
+2. Landing page scored (must be ≥75/100)
+3. Optimization agents run:
+   - Landing Page Optimizer
+   - Headline Generator (10+ variations)
+   - CRO Analyst
+
+**Required elements:**
+- Benefit-focused headline with keyword
+- Clear value proposition (1-2 sentences)
+- Primary CTA above the fold
+- Trust signal visible (customer count, rating, testimonial)
+- Risk reversal near CTAs
+- FAQ section (SEO pages)
+
+---
+
+### /landing-audit
+
+Audit existing landing pages for conversion optimization opportunities.
+
+**Usage:**
+```bash
+/landing-audit [URL or file path] --goal [trial|demo|lead]
+```
+
+**Examples:**
+```bash
+/landing-audit https://yoursite.com/podcast-hosting/
+/landing-audit landing-pages/podcast-hosting-beginners-2025-12-11.md --goal trial
+/landing-audit https://yoursite.com/pricing/ --goal trial
+```
+
+**What it analyzes:**
+
+1. **Landing Page Scorer** - Overall score (0-100) against CRO best practices
+2. **Above-the-Fold Analyzer** - Headline quality, value prop clarity, CTA visibility
+3. **CTA Analyzer** - CTA count, distribution, quality, goal alignment
+4. **Trust Signal Analyzer** - Testimonials, social proof, risk reversal
+5. **CRO Checker** - Checklist-based audit (30+ checks)
+
+**Output:** `audits/landing-audit-[slug]-[YYYY-MM-DD].md`
+
+**Report includes:**
+
+```markdown
+## Executive Summary
+- Overall Landing Page Score: XX/100
+- Above-the-Fold: XX/100
+- CTA Effectiveness: XX/100
+- Trust Signals: XX/100
+- Publishing Ready: Yes/No
+
+## Critical Issues (Fix Immediately)
+## Above-the-Fold Analysis
+## CTA Analysis
+## Trust Signal Analysis
+## CRO Checklist Summary
+## Performance Data (if available)
+## Prioritized Action Items
+## A/B Test Suggestions
+```
+
+**For yoursite.com pages:** Pulls GA4 performance data (page views, bounce rate, conversions)
+
+**Publishing criteria:**
+- Minimum score: 75/100
+- No critical issues
+- All required above-fold elements present
+
+---
+
+### /landing-research
+
+Research a landing page opportunity before creating it. Analyzes competitors, keywords, and provides strategic recommendations.
+
+**Usage:**
+```bash
+/landing-research [topic or keyword] --type [seo|ppc]
+```
+
+**Examples:**
+```bash
+/landing-research "podcast hosting for beginners" --type seo
+/landing-research "podcast free trial" --type ppc
+```
+
+**Research process:**
+
+**Step 1: Keyword & Intent Analysis**
+- SEO: Search volume, difficulty, related keywords, SERP features
+- PPC: Ad copy patterns, CPC, competition, message match requirements
+
+**Step 2: Competitor Analysis (5-10 competitors)**
+- Page length and structure
+- Headline patterns
+- CTA copy and placement
+- Trust signals used
+- Gaps to exploit
+
+**Step 3: Strategic Recommendations**
+- Primary positioning angle
+- 5+ headline options with formulas
+- Recommended CTA copy
+- Trust signals to include
+- Key objections to address
+
+**Output:** `research/landing-brief-[topic-slug]-[YYYY-MM-DD].md`
+
+**Report structure:**
+- Keyword analysis with search intent
+- SERP analysis (features, top results)
+- Competitor analysis (strengths/weaknesses)
+- Competitive patterns
+- Gaps & opportunities
+- Strategic recommendations
+- Content recommendations
+- Internal linking suggestions
+
+**Use the brief with:**
+```bash
+/landing-write research/landing-brief-[slug].md --type [type] --goal [goal]
+```
+
+---
+
+### /landing-publish
+
+Publish landing pages to WordPress as pages (not blog posts).
+
+**Usage:**
+```bash
+/landing-publish [file path] [options]
+```
+
+**Options:**
+- `--noindex` - Set noindex meta (for PPC pages)
+- `--template [slug]` - Use specific WordPress page template
+
+**Examples:**
+```bash
+/landing-publish landing-pages/podcast-hosting-beginners-2025-12-11.md
+/landing-publish landing-pages/free-trial-ppc-2025-12-11.md --noindex
+/landing-publish landing-pages/pricing-comparison-2025-12-11.md --template landing-page
+```
+
+**Publishing process:**
+
+1. **Validation** - Checks file exists and has required metadata
+2. **Score check** - Must be ≥75/100 (aborts if too low)
+3. **Content preparation** - Converts markdown to HTML, prepares Yoast fields
+4. **WordPress API call** - Creates page as draft
+5. **Additional settings** - Sets noindex for PPC, applies template
+
+**Required metadata:**
+```markdown
+# [H1 Headline]
+
+**Meta Title**: [50-60 characters]
+**Meta Description**: [150-160 characters]
+**Target Keyword**: [primary keyword]
+**Page Type**: seo | ppc
+**Conversion Goal**: trial | demo | lead
+**URL Slug**: /[page-slug]/
+```
+
+**Output:**
+- WordPress draft created
+- Edit URL provided for review
+- Landing page score displayed
+
+**Post-publish tasks:**
+1. Review formatting in WordPress
+2. Add featured image and visuals
+3. Verify Yoast green lights
+4. Publish live when ready
+
+**Differences from /publish-draft:**
+
+| Aspect | Blog Posts | Landing Pages |
+|--------|------------|---------------|
+| WordPress type | Post | Page |
+| Categories/tags | Yes | No |
+| Score required | ≥70 | ≥75 |
+| noindex option | No | Yes |
+| Template option | No | Yes |
+| Output directory | drafts/ | landing-pages/ |
+
+---
+
+### /landing-competitor
+
+Analyze a specific competitor's landing page in depth.
+
+**Usage:**
+```bash
+/landing-competitor [URL]
+```
+
+**Examples:**
+```bash
+/landing-competitor https://competitor1.com/pricing/
+/landing-competitor https://competitor2.com/features/
+```
+
+**Analysis framework:**
+
+1. **Page Overview** - URL, page type, word count, structure, conversion goal
+2. **Above-the-Fold** - Headline, value prop, CTA, trust signals
+3. **Content Strategy** - Key messages, benefit/feature balance, pain points
+4. **CTA Strategy** - All CTAs found, frequency, text patterns
+5. **Trust Signals** - Testimonials, social proof, risk reversals
+6. **Objection Handling** - FAQ, comparisons, pricing transparency
+7. **Technical/UX** - Page speed, mobile, form complexity
+
+**Output:** `research/competitor-landing-[domain]-[YYYY-MM-DD].md`
+
+**Report sections:**
+- Quick summary (ratings table)
+- Above-the-fold breakdown
+- Full CTA analysis
+- Trust signals inventory
+- Content structure
+- **Strengths to learn from** (with application to your site)
+- **Weaknesses to exploit** (with differentiation opportunities)
+- Key takeaways (must do / should do / could do / avoid)
+- Recommended differentiation
+- Headlines to beat theirs
+- CTAs to beat theirs
+
+**Compare multiple competitors:**
+```bash
+/landing-competitor [url1]
+/landing-competitor [url2]
+/landing-competitor [url3]
+# Then synthesize findings
+```
+
+---
+
+## Landing Page Workflow
+
+### Creating a New Landing Page
+
+```bash
+# 1. Research (optional but recommended)
+/landing-research "podcast hosting" --type seo
+
+# 2. Create landing page
+/landing-write "podcast hosting" --type seo --goal trial
+
+# 3. Audit the draft
+/landing-audit landing-pages/podcast-hosting-2025-12-11.md
+
+# 4. Fix any issues (if needed)
+# Edit the file manually
+
+# 5. Re-audit until score ≥75
+/landing-audit landing-pages/podcast-hosting-2025-12-11.md
+
+# 6. Publish
+/landing-publish landing-pages/podcast-hosting-2025-12-11.md
+```
+
+### Competitive Analysis Workflow
+
+```bash
+# 1. Analyze top competitors
+/landing-competitor https://competitor1.com/pricing/
+/landing-competitor https://competitor2.com/pricing/
+
+# 2. Audit your existing page
+/landing-audit https://yoursite.com/pricing/
+
+# 3. Create improved version
+/landing-write "pricing page improvements" --type seo --goal trial
+```
+
+### PPC Campaign Landing Page
+
+```bash
+# 1. Research (focus on ad match)
+/landing-research "podcast free trial" --type ppc
+
+# 2. Create short, focused page
+/landing-write "podcast free trial" --type ppc --goal trial
+
+# 3. Audit for conversion elements
+/landing-audit landing-pages/podcast-free-trial-2025-12-11.md --goal trial
+
+# 4. Publish with noindex
+/landing-publish landing-pages/podcast-free-trial-2025-12-11.md --noindex
+```
+
+## CRO Best Practices
+
+### Above-the-Fold Checklist
+- ✅ Benefit-focused headline (H1)
+- ✅ Clear value proposition (5-second test)
+- ✅ Primary CTA visible without scrolling
+- ✅ Trust signal (count, rating, or testimonial)
+
+### CTA Best Practices
+- ✅ Action verbs (Start, Get, Try, Book)
+- ✅ Benefit words (Free, Instant, Today)
+- ✅ Goal-aligned copy
+- ✅ First CTA within 20% of page
+- ✅ CTA at end with risk reversal
+
+### Trust Signals
+- ✅ Customer testimonials with names
+- ✅ Specific results with numbers
+- ✅ Risk reversal (trial, no card, cancel policy)
+- ✅ Social proof (customer count, logos)
+
+### Content Structure
+- ✅ Appropriate length for page type
+- ✅ Scannable format (lists, bold, headers)
+- ✅ FAQ section (SEO pages)
+- ✅ Benefits before features
+
+## Requirements
+
+**Context Files (automatically loaded):**
+- `context/landing-page-templates.md` - Page structure templates
+- `context/cro-best-practices.md` - Conversion guidelines
+- `context/brand-voice.md` - Tone and messaging
+
+**WordPress Integration:**
+- WordPress REST API access
+- Yoast SEO plugin with custom MU-plugin (`wordpress/seo-machine-yoast-rest.php`)
+
+**Python Modules:**
+- `landing_page_scorer.py` - Automated scoring
+- `above_fold_analyzer.py` - Above-fold analysis
+- `cta_analyzer.py` - CTA effectiveness
+- `trust_signal_analyzer.py` - Trust element detection
+- `cro_checker.py` - Checklist-based audit
+
+## Quality Standards
+
+**Minimum scores for publishing:**
+- Overall score: ≥75/100
+- No critical issues present
+- All required above-fold elements
+
+**SEO landing pages must have:**
+- 1500-2500 words
+- 3-5 CTAs distributed throughout
+- 2+ testimonials with specific results
+- 4-6 FAQ questions
+- 2-3 internal links
+
+**PPC landing pages must have:**
+- 400-800 words maximum
+- 2-3 prominent CTAs (same goal)
+- Headline matching ad copy
+- At least 1 testimonial
+- Minimal navigation/distractions

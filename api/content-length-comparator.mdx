@@ -1,0 +1,454 @@
+---
+title: "Content Length Comparator"
+description: "Benchmark your content length against top SERP competitors to determine optimal word count for ranking"
+---
+
+The Content Length Comparator fetches top SERP results for a keyword and analyzes their content length to determine optimal word count for competitive ranking. It provides statistical analysis and recommendations based on competitor benchmarks.
+
+## Basic Usage
+
+Use the convenience function for quick comparison:
+
+```python
+from data_sources.modules.content_length_comparator import compare_content_length
+
+# Requires SERP data from DataForSEO
+serp_results = [
+    {'url': 'https://example1.com/podcast', 'domain': 'example1.com', 'title': 'How to Start a Podcast'},
+    {'url': 'https://example2.com/guide', 'domain': 'example2.com', 'title': 'Podcast Guide'}
+]
+
+result = compare_content_length(
+    keyword="how to start a podcast",
+    your_word_count=2200,
+    serp_results=serp_results,
+    fetch_content=True
+)
+
+print(f"Your count: {result['your_word_count']}")
+print(f"Median: {result['statistics']['median']}")
+print(f"Recommended: {result['recommendation']['recommended_optimal']}")
+print(f"Status: {result['recommendation']['your_status']}")
+```
+
+## Class API
+
+### ContentLengthComparator
+
+The main comparator class:
+
+```python
+from data_sources.modules.content_length_comparator import ContentLengthComparator
+
+comparator = ContentLengthComparator()
+result = comparator.analyze(
+    keyword="your keyword",
+    your_word_count=2500,
+    serp_results=serp_data,
+    fetch_content=True
+)
+```
+
+### analyze()
+
+Analyze content length compared to SERP competitors.
+
+<ParamField path="keyword" type="string" required>
+  Search keyword to analyze
+</ParamField>
+
+<ParamField path="your_word_count" type="int">
+  Your content's word count for comparison
+</ParamField>
+
+<ParamField path="serp_results" type="list[dict]" required>
+  SERP results from DataForSEO. Each dict should contain:
+  - `url` (string): Page URL to fetch
+  - `domain` (string): Domain name
+  - `title` (string): Page title
+</ParamField>
+
+<ParamField path="fetch_content" type="boolean">
+  Whether to fetch and analyze competitor content. Default: `True`
+</ParamField>
+
+<ResponseField name="keyword" type="string">
+  The analyzed keyword
+</ResponseField>
+
+<ResponseField name="competitors_analyzed" type="int">
+  Number of competitor pages successfully analyzed
+</ResponseField>
+
+<ResponseField name="your_word_count" type="int">
+  Your content's word count
+</ResponseField>
+
+<ResponseField name="statistics" type="object">
+  Statistical measures of competitor word counts:
+  - `min` (int): Shortest competitor content
+  - `max` (int): Longest competitor content
+  - `mean` (int): Average word count
+  - `median` (int): Median word count
+  - `mode` (int): Most common word count
+  - `std_dev` (int): Standard deviation
+  - `percentile_25` (int): 25th percentile
+  - `percentile_75` (int): 75th percentile
+</ResponseField>
+
+<ResponseField name="competitor_lengths" type="list[object]">
+  Individual competitor data:
+  - `position` (int): SERP position (1-10)
+  - `url` (string): Page URL
+  - `domain` (string): Domain name
+  - `title` (string): Page title
+  - `word_count` (int): Word count
+</ResponseField>
+
+<ResponseField name="your_position" type="string">
+  Where your content falls in the competitor range
+</ResponseField>
+
+<ResponseField name="recommendation" type="object">
+  Length recommendations:
+  - `recommended_min` (int): Minimum recommended word count
+  - `recommended_optimal` (int): Optimal target word count
+  - `recommended_max` (int): Maximum recommended word count
+  - `your_status` (string): Status - `too_short`, `short`, `good`, `optimal`, `long`
+  - `message` (string): Actionable recommendation message
+  - `reasoning` (string): Explanation of recommendation
+</ResponseField>
+
+<ResponseField name="competitive_analysis" type="object">
+  Competitive comparison:
+  - `total_competitors` (int): Total competitors analyzed
+  - `length_distribution` (dict): Distribution by word count ranges
+  - `comparison` (dict): How you compare (if your_word_count provided)
+  - `gap_to_median` (dict): Gap to median (if below median)
+  - `gap_to_75th_percentile` (dict): Gap to 75th percentile
+</ResponseField>
+
+## Statistics Analysis
+
+Understand competitor content length distribution:
+
+```python
+stats = result['statistics']
+
+print(f"Range: {stats['min']} - {stats['max']} words")
+print(f"Average: {stats['mean']} words")
+print(f"Median: {stats['median']} words")
+print(f"75th percentile: {stats['percentile_75']} words")
+print(f"Standard deviation: {stats['std_dev']} words")
+```
+
+Example output:
+```python
+{
+    'min': 1800,
+    'max': 4500,
+    'mean': 2650,
+    'median': 2500,
+    'mode': 2400,
+    'std_dev': 680,
+    'percentile_25': 2100,
+    'percentile_75': 3200
+}
+```
+
+## Competitor Analysis
+
+View individual competitor word counts:
+
+```python
+for comp in result['competitor_lengths']:
+    print(f"Position {comp['position']}: {comp['domain']}")
+    print(f"  Title: {comp['title']}")
+    print(f"  Word Count: {comp['word_count']}")
+```
+
+Example output:
+```
+Position 1: example.com
+  Title: How to Start a Podcast: The Complete Guide
+  Word Count: 3200
+  
+Position 2: competitor.com
+  Title: Podcast Starter Guide 2024
+  Word Count: 2800
+  
+Position 3: blog.site.com
+  Title: Starting Your First Podcast
+  Word Count: 2400
+```
+
+## Recommendations
+
+Get actionable length recommendations:
+
+```python
+rec = result['recommendation']
+
+print(f"Recommended Range: {rec['recommended_min']} - {rec['recommended_max']} words")
+print(f"Optimal Target: {rec['recommended_optimal']} words")
+print(f"Your Status: {rec['your_status']}")
+print(f"Message: {rec['message']}")
+print(f"Reasoning: {rec['reasoning']}")
+```
+
+### Recommendation Logic
+
+The recommended optimal target is calculated as:
+- **Greater of**: 75th percentile OR median + 20%
+- This ensures you match or exceed top performers
+
+Example:
+```python
+{
+    'recommended_min': 2500,
+    'recommended_optimal': 3200,
+    'recommended_max': 3840,
+    'your_status': 'short',
+    'message': 'Your content is shorter than most competitors. Consider adding 1000 more words.',
+    'reasoning': 'Based on median (2500) and 75th percentile (3200) of top 10 results'
+}
+```
+
+### Status Values
+
+- **`too_short`**: < 80% of recommended minimum - significantly short
+- **`short`**: < recommended minimum - below most competitors
+- **`good`**: < recommended optimal - competitive but room to improve
+- **`optimal`**: Within recommended range - matches top performers ✅
+- **`long`**: > recommended maximum - longer than necessary
+
+## Length Distribution
+
+See how competitor content is distributed across length ranges:
+
+```python
+dist = result['competitive_analysis']['length_distribution']
+
+print("Content Length Distribution:")
+print(f"  Under 1000 words: {dist['under_1000']}")
+print(f"  1000-1500 words: {dist['1000_1500']}")
+print(f"  1500-2000 words: {dist['1500_2000']}")
+print(f"  2000-2500 words: {dist['2000_2500']}")
+print(f"  2500-3000 words: {dist['2500_3000']}")
+print(f"  3000+ words: {dist['3000_plus']}")
+```
+
+Example output:
+```python
+{
+    'under_1000': 0,
+    '1000_1500': 1,
+    '1500_2000': 2,
+    '2000_2500': 3,
+    '2500_3000': 2,
+    '3000_plus': 2
+}
+```
+
+## Your Position
+
+See where your content falls in the competitor range:
+
+```python
+print(f"Your position: {result['your_position']}")
+```
+
+Example outputs:
+```
+"Below all competitors (shortest is 1800)"
+"Between position 3 and 4 competitors"
+"Above all competitors (longest is 3500)"
+"Within competitive range"
+```
+
+## Comparison Analysis
+
+Get detailed comparison when your word count is provided:
+
+```python
+if 'comparison' in result['competitive_analysis']:
+    comp = result['competitive_analysis']['comparison']
+    
+    print(f"Shorter than you: {comp['shorter_than_you']} competitors")
+    print(f"Longer than you: {comp['longer_than_you']} competitors")
+    print(f"Your percentile: {comp['percentile']}th")
+```
+
+Example:
+```python
+{
+    'shorter_than_you': 3,
+    'longer_than_you': 7,
+    'percentile': 30
+}
+```
+
+## Gap Analysis
+
+See how many words you're behind competitors:
+
+```python
+if 'gap_to_median' in result['competitive_analysis']:
+    gap = result['competitive_analysis']['gap_to_median']
+    print(f"Gap to median: {gap['words']} words ({gap['percentage']}%)")
+
+if 'gap_to_75th_percentile' in result['competitive_analysis']:
+    gap = result['competitive_analysis']['gap_to_75th_percentile']
+    print(f"Gap to 75th percentile: {gap['words']} words ({gap['percentage']}%)")
+```
+
+Example:
+```python
+{
+    'gap_to_median': {
+        'words': 300,
+        'percentage': 14
+    },
+    'gap_to_75th_percentile': {
+        'words': 1000,
+        'percentage': 45
+    }
+}
+```
+
+## Integration with DataForSEO
+
+Combine with DataForSEO for real SERP analysis:
+
+```python
+from data_sources.modules.dataforseo import DataForSEO
+from data_sources.modules.content_length_comparator import compare_content_length
+
+# Step 1: Get SERP data
+dfs = DataForSEO()
+serp_data = dfs.get_serp_data("how to start a podcast")
+
+# Step 2: Extract organic results
+organic_results = [
+    {
+        'url': result['url'],
+        'domain': result['domain'],
+        'title': result['title']
+    }
+    for result in serp_data['organic'][:10]
+]
+
+# Step 3: Compare content length
+result = compare_content_length(
+    keyword="how to start a podcast",
+    your_word_count=2200,
+    serp_results=organic_results,
+    fetch_content=True
+)
+
+print(f"Recommended optimal: {result['recommendation']['recommended_optimal']} words")
+print(f"Your status: {result['recommendation']['your_status']}")
+```
+
+## Content Extraction
+
+The comparator intelligently extracts main content:
+
+1. **Removes noise**: Strips `script`, `style`, `nav`, `footer`, `header`, `aside` elements
+2. **Finds main content**: Looks for `article`, `main`, `.content`, `.post`, `.entry-content`
+3. **Counts real words**: Only counts words with 2+ characters
+4. **Handles failures**: Silently skips pages that fail to fetch
+
+```python
+# The analyzer automatically handles content extraction
+result = comparator.analyze(
+    keyword="your keyword",
+    serp_results=serp_results,
+    fetch_content=True  # Automatically fetches and extracts content
+)
+```
+
+## Real-World Example
+
+Complete workflow:
+
+```python
+from data_sources.modules.content_length_comparator import compare_content_length
+
+# SERP data from DataForSEO
+serp_results = [
+    {'url': 'https://example1.com/podcast-guide', 'domain': 'example1.com', 'title': 'Ultimate Podcast Guide'},
+    {'url': 'https://example2.com/start-podcast', 'domain': 'example2.com', 'title': 'How to Start a Podcast'},
+    {'url': 'https://example3.com/podcast-101', 'domain': 'example3.com', 'title': 'Podcasting 101'},
+    # ... more results
+]
+
+# Your article is 2200 words
+result = compare_content_length(
+    keyword="how to start a podcast",
+    your_word_count=2200,
+    serp_results=serp_results
+)
+
+# Print report
+print("=== Content Length Analysis ===")
+print(f"\nKeyword: {result['keyword']}")
+print(f"Competitors analyzed: {result['competitors_analyzed']}")
+print(f"Your word count: {result['your_word_count']}")
+
+print(f"\nCompetitor Statistics:")
+stats = result['statistics']
+print(f"  Range: {stats['min']} - {stats['max']} words")
+print(f"  Average: {stats['mean']} words")
+print(f"  Median: {stats['median']} words")
+print(f"  75th percentile: {stats['percentile_75']} words")
+
+print(f"\nRecommendation:")
+rec = result['recommendation']
+print(f"  Target: {rec['recommended_optimal']} words")
+print(f"  Range: {rec['recommended_min']}-{rec['recommended_max']} words")
+print(f"  Your status: {rec['your_status']}")
+print(f"  {rec['message']}")
+
+print(f"\nYour Position: {result['your_position']}")
+
+if 'gap_to_75th_percentile' in result['competitive_analysis']:
+    gap = result['competitive_analysis']['gap_to_75th_percentile']
+    print(f"\nGap to top performers: {gap['words']} words ({gap['percentage']}% increase needed)")
+```
+
+## Error Handling
+
+The module handles errors gracefully:
+
+```python
+result = compare_content_length(
+    keyword="test",
+    serp_results=[]
+)
+
+if 'error' in result:
+    print(f"Error: {result['error']}")
+    print(f"Recommendation: {result['recommendation']}")
+```
+
+Error cases:
+- No SERP results provided
+- Could not fetch competitor content
+- Insufficient sections for clustering
+
+## Best Practices
+
+1. **Target 75th percentile** - aim to match or exceed top performers
+2. **Analyze top 10 results** - provides comprehensive competitor data
+3. **Use with DataForSEO** - get real-time SERP data
+4. **Check regularly** - competitor content lengths change over time
+5. **Consider intent** - transactional queries may need less content
+6. **Quality over quantity** - don't add fluff just to hit word count
+7. **Match or exceed median** - minimum competitive threshold
+
+## Related Modules
+
+- [SEO Quality Rater](/api/seo-quality-rater) - Includes word count in quality score
+- [Search Intent Analyzer](/api/search-intent-analyzer) - Different intents need different lengths
+- [Keyword Analyzer](/api/keyword-analyzer) - Longer content affects keyword density

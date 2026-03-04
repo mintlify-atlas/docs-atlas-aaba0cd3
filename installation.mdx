@@ -1,0 +1,388 @@
+---
+title: Installation
+description: Step-by-step guide to installing and setting up SEO Machine in your Claude Code workspace
+---
+
+# Installation
+
+Get SEO Machine running in your environment with this comprehensive installation guide.
+
+## Prerequisites
+
+Before you begin, ensure you have:
+
+<CardGroup cols={2}>
+  <Card title="Claude Code" icon="code">
+    [Claude Code](https://claude.com/claude-code) installed and configured
+  </Card>
+  <Card title="Python 3.8+" icon="python">
+    Python 3.8 or higher for analysis modules
+  </Card>
+  <Card title="Anthropic API Account" icon="key">
+    Active Anthropic API account for Claude Code
+  </Card>
+  <Card title="Git" icon="git-alt">
+    Git for cloning the repository
+  </Card>
+</CardGroup>
+
+## Step 1: Clone the Repository
+
+Clone the SEO Machine repository to your local machine:
+
+```bash
+git clone https://github.com/[your-username]/seomachine.git
+cd seomachine
+```
+
+<Note>
+  Replace `[your-username]` with the actual GitHub username or organization hosting the repository.
+</Note>
+
+## Step 2: Install Python Dependencies
+
+SEO Machine includes powerful Python analysis modules that require several packages. Install them using pip:
+
+```bash
+pip install -r data_sources/requirements.txt
+```
+
+### What Gets Installed
+
+The requirements file includes:
+
+<AccordionGroup>
+  <Accordion title="Google Analytics & Search Console">
+    - `google-analytics-data>=0.18.0`
+    - `google-auth>=2.23.0`
+    - `google-auth-oauthlib>=1.1.0`
+    - `google-api-python-client>=2.100.0`
+    
+    For GA4 traffic data and Search Console rankings.
+  </Accordion>
+  
+  <Accordion title="Data Analysis">
+    - `pandas>=2.1.0`
+    - `numpy>=1.24.0`
+    - `scikit-learn>=1.3.0`
+    
+    For keyword clustering, topic analysis, and opportunity scoring.
+  </Accordion>
+  
+  <Accordion title="NLP & Text Analysis">
+    - `textstat>=0.7.3`
+    - `nltk>=3.8.0`
+    
+    For readability scoring (Flesch Reading Ease, grade level) and text analysis.
+  </Accordion>
+  
+  <Accordion title="Web Scraping">
+    - `beautifulsoup4>=4.12.0`
+    - `lxml>=4.9.0`
+    - `requests>=2.31.0`
+    
+    For fetching and analyzing competitor content.
+  </Accordion>
+  
+  <Accordion title="Configuration & Utilities">
+    - `python-dotenv>=1.0.0`
+    - `diskcache>=5.6.0`
+    - `markdown>=3.5.0`
+    
+    For environment variables, API response caching, and WordPress publishing.
+  </Accordion>
+</AccordionGroup>
+
+<Tip>
+  Using a virtual environment is recommended to avoid dependency conflicts:
+  
+  ```bash
+  python -m venv venv
+  source venv/bin/activate  # On Windows: venv\Scripts\activate
+  pip install -r data_sources/requirements.txt
+  ```
+</Tip>
+
+## Step 3: Open in Claude Code
+
+Open the SEO Machine workspace in Claude Code:
+
+```bash
+claude-code .
+```
+
+This launches Claude Code with the SEO Machine workspace loaded, giving you access to all custom commands, agents, and context files.
+
+<Note>
+  If `claude-code` command is not found, ensure Claude Code is properly installed and added to your PATH.
+</Note>
+
+## Step 4: Directory Structure Verification
+
+Verify that all required directories exist. SEO Machine should have this structure:
+
+```
+seomachine/
+├── .claude/
+│   ├── commands/          # Custom workflow commands
+│   ├── agents/            # Specialized analysis agents
+│   └── skills/            # 26 marketing skills
+├── data_sources/          # Analytics integrations
+│   ├── modules/          # Python analysis modules
+│   ├── config/           # API credentials (create this)
+│   ├── utils/            # Helper functions
+│   └── cache/            # Cached API responses (create this)
+├── config/                # Configuration files
+├── context/               # Brand guidelines and context
+├── wordpress/             # WordPress integration files
+├── topics/                # Raw topic ideas
+├── research/              # Research briefs
+├── drafts/                # Work in progress
+├── review-required/       # Pending review
+├── published/             # Final content
+├── rewrites/              # Updated content
+├── landing-pages/         # Landing pages
+└── audits/                # Audit reports
+```
+
+Create any missing directories:
+
+```bash
+mkdir -p data_sources/config data_sources/cache
+mkdir -p topics research drafts review-required published rewrites landing-pages audits
+```
+
+## Step 5: Configure API Integrations (Optional)
+
+SEO Machine can integrate with external data sources for enhanced capabilities. These integrations are **optional** but recommended for data-driven content strategy.
+
+### Google Analytics 4
+
+<Steps>
+  <Step title="Create Service Account">
+    1. Go to [Google Cloud Console](https://console.cloud.google.com)
+    2. Create a new project or select an existing one
+    3. Enable the **Google Analytics Data API**
+    4. Navigate to **APIs & Services > Credentials**
+    5. Create a **Service Account**
+    6. Download the JSON key file
+  </Step>
+  
+  <Step title="Grant Access">
+    1. Open your GA4 property
+    2. Go to **Admin > Property Access Management**
+    3. Add the service account email (from JSON file)
+    4. Grant **Viewer** role
+  </Step>
+  
+  <Step title="Save Credentials">
+    Save the JSON key file to:
+    ```
+    credentials/ga4-credentials.json
+    ```
+  </Step>
+</Steps>
+
+### Google Search Console
+
+<Steps>
+  <Step title="Enable API">
+    1. In Google Cloud Console (same project as GA4)
+    2. Enable the **Google Search Console API**
+  </Step>
+  
+  <Step title="Grant Access">
+    1. Open [Google Search Console](https://search.google.com/search-console)
+    2. Select your property
+    3. Go to **Settings > Users and permissions**
+    4. Add the service account email
+    5. Grant **Full** permission
+  </Step>
+  
+  <Step title="Save Credentials">
+    You can use the same JSON file as GA4:
+    ```
+    credentials/gsc-credentials.json
+    ```
+  </Step>
+</Steps>
+
+### DataForSEO
+
+<Steps>
+  <Step title="Sign Up">
+    Create an account at [DataForSEO](https://dataforseo.com)
+  </Step>
+  
+  <Step title="Get API Credentials">
+    1. Log in to your DataForSEO dashboard
+    2. Navigate to API credentials
+    3. Copy your login email and password
+  </Step>
+</Steps>
+
+### Create Environment File
+
+Create a `.env` file in `data_sources/config/` with your credentials:
+
+```bash
+cp .env.example data_sources/config/.env
+```
+
+Then edit `data_sources/config/.env`:
+
+```bash
+# Google Analytics 4
+GA4_PROPERTY_ID=123456789
+GA4_CREDENTIALS_PATH=./credentials/ga4-credentials.json
+
+# Google Search Console
+GSC_SITE_URL=https://yoursite.com/
+GSC_CREDENTIALS_PATH=./credentials/gsc-credentials.json
+
+# DataForSEO
+DATAFORSEO_LOGIN=your_email@example.com
+DATAFORSEO_PASSWORD=your_api_password_here
+
+# Optional: Blog path filter
+BLOG_PATH=/blog/
+
+# Company information
+COMPANY_NAME=Your Company Name
+COMPANY_DOMAIN=yoursite.com
+TARGET_INDUSTRY=your-industry
+```
+
+<Warning>
+  **Never commit your `.env` file to version control!** It contains sensitive API credentials. The `.env` file is already in `.gitignore`.
+</Warning>
+
+### Test API Connectivity
+
+Verify your API integrations are working:
+
+```bash
+python3 test_dataforseo.py
+```
+
+This script tests connectivity to DataForSEO and displays your account balance and available credits.
+
+## Step 6: WordPress Integration (Optional)
+
+To publish directly to WordPress from SEO Machine:
+
+<Steps>
+  <Step title="Install MU Plugin">
+    Copy `wordpress/seo-machine-yoast-rest.php` to your WordPress site:
+    ```
+    wp-content/mu-plugins/seo-machine-yoast-rest.php
+    ```
+    
+    This plugin exposes Yoast SEO fields via the WordPress REST API.
+  </Step>
+  
+  <Step title="Add Functions Snippet">
+    Add the code from `wordpress/functions-snippet.php` to your theme's `functions.php` file.
+  </Step>
+  
+  <Step title="Create Application Password">
+    1. In WordPress admin, go to **Users > Your Profile**
+    2. Scroll to **Application Passwords**
+    3. Create a new application password
+    4. Copy the generated password
+  </Step>
+  
+  <Step title="Configure Credentials">
+    Add to your `data_sources/config/.env` file:
+    ```bash
+    WP_URL=https://yoursite.com
+    WP_USERNAME=your_username
+    WP_APP_PASSWORD=your_application_password
+    ```
+  </Step>
+</Steps>
+
+See `wordpress/README.md` for detailed setup instructions.
+
+## Verification
+
+Verify your installation is complete:
+
+<Accordion title="Check Python Dependencies">
+  ```bash
+  python -c "import pandas, nltk, textstat, sklearn; print('All dependencies installed!')"
+  ```
+</Accordion>
+
+<Accordion title="Verify Directory Structure">
+  ```bash
+  ls -la .claude/commands/
+  ls -la data_sources/modules/
+  ```
+</Accordion>
+
+<Accordion title="Test Claude Code Commands">
+  In Claude Code, type `/` to see available commands. You should see:
+  - `/research`
+  - `/write`
+  - `/optimize`
+  - `/analyze-existing`
+  - And more...
+</Accordion>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Python dependencies fail to install">
+    **Issue**: Error installing packages from requirements.txt
+    
+    **Solution**:
+    1. Ensure Python 3.8+ is installed: `python --version`
+    2. Upgrade pip: `pip install --upgrade pip`
+    3. Install packages individually to identify the problem
+    4. Check for system dependencies (some packages require compilers)
+  </Accordion>
+  
+  <Accordion title="Claude Code commands not appearing">
+    **Issue**: Slash commands don't show up in Claude Code
+    
+    **Solution**:
+    1. Ensure you opened Claude Code from the repository root directory
+    2. Check that `.claude/commands/` directory exists with `.md` files
+    3. Restart Claude Code
+    4. Verify Claude Code is up to date
+  </Accordion>
+  
+  <Accordion title="API authentication errors">
+    **Issue**: Google Analytics or Search Console API calls fail
+    
+    **Solution**:
+    1. Verify the service account JSON file exists at the specified path
+    2. Check that the service account has been added to GA4/GSC with correct permissions
+    3. Ensure the property ID and site URL in `.env` are correct
+    4. Run `python3 test_dataforseo.py` to test connectivity
+  </Accordion>
+  
+  <Accordion title="Module import errors">
+    **Issue**: Python scripts fail with "ModuleNotFoundError"
+    
+    **Solution**:
+    1. Activate your virtual environment if using one
+    2. Reinstall requirements: `pip install -r data_sources/requirements.txt`
+    3. Check that you're running scripts from the repository root
+    4. Verify Python path includes the repository directory
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+With SEO Machine installed, you're ready to configure your context files and create your first article.
+
+<CardGroup cols={2}>
+  <Card title="Configuration" icon="gear" href="/configuration">
+    Set up brand voice, style guide, and SEO guidelines
+  </Card>
+  <Card title="Quick Start" icon="rocket" href="/quickstart">
+    Create your first SEO-optimized article in 10 minutes
+  </Card>
+</CardGroup>

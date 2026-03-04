@@ -1,0 +1,512 @@
+---
+title: Research Scripts
+description: Python research scripts for SEO analysis, competitor gaps, trending topics, and content prioritization
+---
+
+SEO Machine includes 7 Python research scripts that analyze your content strategy from multiple angles using data from Google Search Console, Google Analytics 4, and DataForSEO.
+
+## Overview
+
+Research scripts provide data-driven insights for content strategy:
+
+- **Quick Wins**: Keywords ranking positions 11-20 (page 2)
+- **Competitor Gaps**: Keywords competitors rank for that you don't
+- **Performance Matrix**: Categorize all content by traffic and rankings
+- **Priorities**: Unified roadmap combining all research modules
+- **SERP Analysis**: Deep analysis of what Google wants for a keyword
+- **Topic Clusters**: Identify topical authority gaps
+- **Trending**: Rising search trends for time-sensitive content
+
+## Installation
+
+Install dependencies:
+
+```bash
+pip install -r data_sources/requirements.txt
+```
+
+Configure API credentials in `data_sources/config/.env` (GA4, GSC, DataForSEO).
+
+## Quick Wins
+
+**Script**: `research_quick_wins.py`
+
+Identifies keywords ranking positions 11-20 (page 2) that can be pushed to page 1.
+
+### Usage
+
+```bash
+python3 research_quick_wins.py
+```
+
+### What It Does
+
+1. Fetches keywords from GSC ranking positions 11-20 (last 30 days)
+2. Enriches with DataForSEO data (search volume, difficulty)
+3. Calculates enhanced opportunity scores (0-100)
+4. Analyzes search intent and traffic potential
+5. Generates prioritized report
+
+### Output
+
+- File: `research/quick-wins-YYYY-MM-DD.md`
+- Contains:
+  - Top 10 opportunities with detailed metrics
+  - Enhanced opportunity scoring breakdown
+  - Traffic potential estimates
+  - Action recommendations for each keyword
+
+### Key Metrics
+
+- **Current Position**: Where you rank now
+- **Impressions**: Monthly search visibility
+- **Opportunity Score**: 0-100 score based on volume, position, intent, competition
+- **Traffic Potential**: Estimated click increase if moved to position 5-7
+
+### Example Output
+
+```
+#1 KEYWORD: content marketing strategies
+Current Position: 12.3
+Impressions (30d): 2,450
+Clicks (30d): 35
+CTR: 1.43%
+Opportunity Score: 87.5
+Priority: CRITICAL
+
+Enhanced Scoring Analysis:
+  Enhanced Score: 87/100
+  Key Factor: volume
+  Potential: +95 clicks/month (+271%)
+
+RECOMMENDATION:
+  Strong candidate - very close to page 1 | Also optimize title/meta for better CTR
+```
+
+## Competitor Gaps
+
+**Script**: `research_competitor_gaps.py`
+
+Identifies keywords where competitors rank in top 20 but you don't rank at all.
+
+### Usage
+
+```bash
+python3 research_competitor_gaps.py
+```
+
+### Configuration
+
+Requires `config/competitors.json` with competitor domains:
+
+```json
+{
+  "direct_competitors": ["competitor1.com", "competitor2.com"],
+  "content_competitors": ["blog1.com", "blog2.com"],
+  "relevant_terms": ["your", "industry", "keywords"]
+}
+```
+
+### What It Does
+
+1. Fetches your current ranking keywords from GSC
+2. Analyzes competitors' top 20 rankings via DataForSEO
+3. Identifies keywords where competitors rank but you don't
+4. Filters out branded/irrelevant keywords
+5. Scores and prioritizes opportunities
+
+### Output
+
+- File: `research/competitor-gaps-YYYY-MM-DD.md`
+- Groups by priority: CRITICAL, HIGH, MEDIUM
+- Includes content type recommendations
+- Shows competitor intel and keyword metrics
+
+### Example Output
+
+```
+### 1. podcast hosting for businesses
+
+**Priority:** CRITICAL
+**Opportunity Score:** 92.3/100
+
+#### Competitor Intel
+- Ranking Competitor: buzzsprout.com (Direct)
+- Their Position: 5
+- Your Position: Not ranking (top 100)
+
+#### Keyword Metrics
+- Search Volume: 1,800/month
+- SEO Difficulty: 42/100
+- Search Intent: commercial_investigation
+- Content Type Needed: Comparison Article
+
+#### Recommended Action
+Create comprehensive comparison article targeting this keyword.
+```
+
+## Performance Matrix
+
+**Script**: `research_performance_matrix.py`
+
+Categorizes all content into performance quadrants based on traffic and rankings.
+
+### Usage
+
+```bash
+python3 research_performance_matrix.py
+```
+
+### Quadrants
+
+- **Stars**: High traffic + High rankings → Maintain and expand
+- **Overperformers**: High traffic + Low rankings → Understand why (likely social/referral)
+- **Underperformers**: Low traffic + High rankings → CTR problem
+- **Declining**: Low traffic + Low rankings → Refresh or redirect
+
+### What It Does
+
+1. Fetches page traffic from GA4 (last 90 days)
+2. Enriches with GSC ranking data
+3. Calculates traffic trends
+4. Categorizes into performance quadrants
+5. Generates actionable priorities
+
+### Output
+
+- File: `research/performance-matrix-YYYY-MM-DD.md`
+- Separate sections for each quadrant
+- Top priorities by category
+- Recommended workflow by week
+
+### Thresholds
+
+```python
+TRAFFIC_THRESHOLD_HIGH = 500  # monthly pageviews
+POSITION_THRESHOLD_GOOD = 15  # average position
+```
+
+### Example Output
+
+```
+## ⚠️ UNDERPERFORMERS (23 pages)
+
+### 1. Complete Guide to Content Marketing
+
+- Average Position: 6.2 (GOOD!)
+- Monthly Traffic: 245 pageviews
+- Expected Traffic: 1,200 pageviews
+- Traffic Gap: 955 pageviews/month missing
+- Current CTR: 1.2%
+- Priority: CRITICAL
+
+Action: URGENT: CTR problem - rewrite title and meta description
+
+Specific Steps:
+1. Rewrite title tag to be more compelling
+2. Add year/numbers/power words to title
+3. Rewrite meta description with clear value proposition
+4. Add FAQ schema if relevant
+5. Test different title variations
+```
+
+## Priorities Comprehensive
+
+**Script**: `research_priorities_comprehensive.py`
+
+Orchestrates all research modules to provide a unified, actionable content roadmap.
+
+### Usage
+
+```bash
+python3 research_priorities_comprehensive.py
+```
+
+### What It Does
+
+1. Runs all 5 research modules (or uses cached results)
+2. Synthesizes insights across modules
+3. Generates unified roadmap by week
+4. Prioritizes actions by urgency and impact
+
+### Output
+
+- File: `research/ROADMAP-YYYY-MM-DD.md`
+- Week 1: Immediate priorities
+- Weeks 2-3: High-value opportunities
+- Weeks 4+: Strategic initiatives
+- Ongoing maintenance schedule
+
+### Roadmap Structure
+
+```
+Week 1: Immediate Priorities
+- Time-sensitive trends
+- Underperformer title/meta fixes
+- Top 3 quick wins
+
+Weeks 2-3: High-Value Opportunities
+- Top 5 competitor gaps
+- Declining star content refresh
+- Positions 14-17 quick wins
+
+Weeks 4+: Strategic Initiatives
+- Topic cluster building
+- Remaining gap opportunities
+- Star content expansion
+```
+
+## SERP Analysis
+
+**Script**: `research_serp_analysis.py`
+
+Deep analysis of what Google wants for a specific keyword.
+
+### Usage
+
+```bash
+python3 research_serp_analysis.py "your target keyword"
+```
+
+### What It Does
+
+1. Fetches top 10-20 SERP results for keyword
+2. Analyzes content patterns and types
+3. Calculates recommended word count
+4. Detects freshness signals
+5. Identifies SERP features
+6. Generates comprehensive content brief
+
+### Output
+
+- File: `research/serp-analysis-keyword-name.md`
+- Content requirements (word count, type)
+- SERP features present
+- Top 10 ranking analysis
+- Complete content brief with structure
+- Action plan with timeline
+
+### Content Brief Includes
+
+- Target specifications (word count, tone, intent)
+- Must-have elements
+- SERP features to target
+- Recommended structure
+- Competitive insights
+- Step-by-step action plan
+
+### Example Output
+
+```
+## Content Requirements
+
+### Word Count
+- Average: 3,245 words
+- Median: 3,100 words
+- Range: 2,100 - 4,800 words
+- Recommended: 3,570+ words (exceed average by 10%)
+
+### Content Type Distribution
+- How-To Guide: 7/10 results
+- Listicle: 2/10 results
+- General Article: 1/10 results
+
+**Recommendation:** Your content should be a **How-To Guide**
+
+## Content Brief
+
+### Must-Have Elements
+- [ ] Step-by-step instructions
+- [ ] Visual aids (screenshots, diagrams)
+- [ ] Prerequisites section
+- [ ] Time estimate
+- [ ] Troubleshooting tips
+- [ ] Current year (2026) in title and content
+- [ ] Latest statistics and examples
+
+### SERP Features to Target
+- [ ] People Also Ask - Add FAQ section answering related questions
+- [ ] Featured Snippet - Add concise definition/answer in first 100 words
+- [ ] Images - Include high-quality images with alt text
+```
+
+## Topic Clusters
+
+**Script**: `research_topic_clusters.py`
+
+Analyzes topical authority by clustering keywords into related topics.
+
+### Usage
+
+```bash
+python3 research_topic_clusters.py
+```
+
+### What It Does
+
+1. Fetches all ranking keywords from GSC (90 days)
+2. Clusters keywords into topics using ML (if sklearn available) or pattern matching
+3. Calculates authority score (0-100) for each cluster
+4. Identifies coverage gaps using DataForSEO
+5. Prioritizes weak clusters with high demand
+
+### Output
+
+- File: `research/topic-clusters-YYYY-MM-DD.md`
+- Authority distribution summary
+- Weak clusters (build these!)
+- Strong clusters (maintain these!)
+- Strategy recommendations by phase
+
+### Authority Scoring
+
+```python
+Authority Score = (
+  Coverage (50%) +      # How many keywords you rank for
+  Position Quality (30%) +  # How well you rank
+  Demand (20%)          # Total search volume
+)
+
+Levels:
+- Strong: 75-100
+- Moderate: 50-74
+- Weak: 25-49
+- Minimal: 0-24
+```
+
+### Example Output
+
+```
+## 🎯 WEAK AUTHORITY TOPICS (Build These!)
+
+### 1. Email Marketing
+
+- Authority Score: 34/100 (Weak)
+- Keywords Ranking: 8
+- Average Position: 24.5
+- Total Impressions: 4,200/month
+- Total Clicks: 95/month
+
+**Current Top Keywords:**
+- email marketing tools (position 18.5, 850 impressions)
+- email campaign tips (position 22.1, 620 impressions)
+- newsletter best practices (position 29.3, 480 impressions)
+
+**Coverage Gaps** (12 opportunities):
+- email marketing automation - Volume: 2,400, Difficulty: 45
+- email subject line examples - Volume: 1,800, Difficulty: 38
+- email template design - Volume: 1,200, Difficulty: 42
+
+**Recommended Action:**
+- Create 8-12 comprehensive articles covering this topic cluster
+- Build pillar page linking to all cluster content
+- Target the coverage gaps identified above
+```
+
+## Trending
+
+**Script**: `research_trending.py`
+
+Identifies topics gaining search interest NOW using GSC trend data.
+
+### Usage
+
+```bash
+python3 research_trending.py
+```
+
+### What It Does
+
+1. Compares last 7 days vs previous 30 days in GSC
+2. Identifies queries with significant growth
+3. Enriches with DataForSEO metrics
+4. Calculates urgency level
+5. Generates time-sensitive action plan
+
+### Output
+
+- File: `research/trending-YYYY-MM-DD.md`
+- Groups by urgency: CRITICAL, HIGH, MODERATE
+- Time-sensitive recommendations
+- Implementation strategy by week
+
+### Urgency Levels
+
+- **CRITICAL**: +150% growth → Act within 1 week
+- **HIGH**: +75% growth → Act within 2 weeks
+- **MODERATE**: +30% growth → Act within 1 month
+- **LOW**: less than 30% growth → Monitor trend
+
+### Example Output
+
+```
+## 🔥 CRITICAL URGENCY TRENDS
+
+### 1. ai content writing tools 2026
+
+- Growth: +285% (120 → 462 impressions)
+- Your Position: 18.3
+- Search Volume: 3,200/month
+- SEO Difficulty: 38/100
+- Search Intent: commercial_investigation
+- Opportunity Score: 94.7/100
+- Urgency: CRITICAL - Act within 1 week
+
+**Why It's Hot:**
+- Massive growth spike (3x+ increase)
+- You already have visibility (position 18)
+- Small optimization could drive significant traffic
+- High immediate demand (462 impressions last week)
+
+**Recommended Action:**
+1. Update existing ranking content immediately
+2. Add trending angle/section
+3. Update title to include current year
+4. Optimize for this trending query
+
+**Timeline:** Complete within 7 days
+```
+
+## Best Practices
+
+### Running Research Scripts
+
+1. **Weekly**: Run `research_trending.py` to catch new trends early
+2. **Bi-weekly**: Run `research_quick_wins.py` for quick wins
+3. **Monthly**: Run full comprehensive analysis
+4. **As needed**: Run `research_serp_analysis.py` before creating content
+
+### API Cost Management
+
+- **Quick Wins**: ~100-200 API calls ($0.10-$0.20)
+- **Competitor Gaps**: ~500-1000 API calls ($0.50-$1.00)
+- **SERP Analysis**: ~20-30 API calls per keyword ($0.02-$0.03)
+- **Trending**: ~50-100 API calls ($0.05-$0.10)
+
+### Interpreting Results
+
+Priority levels across all scripts:
+
+- **CRITICAL**: Act immediately (within 1 week)
+- **HIGH**: Act soon (within 2-3 weeks)
+- **MEDIUM**: Include in monthly plan
+- **LOW**: Monitor or skip
+
+### Integration with Commands
+
+Use research findings with SEO Machine commands:
+
+```bash
+# After identifying a quick win:
+/research-serp [keyword]  # Get content requirements
+/write [keyword]          # Create content
+/optimize [file]          # Final polish
+
+# After identifying a competitor gap:
+/research [topic]         # Deep research
+/write [topic]            # Create content
+
+# For trending topics:
+/analyze-existing [URL]   # If you have existing content
+/rewrite [topic]          # Update with trending angle
+```

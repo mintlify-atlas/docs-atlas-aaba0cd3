@@ -1,0 +1,605 @@
+---
+title: SEO Analysis Scripts
+description: Python scripts for SEO baseline analysis, BOFU rankings, and competitor comparison
+---
+
+SEO Machine includes 3 specialized SEO analysis scripts that focus on high buyer-intent keywords and competitive positioning using DataForSEO and Google Search Console.
+
+## Overview
+
+SEO analysis scripts are config-driven and focus on:
+
+- **Baseline Analysis**: Comprehensive snapshot of MOFU/BOFU keyword rankings
+- **BOFU Rankings**: Detailed analysis of high-value buyer-intent keywords
+- **Competitor Analysis**: Head-to-head comparison vs competitors
+
+All scripts use `config/competitors.json` for keyword lists and competitor domains.
+
+## Configuration
+
+### Setup
+
+Copy the example config:
+
+```bash
+cp config/competitors.example.json config/competitors.json
+```
+
+Edit `config/competitors.json` with your data:
+
+```json
+{
+  "direct_competitors": [
+    "competitor1.com",
+    "competitor2.com"
+  ],
+  "content_competitors": [
+    "blog1.com",
+    "blog2.com"
+  ],
+  "bofu_keywords": [
+    "your product pricing",
+    "your product vs competitor",
+    "best product for use case"
+  ],
+  "mofu_keywords": [
+    "how to solve problem",
+    "what is solution",
+    "benefits of approach"
+  ],
+  "alternative_keywords": [
+    "competitor1 alternative",
+    "competitor2 alternative"
+  ],
+  "relevant_terms": [
+    "your",
+    "industry",
+    "keywords"
+  ],
+  "skip_terms": [
+    "celebrity",
+    "irrelevant",
+    "spam"
+  ]
+}
+```
+
+### Keyword Types
+
+**BOFU (Bottom of Funnel)**
+- High buyer intent
+- Ready to purchase
+- Examples: "[product] pricing", "best [product] for [use case]", "[product] vs [competitor]"
+
+**MOFU (Middle of Funnel)**
+- Research phase
+- Evaluating solutions
+- Examples: "how to [solve problem]", "benefits of [solution]", "[topic] guide"
+
+**Alternative Keywords**
+- "[competitor] alternative"
+- "[competitor] vs [your brand]"
+- Captures users searching for competition
+
+### Environment Variables
+
+Set in `data_sources/config/.env`:
+
+```bash
+# Your company
+COMPANY_NAME=Your Company
+GSC_SITE_URL=https://yoursite.com
+
+# API credentials
+DATAFORSEO_LOGIN=your_login
+DATAFORSEO_PASSWORD=your_password
+```
+
+## Baseline Analysis
+
+**Script**: `seo_baseline_analysis.py`
+
+Comprehensive snapshot of current SEO position for high buyer-intent keywords.
+
+### Usage
+
+```bash
+python3 seo_baseline_analysis.py
+```
+
+### What It Does
+
+1. **DataForSEO Live SERP Check**
+   - Checks current rankings for all BOFU keywords
+   - Checks current rankings for all MOFU keywords
+   - Categorizes: Page 1, Page 2-3, Not Ranking
+
+2. **GSC Performance Data**
+   - Last 30 days of actual traffic
+   - Filters to high-intent keywords using relevant_terms
+   - Identifies quick wins (position 11-20)
+   - Commercial intent analysis
+
+3. **Summary Report**
+   - Percentage breakdowns
+   - Traffic potential metrics
+   - Baseline snapshot for tracking progress
+
+### Output Example
+
+```
+======================================================================
+YOUR COMPANY SEO BASELINE ANALYSIS
+Focus: MOFU/BOFU High Buyer-Intent Keywords
+======================================================================
+
+✓ DataForSEO connected
+✓ Google Search Console connected
+
+======================================================================
+SECTION 1: KEYWORD RANKINGS (DataForSEO Live SERP)
+======================================================================
+
+----------------------------------------------------------------------
+BOFU KEYWORDS (Bottom of Funnel - Ready to Buy)
+----------------------------------------------------------------------
+
+  🏆 Page 1 Rankings (12)
+    # 3 | podcast hosting pricing              | Vol: 1,200
+    # 5 | best podcast hosting for business   | Vol: 2,400
+    # 7 | podcast hosting features            | Vol: 890
+
+  📈 Page 2-3 Quick Wins (8)
+    #12 | podcast hosting plans                | Vol: 1,600
+    #14 | business podcast hosting             | Vol: 980
+    #18 | podcast hosting comparison           | Vol: 1,100
+
+  ❌ Not Ranking/Beyond Page 3 (15)
+    --  | podcast hosting for enterprises      | Vol: 450
+    --  | unlimited podcast hosting            | Vol: 720
+
+----------------------------------------------------------------------
+MOFU KEYWORDS (Middle of Funnel - Researching)
+----------------------------------------------------------------------
+
+  🏆 Page 1 Rankings (18)
+    # 2 | how to start a podcast              | Vol: 12,000
+    # 4 | podcast equipment guide             | Vol: 4,500
+
+======================================================================
+SECTION 2: GOOGLE SEARCH CONSOLE DATA (Last 30 Days)
+======================================================================
+
+Found 247 high-intent keywords (filtered from 1,842 total)
+
+📊 DISTRIBUTION:
+  Page 1 (positions 1-10): 89 keywords
+  Page 2 (positions 11-20): 54 keywords
+  Page 3+ (positions 21+): 104 keywords
+
+  Page 1 Performance: 45,230 impressions, 3,421 clicks
+  Page 2 Opportunity: 18,940 impressions, 456 clicks
+
+----------------------------------------------------------------------
+COMMERCIAL INTENT ANALYSIS
+----------------------------------------------------------------------
+
+Quick Win Breakdown by Commercial Intent:
+  Transactional (Ready to Buy): 12
+  Commercial Investigation: 28
+  Informational (Relevant): 14
+
+Top 20 TRANSACTIONAL Quick Wins:
+   1. #11.2 | podcast hosting pricing plans         | 1,240 imp | Score: 89
+   2. #12.8 | best podcast host for small business | 890 imp | Score: 85
+   3. #13.5 | podcast hosting features comparison  | 760 imp | Score: 82
+
+======================================================================
+BASELINE SUMMARY
+======================================================================
+
+DATAFORSEO RANKINGS (Live SERP Check):
+--------------------------------------
+BOFU Keywords (High Buyer Intent):
+  - Total Tracked: 35
+  - Page 1: 12 (34%)
+  - Page 2-3 (Quick Wins): 8 (23%)
+  - Not Ranking: 15 (43%)
+
+MOFU Keywords (Research Phase):
+  - Total Tracked: 48
+  - Page 1: 18 (38%)
+  - Page 2-3 (Quick Wins): 15 (31%)
+  - Not Ranking: 15 (31%)
+
+GSC PERFORMANCE (Actual Traffic Data):
+--------------------------------------
+High-Intent Keywords:
+  - Total Tracked: 247
+  - Page 1 Rankings: 89
+  - Quick Win Opportunities (Page 2): 54
+  - Page 3+ (Need Work): 104
+
+Traffic Potential:
+  - Current Page 1 Impressions: 45,230
+  - Page 2 Impressions (Quick Win Potential): 18,940
+```
+
+### Use Cases
+
+- **Monthly reporting**: Track progress over time
+- **Initial audit**: Establish baseline before optimization
+- **Competitor comparison**: Compare against targets
+- **Strategy validation**: See which keyword groups are working
+
+## BOFU Rankings
+
+**Script**: `seo_bofu_rankings.py`
+
+Detailed analysis of specific high-value buyer-intent keywords.
+
+### Usage
+
+```bash
+python3 seo_bofu_rankings.py
+```
+
+### What It Does
+
+1. **Live SERP Check** (DataForSEO)
+   - Checks top 50 results for each BOFU keyword
+   - Shows your position and URL
+   - Lists top 5 competitors
+   - Displays search volume, CPC, competition
+
+2. **Alternative Keywords**
+   - Checks "[competitor] alternative" keywords
+   - Identifies capture opportunities
+
+3. **GSC High-Intent Analysis**
+   - Filters all GSC data to relevant terms
+   - Shows Page 1, Page 2, Page 3+ distribution
+   - Detailed performance metrics
+
+4. **Key Query Performance**
+   - Tracks specific important queries from config
+   - Shows best ranking position
+   - Total impressions/clicks for related variants
+
+### Output Example
+
+```
+================================================================================
+DETAILED BOFU KEYWORD ANALYSIS FOR YOUR COMPANY
+================================================================================
+
+================================================================================
+PART 1: LIVE SERP CHECK (DataForSEO)
+================================================================================
+
+>>> Checking: 'podcast hosting pricing'
+    Search Volume: 1,200
+    CPC: $8.45
+    Competition: High
+    ✓ RANKING: #5
+      URL: https://yoursite.com/pricing
+    Top 5 Results:
+      # 1. buzzsprout.com
+      # 2. transistor.fm
+      # 3. captivate.fm
+      # 4. podbean.com
+      # 5. yoursite.com
+
+>>> Checking: 'best podcast hosting for business'
+    Search Volume: 2,400
+    CPC: $12.30
+    Competition: High
+    ✗ NOT IN TOP 50
+    Top 5 Results:
+      # 1. podcaster.com
+      # 2. buzzsprout.com
+      # 3. anchor.fm
+      # 4. transistor.fm
+      # 5. captivate.fm
+
+================================================================================
+PART 2: COMPETITOR ALTERNATIVE KEYWORDS
+================================================================================
+
+>>> Checking: 'buzzsprout alternative'
+    Search Volume: 890
+    ✓ RANKING: #8
+    Top 3 Results:
+      # 1. captivate.fm
+      # 2. transistor.fm
+      # 3. yoursite.com/vs/buzzsprout
+
+================================================================================
+PART 3: GSC DATA - HIGH-INTENT KEYWORDS
+================================================================================
+
+Found 247 high-intent keywords
+--------------------------------------------------------------------------------
+Page 1: 89 | Page 2: 54 | Page 3+: 104
+
+🏆 PAGE 1 KEYWORDS:
+  #2.3  | how to start a podcast business          | 2,450 imp | 245 clicks | 10.0% CTR
+  #3.8  | podcast hosting features                 | 1,890 imp | 156 clicks | 8.3% CTR
+  #5.1  | podcast hosting pricing                  | 1,240 imp | 89 clicks | 7.2% CTR
+
+📈 PAGE 2 QUICK WINS:
+  #11.2 | podcast hosting plans                    |   980 imp | 18 clicks | 1.8% CTR
+  #12.8 | business podcast hosting                 |   760 imp | 12 clicks | 1.6% CTR
+  #14.5 | podcast hosting comparison               |   620 imp | 8 clicks | 1.3% CTR
+
+================================================================================
+PART 4: KEY QUERY PERFORMANCE (GSC)
+================================================================================
+
+'podcast hosting pricing':
+  Best Position: #5.2 for 'podcast hosting pricing plans'
+  Total Related Impressions: 3,450
+  Total Related Clicks: 248
+
+'podcast hosting for business':
+  Best Position: #12.8 for 'business podcast hosting'
+  Total Related Impressions: 1,890
+  Total Related Clicks: 45
+```
+
+### Use Cases
+
+- **BOFU strategy**: Focus on high-value buyer keywords
+- **Competitor tracking**: Monitor positions vs competitors
+- **Alternative keywords**: Capture users searching for competitors
+- **Conversion tracking**: Correlate rankings with conversions
+
+## Competitor Analysis
+
+**Script**: `seo_competitor_analysis.py`
+
+Head-to-head comparison of your site vs configured competitors.
+
+### Usage
+
+```bash
+python3 seo_competitor_analysis.py
+```
+
+### What It Does
+
+1. **Head-to-Head BOFU Rankings**
+   - Checks each keyword for all competitors
+   - Shows who ranks where
+   - Visual status indicators
+
+2. **Ranking Comparison Table**
+   - Side-by-side table of all positions
+   - Easy to spot gaps and wins
+
+3. **Competitor Keyword Analysis**
+   - Fetches top 300 keywords for each competitor
+   - Filters to relevant industry terms
+   - Shows their top-ranking content
+
+4. **Keyword Gap Analysis**
+   - Where competitors rank but you don't
+   - Prioritized by search volume
+   - Content opportunities
+
+5. **Win/Loss Analysis**
+   - Head-to-head wins vs each competitor
+   - Keywords where you win
+   - Keywords where you lose
+
+6. **MOFU Comparison**
+   - Same analysis for MOFU keywords
+   - Research phase positioning
+
+### Output Example
+
+```
+==========================================================================================
+COMPETITOR SEO ANALYSIS: YOUR COMPANY VS COMPETITORS
+==========================================================================================
+
+==========================================================================================
+SECTION 1: HEAD-TO-HEAD BOFU KEYWORD RANKINGS
+==========================================================================================
+
+>>> Checking: 'podcast hosting pricing'
+    Search Volume: 1,200
+    Rankings:
+      ✅ YourCompany: #5
+      ✅ Buzzsprout: #2
+      📈 Transistor: #12
+      ⚫ Captivate: Not in top 100
+
+>>> Checking: 'best podcast hosting for business'
+    Search Volume: 2,400
+    Rankings:
+      ⚫ YourCompany: Not in top 100
+      ✅ Buzzsprout: #1
+      ✅ Transistor: #4
+      📈 Captivate: #15
+
+==========================================================================================
+SECTION 2: COMPLETE RANKING COMPARISON TABLE
+==========================================================================================
+
+Keyword                                  | YourCompany | Buzzsprout | Transistor | Captivate
+---------------------------------------------------------------------------------------------------------
+podcast hosting pricing                  |         #5  |        #2  |       #12  |         -
+best podcast hosting for business        |          -  |        #1  |        #4  |       #15
+podcast hosting features                 |         #3  |        #7  |        #9  |       #18
+podcast analytics tools                  |         #8  |        #3  |        #6  |       #22
+
+==========================================================================================
+SECTION 3: COMPETITOR RANKED KEYWORDS (Top 300)
+==========================================================================================
+
+>>> Fetching top keywords for Buzzsprout (buzzsprout.com)...
+    Total ranked keywords (top 20): 287
+    Industry-relevant keywords: 124
+
+    Top 20 Keywords for Buzzsprout:
+       1. # 1 | podcast hosting                           | Vol: 14,800
+       2. # 1 | podcast hosting platform                  | Vol: 3,600
+       3. # 2 | best podcast hosting                      | Vol: 9,200
+       4. # 2 | podcast hosting sites                     | Vol: 2,100
+       5. # 3 | podcast hosting services                  | Vol: 4,500
+
+==========================================================================================
+SECTION 4: KEYWORD GAP ANALYSIS
+Where competitors rank but Your Company doesn't
+==========================================================================================
+
+>>> Buzzsprout ranks for these keywords where Your Company doesn't:
+    # 1 | podcast hosting platform                       | Vol: 3,600
+    # 2 | podcast hosting sites                          | Vol: 2,100
+    # 3 | podcast analytics dashboard                    | Vol: 1,200
+    # 4 | podcast monetization tools                     | Vol: 980
+    # 5 | podcast rss feed hosting                       | Vol: 720
+
+>>> Transistor ranks for these keywords where Your Company doesn't:
+    # 2 | private podcast hosting                        | Vol: 1,400
+    # 3 | podcast hosting for teams                      | Vol: 890
+    # 4 | enterprise podcast hosting                     | Vol: 560
+
+==========================================================================================
+SECTION 5: HEAD-TO-HEAD WIN/LOSS ANALYSIS
+==========================================================================================
+
+>>> Your Company vs Buzzsprout:
+    Wins: 8 | Losses: 18 | Ties: 2
+
+    Keywords where Your Company WINS:
+      podcast hosting features: Your Company #3 vs Buzzsprout #7
+      podcast hosting reviews: Your Company #6 vs Buzzsprout #12
+      podcast hosting comparison: Your Company #8 vs Buzzsprout #14
+
+    Keywords where Your Company LOSES:
+      podcast hosting: Your Company - vs Buzzsprout #1
+      best podcast hosting: Your Company - vs Buzzsprout #2
+      podcast hosting platform: Your Company - vs Buzzsprout #1
+
+>>> Your Company vs Transistor:
+    Wins: 12 | Losses: 10 | Ties: 3
+
+==========================================================================================
+COMPETITIVE ANALYSIS SUMMARY
+==========================================================================================
+
+>>> Page 1 Rankings Count (BOFU Keywords):
+    YourCompany : Page 1: 12 | Page 2: 8 | Not ranking: 15
+    Buzzsprout  : Page 1: 22 | Page 2: 7 | Not ranking: 6
+    Transistor  : Page 1: 18 | Page 2: 10 | Not ranking: 7
+    Captivate   : Page 1: 14 | Page 2: 9 | Not ranking: 12
+```
+
+### Use Cases
+
+- **Competitive positioning**: Understand your market position
+- **Gap identification**: Find keywords competitors dominate
+- **Content strategy**: Prioritize based on competitive intel
+- **Win analysis**: Double down on areas where you're winning
+- **Reporting**: Executive summaries of competitive performance
+
+## Best Practices
+
+### Frequency
+
+- **Weekly**: Quick spot-checks on critical keywords
+- **Monthly**: Full baseline and competitor analysis
+- **Quarterly**: Comprehensive reporting and strategy adjustment
+
+### Configuration Tips
+
+1. **Start small**: Begin with 10-20 critical BOFU keywords
+2. **Expand gradually**: Add more as you optimize existing ones
+3. **Update regularly**: Add new keywords as products/services evolve
+4. **Remove irrelevant**: Clean out keywords that don't convert
+5. **Segment by intent**: Keep BOFU and MOFU separate
+
+### Cost Management
+
+DataForSEO API costs:
+
+- **Baseline Analysis**: ~200-400 calls ($0.20-$0.40)
+- **BOFU Rankings**: ~100-200 calls ($0.10-$0.20)
+- **Competitor Analysis**: ~500-1000 calls ($0.50-$1.00)
+
+Tips:
+- Limit competitor list to 3-5 direct competitors
+- Use position_max and limit parameters
+- Cache results when possible
+- Run comprehensive analysis monthly, not daily
+
+### Interpreting Results
+
+**Priority Actions:**
+
+1. **BOFU Page 2-3**: Highest ROI - optimize existing content
+2. **BOFU Not Ranking**: Create new content targeting gaps
+3. **Competitor Gaps**: Study why they rank, what's missing from your content
+4. **Win/Loss Patterns**: Understand your competitive advantages
+
+**Success Metrics:**
+
+- **Page 1 %**: Target 40-60% of BOFU keywords on page 1
+- **Quick Win Conversion**: Target 50% of page 2-3 moved to page 1 within 3 months
+- **Traffic Lift**: Monitor impressions and clicks from GSC
+- **Competitive Wins**: Increase win ratio vs competitors over time
+
+### Integration with Workflow
+
+Use SEO analysis findings:
+
+```bash
+# After baseline analysis identifies a gap:
+python3 research_serp_analysis.py "keyword from gap"
+/research [keyword]
+/write [keyword]
+
+# For page 2-3 quick wins:
+/analyze-existing [current ranking URL]
+/rewrite [topic]
+/optimize [file]
+
+# For competitor gap keywords:
+# Study competitor's ranking content first
+/research [competitor gap keyword]
+/write [keyword]
+```
+
+## Troubleshooting
+
+### "No data available"
+
+- Check DataForSEO credentials in `.env`
+- Verify you have API credits
+- Try with a simpler keyword first
+
+### "GSC Error: 403"
+
+- Verify GSC API access is enabled
+- Check service account credentials
+- Ensure site is verified in GSC
+
+### "No keywords configured"
+
+- Create `config/competitors.json` from example
+- Add at least 5-10 keywords to test
+
+### High API costs
+
+- Reduce competitor count
+- Lower limit parameter
+- Use position_max=30 instead of 100
+- Run less frequently
+
+### Irrelevant keywords in results
+
+- Add to `skip_terms` in config
+- Refine `relevant_terms` to be more specific
+- Filter results manually in reports

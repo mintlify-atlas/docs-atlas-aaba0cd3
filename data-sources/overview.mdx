@@ -1,0 +1,151 @@
+---
+title: Data Sources Overview
+description: Integrate real-time analytics and SEO data to power intelligent content decisions in SEO Machine
+---
+
+SEO Machine integrates with multiple data sources to provide real-time performance metrics that power the Performance Agent and inform content strategy decisions.
+
+## What Data Sources Provide
+
+Data sources deliver actionable insights for:
+
+- **Content Performance**: Track which articles drive traffic and conversions
+- **SEO Opportunities**: Identify keywords ranking 11-20 ready to push to page 1
+- **Content Gaps**: Discover topics competitors rank for that you don't
+- **Update Priority**: Find articles with declining traffic or outdated content
+- **Trending Topics**: Spot rising search queries and emerging opportunities
+
+## Supported Integrations
+
+<CardGroup cols={3}>
+  <Card title="Google Analytics 4" icon="chart-line" href="/data-sources/google-analytics">
+    Traffic, engagement, and conversion data from your GA4 property
+  </Card>
+  <Card title="Google Search Console" icon="magnifying-glass" href="/data-sources/google-search-console">
+    Search performance, keyword rankings, and SERP data
+  </Card>
+  <Card title="DataForSEO" icon="ranking-star" href="/data-sources/dataforseo">
+    Competitive SEO data, keyword research, and SERP analysis
+  </Card>
+</CardGroup>
+
+## How They Work Together
+
+The Data Aggregator combines all sources into unified analytics:
+
+```python
+from data_sources.modules.data_aggregator import DataAggregator
+
+aggregator = DataAggregator()
+
+# Get comprehensive page performance
+performance = aggregator.get_page_performance(
+    url="/blog/podcast-monetization-guide"
+)
+```
+
+Returns combined data:
+
+```json
+{
+  "url": "/blog/podcast-monetization-guide",
+  "ga4": {
+    "pageviews": 12500,
+    "avg_engagement_time": 245,
+    "bounce_rate": 0.42
+  },
+  "gsc": {
+    "impressions": 45000,
+    "clicks": 3200,
+    "avg_position": 8.5,
+    "ctr": 0.071
+  },
+  "dataforseo": {
+    "primary_keyword": "podcast monetization",
+    "position": 8,
+    "search_volume": 2900
+  }
+}
+```
+
+## Performance Agent Integration
+
+The Performance Agent automatically uses data sources to:
+
+### 1. Identify Declining Content
+- Articles losing traffic (GA4)
+- Keywords dropping in position (GSC + DataForSEO)
+- Increased bounce rates (GA4)
+
+### 2. Find Quick Wins
+- Keywords ranking 11-20 (GSC + DataForSEO)
+- High impressions, low CTR (GSC)
+- Competitor gaps (DataForSEO)
+
+### 3. Prioritize Updates
+- High-traffic articles with old data
+- Articles on page 2 for valuable keywords
+- Content gaps in topic clusters
+
+### 4. Suggest New Content
+- Rising search queries (GSC)
+- Competitor keyword gaps (DataForSEO)
+- Related questions (DataForSEO)
+
+## Data Caching
+
+To avoid API rate limits and costs:
+
+- Responses are cached for 24 hours by default
+- Cache files stored in `data_sources/cache/`
+- Adjust `CACHE_TTL_HOURS` in `.env`
+- Clear cache: `rm -rf data_sources/cache/*`
+
+## Rate Limits & Costs
+
+<AccordionGroup>
+  <Accordion title="Google Analytics 4">
+    - **Free Tier**: 25,000 requests/day
+    - **Quotas**: Per-property quotas apply
+    - **Cost**: Free for standard properties
+  </Accordion>
+  
+  <Accordion title="Google Search Console">
+    - **Free Tier**: Unlimited (reasonable use)
+    - **Limits**: 1000 rows per request
+    - **Cost**: Free
+  </Accordion>
+  
+  <Accordion title="DataForSEO">
+    - **Pricing**: Pay-per-request
+    - **SERP check**: $0.006 per keyword
+    - **Ranking check**: $0.0005 per keyword
+    - **Keyword data**: $0.006 per keyword
+    - **Tip**: Use caching aggressively to minimize costs
+  </Accordion>
+</AccordionGroup>
+
+## Security Best Practices
+
+<Warning>
+  Never commit credentials to git! All credential files are in `.gitignore`.
+</Warning>
+
+- Use service accounts, not user accounts
+- Rotate credentials regularly
+- Limit service account permissions to read-only
+- Store encrypted backups in a secure location
+
+## Next Steps
+
+<CardGroup cols={3}>
+  <Card title="Set Up Google Analytics" icon="chart-line" href="/data-sources/google-analytics">
+    Connect your GA4 property for traffic data
+  </Card>
+  <Card title="Set Up Search Console" icon="magnifying-glass" href="/data-sources/google-search-console">
+    Integrate search performance metrics
+  </Card>
+  <Card title="Set Up DataForSEO" icon="ranking-star" href="/data-sources/dataforseo">
+    Enable competitive SEO research
+  </Card>
+</CardGroup>

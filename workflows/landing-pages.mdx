@@ -1,0 +1,589 @@
+---
+title: Landing Page Workflow
+description: Create and optimize high-converting landing pages for SEO traffic or PPC campaigns
+---
+
+Landing pages have a different goal than blog posts: conversion over education. SEO Machine provides specialized commands for creating, auditing, and optimizing landing pages for maximum conversion rates.
+
+## Overview
+
+The landing page workflow differs from blog content creation:
+
+- **Goal**: Convert visitors, not educate
+- **Length**: 400-2,500 words (vs 2,000-3,000+ for blogs)
+- **Structure**: Conversion flow, not educational flow
+- **CTAs**: 2-5 prominent CTAs, not contextual
+- **Scoring**: Uses `landing_page_scorer` (not `content_scorer`)
+
+<Info>
+SEO Machine supports two landing page types: **SEO landing pages** (for organic traffic) and **PPC landing pages** (for paid campaigns). Each has different length and structure requirements.
+</Info>
+
+## Landing Page Commands
+
+| Command | Purpose |
+|---------|----------|
+| `/landing-research` | Research competitors and positioning |
+| `/landing-write` | Create conversion-optimized landing page |
+| `/landing-audit` | Audit existing page for CRO issues |
+| `/landing-competitor` | Deep competitor landing page analysis |
+| `/landing-publish` | Publish landing page to WordPress |
+
+## Step 1: Research (Optional but Recommended)
+
+Start with research to understand competitive positioning and opportunities.
+
+### Command Usage
+
+```bash
+/landing-research [topic] --type [seo|ppc]
+```
+
+### Example
+
+```bash
+/landing-research "podcast hosting for beginners" --type seo
+```
+
+### What It Does
+
+<Steps>
+  <Step title="Competitor Analysis">
+    Identifies top landing pages targeting the same keyword or offering
+  </Step>
+  
+  <Step title="Positioning Research">
+    Analyzes messaging, value propositions, and differentiation strategies
+  </Step>
+  
+  <Step title="Trust Signal Audit">
+    Reviews what social proof and trust elements competitors use
+  </Step>
+  
+  <Step title="CTA Analysis">
+    Examines call-to-action copy, placement, and conversion goals
+  </Step>
+  
+  <Step title="Creates Research Brief">
+    Generates brief with recommended headlines, structure, and differentiation strategy
+  </Step>
+</Steps>
+
+## Step 2: Create Landing Page
+
+Use the `/landing-write` command to create your landing page.
+
+### Command Usage
+
+```bash
+/landing-write [topic] --type [seo|ppc] --goal [trial|demo|lead]
+```
+
+### Examples
+
+```bash
+# SEO landing page for free trial signups
+/landing-write "podcast hosting for beginners" --type seo --goal trial
+
+# PPC landing page for demo bookings
+/landing-write "enterprise podcast hosting" --type ppc --goal demo
+
+# SEO landing page for lead magnet downloads
+/landing-write "podcast monetization guide" --type seo --goal lead
+```
+
+### Parameters
+
+- **`--type`**: `seo` (default) or `ppc`
+  - **SEO**: 1500-2500 words, 3-5 CTAs, optimized for organic rankings
+  - **PPC**: 400-800 words, 2-3 CTAs, minimal distractions
+
+- **`--goal`**: `trial` (default), `demo`, or `lead`
+  - **Trial**: Free trial signups
+  - **Demo**: Schedule demo calls
+  - **Lead**: Download lead magnets (guides, checklists, templates)
+
+### What It Does
+
+<Steps>
+  <Step title="Reviews Context">
+    Reads landing page templates, CRO best practices, and brand voice
+  </Step>
+  
+  <Step title="Creates Landing Page">
+    Generates conversion-optimized page with proper structure for type and goal
+  </Step>
+  
+  <Step title="Includes All CRO Elements">
+    - Above-the-fold hero section
+    - Trust signals and social proof
+    - Risk reversal statements
+    - Goal-aligned CTAs
+    - Benefit-focused copy
+  </Step>
+  
+  <Step title="Saves to Landing Pages Directory">
+    Saves to `landing-pages/[topic-slug]-[date].md`
+  </Step>
+  
+  <Step title="Automatic Scrubbing">
+    Removes AI watermarks using `/scrub` command
+  </Step>
+  
+  <Step title="Automatic Scoring">
+    Runs landing page scorer and generates CRO analysis
+  </Step>
+  
+  <Step title="Triggers CRO Agents">
+    Runs Landing Page Optimizer, Headline Generator, and CRO Analyst agents
+  </Step>
+</Steps>
+
+## SEO Landing Page Structure
+
+**Word Count**: 1500-2500 words  
+**CTAs**: 3-5 distributed throughout  
+**Internal Links**: 2-3 strategic links
+
+### Required Sections
+
+<Steps>
+  <Step title="Hero Section (Above the Fold)">
+    - Benefit-focused headline with keyword (H1)
+    - 2-3 sentence value proposition
+    - Primary CTA button (prominent, contrasting color)
+    - Trust signal (customer count, rating, or result)
+  </Step>
+  
+  <Step title="Problem/Pain Point Section">
+    2-3 paragraphs acknowledging reader's struggle, includes mini-story with specific person and outcome
+  </Step>
+  
+  <Step title="Solution Overview">
+    - How your product solves the problem
+    - 3-5 key benefits (bold headings)
+    - Secondary CTA
+  </Step>
+  
+  <Step title="Features That Deliver">
+    3-5 features, each tied to a benefit with 2-3 sentences explaining what it is and why it matters
+  </Step>
+  
+  <Step title="Social Proof">
+    - 2+ testimonials with names and titles
+    - Specific results with numbers
+    - CTA button
+  </Step>
+  
+  <Step title="How It Works">
+    3-step process showing how easy it is to get started
+  </Step>
+  
+  <Step title="FAQ Section">
+    4-6 questions addressing common objections (featured snippet opportunity)
+  </Step>
+  
+  <Step title="Final CTA Section">
+    - Strong closing headline
+    - 1-2 sentence value summary
+    - Prominent CTA button
+    - Risk reversal ("Free trial • No credit card • Cancel anytime")
+  </Step>
+</Steps>
+
+### SEO Optimization
+
+SEO landing pages must include:
+
+- Primary keyword in H1, first 100 words, and 2+ H2 headings
+- Meta title (50-60 chars) and description (150-160 chars)
+- 2-3 internal links to related content
+- Proper H2/H3 structure
+- FAQ section (schema markup opportunity)
+
+## PPC Landing Page Structure
+
+**Word Count**: 400-800 words  
+**CTAs**: 2-3 (same goal, prominent)  
+**Internal Links**: 0-1 (minimize distractions)
+
+### Required Sections
+
+<Steps>
+  <Step title="Hero Section (Above the Fold)">
+    - Headline matching ad copy
+    - One-sentence value proposition
+    - Trust signal
+    - Large, prominent primary CTA button
+  </Step>
+  
+  <Step title="Why Choose [Your Company]">
+    3 bullet points, one sentence each, highlighting key benefits
+  </Step>
+  
+  <Step title="Proof It Works">
+    One short testimonial with specific result and name
+  </Step>
+  
+  <Step title="Primary CTA (Repeated)">
+    Same CTA button, prominent
+  </Step>
+  
+  <Step title="What You Get">
+    3-5 bullet points listing what's included
+  </Step>
+  
+  <Step title="Risk Reversal">
+    - Free trial period
+    - No credit card required
+    - Cancel anytime
+  </Step>
+  
+  <Step title="Final CTA">
+    Same CTA button for the third time
+  </Step>
+</Steps>
+
+### PPC Best Practices
+
+- **Match Ad Copy**: Headline and value prop must match the ad
+- **Single Goal**: All CTAs lead to the same conversion goal
+- **Minimal Navigation**: No header menu or footer links
+- **Fast Loading**: Minimal images, optimized for speed
+- **No Distractions**: Remove internal links and side content
+
+## Goal-Specific CTA Copy
+
+### Trial Goal CTAs
+
+**Primary CTAs**:
+- "Start Your Free Trial →"
+- "Try Free for 14 Days →"
+- "Get Started Free →"
+
+**Supporting Copy**:
+- "No credit card required"
+- Trial length ("14-day free trial")
+- "Cancel anytime"
+- "Set up in minutes"
+
+**Trust Signals**:
+- User count ("Join 50,000+ users")
+- Ease of setup
+- No commitment messaging
+
+### Demo Goal CTAs
+
+**Primary CTAs**:
+- "Book Your Demo →"
+- "Schedule a Call →"
+- "See It in Action →"
+
+**Supporting Copy**:
+- Demo length ("15-minute walkthrough")
+- What demo covers
+- "No pressure, no hard sell"
+- Personalization promise ("Tailored to your needs")
+
+**Trust Signals**:
+- Enterprise customer logos
+- Custom solutions mention
+- Expert guidance
+
+### Lead Goal CTAs
+
+**Primary CTAs**:
+- "Download the Free Guide →"
+- "Get Instant Access →"
+- "Claim Your Copy →"
+
+**Supporting Copy**:
+- What they're getting ("47-page comprehensive guide")
+- "Instant download"
+- "No spam, ever"
+- Content preview/teaser
+
+**Trust Signals**:
+- Community/subscriber size
+- Author credibility
+- Content preview or testimonials
+
+## Step 3: Review Scoring and Agent Feedback
+
+After creation, the landing page is automatically scored.
+
+### Landing Page Scoring
+
+The `landing_page_scorer` evaluates:
+
+- **Above the Fold** (25%): Headline, value prop, CTA, trust signal
+- **CTAs** (20%): Quality, distribution, goal alignment
+- **Trust Signals** (20%): Testimonials, social proof, risk reversal
+- **Structure & Flow** (20%): Logical progression, scannability
+- **SEO/Technical** (15%): Meta elements, page speed, mobile optimization
+
+**Minimum Score**: 75/100 to be publish-ready
+
+### Agent Analysis
+
+Three agents automatically analyze your landing page:
+
+#### Landing Page Optimizer
+
+- CRO scoring (0-100) with category breakdowns
+- Above-fold, CTA, trust signal, structure, and SEO analysis
+- A/B testing recommendations
+- Priority action list
+
+#### Headline Generator
+
+- 10+ headline variations using proven formulas
+- Conversion potential scoring
+- A/B testing strategies
+- Audience-specific headline options
+
+#### CRO Analyst
+
+- Above-the-fold effectiveness
+- CTA quality and distribution
+- Trust signal presence
+- Friction points
+- Page structure and psychology
+
+<Warning>
+If your landing page scores below 75, it will be saved to `review-required/landing-pages/` with notes on critical issues to fix.
+</Warning>
+
+## Step 4: Audit Existing Landing Pages (Optional)
+
+Use `/landing-audit` to analyze existing landing pages for improvement opportunities.
+
+### Command Usage
+
+```bash
+/landing-audit [file or URL]
+```
+
+### Example
+
+```bash
+/landing-audit https://yoursite.com/trial-signup
+```
+
+### What It Does
+
+- Audits page against CRO best practices
+- Scores above-fold effectiveness
+- Analyzes CTA quality and placement
+- Reviews trust signals
+- Identifies friction points
+- Provides prioritized improvement recommendations
+
+## Step 5: Publish to WordPress
+
+When ready, publish your landing page.
+
+### Command Usage
+
+```bash
+/landing-publish [file] --type page
+```
+
+### Example
+
+```bash
+/landing-publish landing-pages/podcast-hosting-beginners-2025-03-04.md --type page
+```
+
+<Info>
+Landing pages are typically published as WordPress **pages** (not posts) since they don't appear in blog archives or RSS feeds.
+</Info>
+
+## Complete Workflow Example
+
+<Steps>
+  <Step title="Research (Optional)">
+    ```bash
+    /landing-research "podcast hosting for WordPress" --type seo
+    ```
+    Review brief in `research/landing-brief-podcast-hosting-wordpress-[date].md`
+  </Step>
+  
+  <Step title="Create Landing Page">
+    ```bash
+    /landing-write "podcast hosting for WordPress" --type seo --goal trial
+    ```
+    Page saved to `landing-pages/podcast-hosting-wordpress-[date].md`
+  </Step>
+  
+  <Step title="Review Score and Recommendations">
+    Check automatic scoring output and agent reports:
+    - Landing page score (target: 75+)
+    - Landing Page Optimizer report
+    - Headline Generator variations
+    - CRO Analyst insights
+  </Step>
+  
+  <Step title="Make Revisions (If Needed)">
+    If score < 75, address critical issues identified in the reports
+  </Step>
+  
+  <Step title="Re-score After Changes">
+    Run the landing page optimizer agent again to verify improvements
+  </Step>
+  
+  <Step title="Publish When Ready">
+    ```bash
+    /landing-publish landing-pages/podcast-hosting-wordpress-[date].md --type page
+    ```
+    Returns WordPress edit URL for final review
+  </Step>
+  
+  <Step title="Set Up A/B Testing">
+    Use Headline Generator variations to test different headlines in your testing tool
+  </Step>
+</Steps>
+
+## Headline Formula Options
+
+Use these proven formulas for landing page headlines:
+
+### Benefit-Focused
+- "[Achieve Outcome] Without [Pain Point]"
+- "The [Adjective] Way to [Achieve Outcome]"
+- "Finally, [Solution] for [Audience]"
+
+**Examples**:
+- "Launch Your Podcast Without Technical Headaches"
+- "The Simple Way to Monetize Your Podcast"
+- "Finally, Podcast Hosting Built for Creators"
+
+### Number-Based
+- "[Number] [Audience] Trust [Product] to [Benefit]"
+- "Launch Your [Product] in [Number] Minutes"
+
+**Examples**:
+- "50,000+ Podcasters Trust Castos to Grow Their Audience"
+- "Launch Your Podcast in 10 Minutes"
+
+### Question-Based
+- "Ready to [Achieve Outcome]?"
+- "What if You Could [Desired Outcome]?"
+
+**Examples**:
+- "Ready to Turn Your Podcast Into a Business?"
+- "What if You Could Automate Your Podcast Workflow?"
+
+<Warning>
+**Headline Don'ts**:
+- ❌ "Welcome to..." (too generic)
+- ❌ "The Best..." without proof
+- ❌ "Everything You Need" (meaningless)
+- ❌ Starting with "Our" or "We" (not benefit-focused)
+- ❌ Longer than 70 characters
+</Warning>
+
+## Landing Page Checklist
+
+Before publishing, verify:
+
+### Above the Fold (Critical)
+- [ ] Benefit-focused headline (H1) with keyword (SEO pages)
+- [ ] Clear value proposition (1-2 sentences)
+- [ ] Primary CTA button (prominent, contrasting color)
+- [ ] Trust signal (customer count, rating, or result)
+
+### CTAs
+- [ ] Action verb in CTA text (Start, Get, Try, Book)
+- [ ] Benefit word in CTA (Free, Instant, Today)
+- [ ] Goal-aligned CTA copy
+- [ ] First CTA within 20% of page
+- [ ] Final CTA at end of page
+- [ ] All CTAs lead to same conversion goal (PPC pages)
+
+### Trust Signals
+- [ ] At least 2 testimonials with names (SEO pages)
+- [ ] At least 1 testimonial (PPC pages)
+- [ ] Specific results with numbers
+- [ ] Risk reversal near CTAs ("No credit card", "Cancel anytime")
+
+### SEO (SEO Pages Only)
+- [ ] Keyword in headline
+- [ ] Keyword in meta title
+- [ ] Keyword in first 100 words
+- [ ] 2-3 internal links
+- [ ] Meta description 150-160 characters
+- [ ] FAQ section (schema markup opportunity)
+
+### Technical
+- [ ] Landing page score ≥ 75
+- [ ] No critical issues
+- [ ] Fast loading (under 3 seconds)
+- [ ] Mobile responsive
+- [ ] Form functional (if applicable)
+
+## Differences from Blog Content
+
+| Aspect | Blog Posts | Landing Pages |
+|--------|------------|---------------|
+| **Primary Goal** | Educate & inform | Convert visitors |
+| **Word Count** | 2000-3000+ words | 400-2500 words |
+| **CTAs** | 2-3 contextual | 2-5 prominent |
+| **Structure** | Educational flow | Conversion flow |
+| **Internal Links** | 3-5 | 0-3 (minimal for PPC) |
+| **Command** | `/write` | `/landing-write` |
+| **Output Directory** | `drafts/` | `landing-pages/` |
+| **Scoring Tool** | `content_scorer.py` | `landing_page_scorer.py` |
+| **Publish Type** | Post (blog) | Page (standalone) |
+
+## Common Landing Page Mistakes
+
+<Warning>
+- ❌ Too much text (especially PPC pages)
+- ❌ Weak or generic headlines
+- ❌ CTA below the fold
+- ❌ Multiple conversion goals on one page
+- ❌ No trust signals or social proof
+- ❌ Missing risk reversal
+- ❌ Talking about "we" instead of "you"
+- ❌ No clear value proposition
+- ❌ Slow page load time
+- ❌ Not matching PPC ad copy to landing page
+</Warning>
+
+## Tips for High-Converting Landing Pages
+
+### Headline Best Practices
+- Lead with the benefit, not the feature
+- Use numbers when possible ("50,000+ users")
+- Make it specific, not generic
+- Match visitor's language and search intent
+- Keep under 70 characters for readability
+
+### CTA Best Practices
+- Use action verbs (Start, Get, Download, Book)
+- Include benefit words (Free, Instant, Today)
+- Make buttons large and high-contrast
+- Place first CTA above the fold
+- Repeat CTAs throughout (SEO) or 2-3 times (PPC)
+
+### Trust Signal Best Practices
+- Use specific numbers ("50,000+ customers", not "thousands")
+- Include full names and titles in testimonials
+- Show results with metrics ("increased traffic 300%")
+- Add logos of well-known customers
+- Place risk reversals near CTAs
+
+### PPC-Specific Tips
+- Match headline to ad copy exactly
+- Keep page under 800 words
+- Remove navigation and footer links
+- Use only 1 conversion goal
+- Optimize for speed (minimal images)
+- Make CTA buttons impossible to miss
+
+## Next Steps
+
+- Learn about [Creating Content](/workflows/creating-content) for blog posts
+- Explore [Updating Content](/workflows/updating-content) for existing pages
+- Understand [Publishing](/workflows/publishing) workflows

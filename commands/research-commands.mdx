@@ -1,0 +1,265 @@
+---
+title: Research Commands
+description: Analyze search trends, competitor gaps, content clusters, and SERP patterns to identify strategic content opportunities
+---
+
+Research commands help you discover high-value content opportunities through competitive analysis, trend detection, and performance insights. These commands integrate with Google Search Console, Google Analytics, and DataForSEO to provide data-driven content strategy.
+
+## Available Research Commands
+
+### /research-serp
+
+Deep SERP analysis for a specific keyword to understand what Google wants.
+
+**Usage:**
+```bash
+/research-serp "keyword phrase"
+```
+
+**What it does:**
+- Analyzes top 10 ranking results for a keyword
+- Identifies content type patterns (listicle, how-to, guide)
+- Calculates average word count and recommended length
+- Detects SERP features (featured snippet, PAA, video)
+- Assesses competitive difficulty and search intent
+- Generates comprehensive content brief
+
+**Output:** `research/serp-analysis-[keyword].md`
+
+**Time & Cost:** 1-2 minutes, ~$0.02 per keyword (DataForSEO)
+
+**Use cases:**
+- Before creating new content to understand requirements
+- Before major content updates to check current expectations
+- When deciding content format and structure
+
+---
+
+### /research-gaps
+
+Identify content gaps where competitors rank but you don't.
+
+**Usage:**
+```bash
+/research-gaps
+```
+
+**What it does:**
+- Analyzes 7 competitors to find keywords they rank for (top 20)
+- Filters out branded/irrelevant keywords
+- Scores opportunity based on volume, difficulty, and intent
+- Determines content type needed
+- Prioritizes by potential impact
+
+**Output:** `research/competitor-gaps-YYYY-MM-DD.md`
+
+**Competitors analyzed:**
+- Direct competitors from `config/competitors.json`
+- Industry blogs and media sites in your niche
+
+**The report includes:**
+- Top 20 content gap opportunities
+- Priority level (CRITICAL/HIGH/MEDIUM)
+- Competitor intel (who ranks, at what position)
+- Keyword metrics (volume, difficulty, CPC)
+- Search intent and content type needed
+- Specific action steps for each gap
+
+**Time & Cost:** 3-5 minutes, ~$1-3 (analyzes 300-500 keywords)
+
+**When to run:** Monthly for full competitive landscape review
+
+---
+
+### /research-trending
+
+Identify topics gaining search interest NOW for time-sensitive content opportunities.
+
+**Usage:**
+```bash
+/research-trending
+```
+
+**What it does:**
+- Compares last 7 days vs previous 30 days
+- Identifies topics with significant impression increases
+- Calculates urgency based on growth rate
+- Prioritizes by opportunity score
+- Shows your current position for each trend
+
+**Urgency levels:**
+
+| Level | Growth | Timeline |
+|-------|--------|----------|
+| 🔥 CRITICAL | +150% | Act within 1 week |
+| ⚡ HIGH | +75% | Act within 2 weeks |
+| ⏳ MODERATE | +30% | Act within 1 month |
+
+**Output:** `research/trending-YYYY-MM-DD.md`
+
+**Action based on position:**
+- **Already ranking (≤30):** Update existing content immediately (3-5 days)
+- **Not ranking (>30):** Create comprehensive 2000+ word guide (1 week max)
+
+**Time & Cost:** 1-2 minutes, ~$0.20-0.50 if enriching with search volume
+
+**When to run:** Weekly - trends change fast, catch them early
+
+⚠️ **Warning:** Not all trends sustain. Monitor trend continuation over 2-4 weeks and validate with search volume data.
+
+---
+
+### /research-topics
+
+Analyze topical authority by clustering keywords into related topics.
+
+**Usage:**
+```bash
+/research-topics
+```
+
+**What it does:**
+- Groups ranking keywords into topic clusters
+- Calculates authority score (0-100) for each cluster
+- Identifies coverage gaps within each topic
+- Prioritizes weak clusters with high demand
+
+**Authority levels identified:**
+- **Strong Authority:** Topics you dominate (maintain & expand)
+- **Moderate Authority:** Partial coverage (strengthen)
+- **Weak Authority:** BIGGEST OPPORTUNITY (build comprehensive clusters)
+- **Minimal Authority:** Major gaps
+
+**For each cluster:**
+- Authority score based on coverage, position, demand
+- Number of keywords ranking
+- Average position
+- Total impressions and clicks
+- 8-10 coverage gaps to fill
+
+**Output:** `research/topic-clusters-YYYY-MM-DD.md`
+
+**Key insight:** Weak clusters with high demand = your biggest opportunity
+
+**Strategy:**
+1. **Priority 1:** Build weak clusters (select top 2-3 with highest demand)
+2. **Priority 2:** Maintain strong clusters (keep content fresh)
+3. **Priority 3:** Strengthen moderate clusters (add 3-5 articles)
+
+**Time & Cost:** 2-3 minutes, ~$0.50 if fetching coverage gaps
+
+**When to run:**
+- Monthly to monitor topical authority growth
+- Before content planning to identify cluster opportunities
+- When entering new niche to find topics to own
+
+---
+
+### /research-performance
+
+Categorize all content by traffic and rankings to prioritize optimization.
+
+**Usage:**
+```bash
+/research-performance
+```
+
+**What it does:**
+- Analyzes ALL blog content
+- Categorizes into 4 performance quadrants
+- Calculates traffic trends (180-day comparison)
+- Provides specific action recommendations
+
+**Performance quadrants:**
+
+1. **⭐ Stars** - High traffic + Good rankings → Maintain & expand
+2. **🚀 Overperformers** - High traffic + Poor rankings → Learn why, improve SEO
+3. **⚠️ Underperformers** - Low traffic + Good rankings → Fix CTR (title/meta)
+4. **📉 Declining** - Low traffic + Poor rankings → Refresh or redirect
+
+**Output:** `research/performance-matrix-YYYY-MM-DD.md`
+
+**For each piece:**
+- Traffic trends (rising/stable/declining)
+- Expected vs actual traffic
+- Specific action recommendations
+- Priority level
+
+**Time & Cost:** 2-4 minutes, Free (requires GA4 and GSC)
+
+**When to run:**
+- Monthly to monitor content health
+- After major updates to track impact
+- When traffic drops to identify declining content
+
+---
+
+## Research Workflow
+
+### Starting a New Content Project
+
+```bash
+# 1. Identify gaps and opportunities
+/research-gaps
+
+# 2. Analyze specific keyword requirements
+/research-serp "target keyword"
+
+# 3. Create content with insights
+/write "target keyword"
+```
+
+### Weekly Content Planning
+
+```bash
+# Monday: Check for trending opportunities
+/research-trending
+
+# Act on CRITICAL urgency trends within the week
+```
+
+### Monthly Strategic Review
+
+```bash
+# Analyze content health
+/research-performance
+
+# Identify topical authority gaps
+/research-topics
+
+# Find competitive opportunities
+/research-gaps
+
+# Plan next month's content priorities
+```
+
+## Integration with Other Commands
+
+Research commands feed directly into content creation:
+
+- **After /research-serp** → Use `/write [keyword]` with content brief insights
+- **After /research-gaps** → Use `/research-serp` on high-priority gaps, then `/write`
+- **After /research-trending** → Act fast with `/write [trending topic]`
+- **After /research-topics** → Build cluster with pillar page + supporting articles
+- **After /research-performance** → Use `/analyze-existing [URL]` on underperformers
+
+## Requirements
+
+**API Credentials (configured in `data_sources/config/.env`):**
+- Google Search Console (all commands)
+- Google Analytics 4 (performance matrix)
+- DataForSEO (SERP analysis, enrichment)
+
+**Python Dependencies:**
+```bash
+pip install -r data_sources/requirements.txt
+```
+
+## Data Sources
+
+Research commands pull from:
+- **GSC:** Rankings, impressions, clicks, CTR by page and keyword
+- **GA4:** Traffic, engagement, conversions, and trends
+- **DataForSEO:** Competitive rankings, SERP features, keyword metrics
+
+All reports are saved to the `research/` directory for reference and team collaboration.

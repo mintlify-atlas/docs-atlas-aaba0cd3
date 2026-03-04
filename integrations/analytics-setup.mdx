@@ -1,0 +1,550 @@
+---
+title: 'Analytics Setup'
+description: 'Configure Google Analytics 4, Search Console, and DataForSEO to power data-driven content decisions'
+---
+
+SEO Machine uses analytics data to identify content opportunities, track performance, and prioritize updates. This guide covers setting up all three data sources.
+
+## Overview
+
+The analytics integrations provide:
+
+- **Google Analytics 4 (GA4)**: Traffic, engagement, and conversion metrics
+- **Google Search Console (GSC)**: Search performance and keyword rankings
+- **DataForSEO**: Competitive SEO data and keyword research
+
+These data sources power the `/performance-review` command and inform content strategy decisions.
+
+## Prerequisites
+
+- Google account with access to GA4 and Search Console properties
+- DataForSEO account (optional, for competitive analysis)
+- Python 3.8+ installed
+- `pip` package manager
+
+## Install Dependencies
+
+<Steps>
+  <Step title="Install Python packages">
+    From the repository root, install all required dependencies:
+    
+    ```bash
+    pip install -r data_sources/requirements.txt
+    ```
+    
+    This installs:
+    - `google-analytics-data` - GA4 API client
+    - `google-auth-oauthlib` - Google authentication
+    - `google-api-python-client` - Search Console API
+    - `requests` - HTTP client for DataForSEO
+    - `python-dotenv` - Environment variable management
+    - `pandas` - Data analysis and manipulation
+  </Step>
+  
+  <Step title="Verify installation">
+    Test that packages are installed correctly:
+    
+    ```bash
+    python3 -c "import google.analytics.data_v1beta; print('GA4 client installed')"
+    python3 -c "import googleapiclient.discovery; print('Search Console client installed')"
+    ```
+  </Step>
+</Steps>
+
+## Google Analytics 4 Setup
+
+### Create Service Account
+
+<Steps>
+  <Step title="Create Google Cloud project">
+    1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+    2. Click **Select a project** → **New Project**
+    3. Name it "SEO Machine" or similar
+    4. Click **Create**
+  </Step>
+  
+  <Step title="Enable Google Analytics Data API">
+    1. In your project, go to **APIs & Services** → **Library**
+    2. Search for "Google Analytics Data API"
+    3. Click the API, then click **Enable**
+  </Step>
+  
+  <Step title="Create service account">
+    1. Go to **APIs & Services** → **Credentials**
+    2. Click **Create Credentials** → **Service Account**
+    3. Name: `seo-machine-analytics`
+    4. Description: "Service account for SEO Machine data access"
+    5. Click **Create and Continue**
+    6. Skip role assignment (permissions set in GA4)
+    7. Click **Done**
+  </Step>
+  
+  <Step title="Generate credentials JSON">
+    1. Click on the service account you just created
+    2. Go to the **Keys** tab
+    3. Click **Add Key** → **Create new key**
+    4. Select **JSON** format
+    5. Click **Create** - the JSON file downloads automatically
+    6. Save as `credentials/ga4-credentials.json` in your repository
+  </Step>
+  
+  <Step title="Add service account to GA4">
+    1. Open [Google Analytics](https://analytics.google.com/)
+    2. Go to **Admin** (gear icon, bottom left)
+    3. In the **Property** column, click **Property Access Management**
+    4. Click **Add users** (+) button
+    5. Paste the service account email (found in the JSON file, looks like `seo-machine-analytics@project-id.iam.gserviceaccount.com`)
+    6. Select role: **Viewer**
+    7. Uncheck "Notify new users by email"
+    8. Click **Add**
+  </Step>
+</Steps>
+
+<Warning>
+  Keep the credentials JSON file secure. Never commit it to version control. It's already in `.gitignore`.
+</Warning>
+
+### Configure GA4 Settings
+
+Add your GA4 configuration to `data_sources/config/.env`:
+
+```env
+# Google Analytics 4
+GA4_PROPERTY_ID=123456789
+GA4_CREDENTIALS_PATH=credentials/ga4-credentials.json
+```
+
+<Info>
+  Find your GA4 Property ID in Analytics: **Admin** → **Property Settings** → **Property ID**
+</Info>
+
+## Google Search Console Setup
+
+<Steps>
+  <Step title="Enable Search Console API">
+    In the same Google Cloud project:
+    1. Go to **APIs & Services** → **Library**
+    2. Search for "Google Search Console API"
+    3. Click the API, then click **Enable**
+  </Step>
+  
+  <Step title="Use existing service account">
+    You can reuse the same service account created for GA4, or create a new one following the same process.
+    
+    If creating a new service account, save credentials as `data_sources/config/gsc_credentials.json`.
+  </Step>
+  
+  <Step title="Add service account to Search Console">
+    1. Go to [Google Search Console](https://search.google.com/search-console)
+    2. Select your property
+    3. Click **Settings** (gear icon, left sidebar)
+    4. Click **Users and permissions**
+    5. Click **Add user**
+    6. Paste service account email
+    7. Select permission: **Full** (required for API access)
+    8. Click **Add**
+  </Step>
+</Steps>
+
+### Configure GSC Settings
+
+Add your Search Console configuration to `data_sources/config/.env`:
+
+```env
+# Google Search Console
+GSC_SITE_URL=https://yourdomain.com
+GSC_CREDENTIALS_PATH=credentials/ga4-credentials.json
+```
+
+<Note>
+  The `GSC_SITE_URL` must exactly match your verified property in Search Console, including `https://` or `http://` and with or without `www`.
+</Note>
+
+## DataForSEO Setup
+
+DataForSEO provides competitive keyword data, SERP analysis, and ranking tracking.
+
+<Steps>
+  <Step title="Create DataForSEO account">
+    1. Sign up at [DataForSEO](https://dataforseo.com/)
+    2. Verify your email address
+    3. Add payment method (pay-per-request pricing)
+  </Step>
+  
+  <Step title="Get API credentials">
+    1. Log in to DataForSEO dashboard
+    2. Go to **API Access** section
+    3. Copy your **Login** (email)
+    4. Copy or generate your **Password** (API password, not account password)
+  </Step>
+  
+  <Step title="Configure credentials">
+    Add DataForSEO credentials to `data_sources/config/.env`:
+    
+    ```env
+    # DataForSEO
+    DATAFORSEO_LOGIN=your_email@domain.com
+    DATAFORSEO_PASSWORD=your_api_password
+    DATAFORSEO_BASE_URL=https://api.dataforseo.com
+    ```
+  </Step>
+</Steps>
+
+<Warning>
+  DataForSEO charges per API request. Enable caching and set budget limits to control costs.
+</Warning>
+
+### DataForSEO Pricing Overview
+
+| Request Type | Cost per Request | Use Case |
+|-------------|------------------|----------|
+| SERP Check | $0.006 | Check top 10 results for a keyword |
+| Ranking Check | $0.0005 | Check your position for a keyword |
+| Keyword Data | $0.006 | Get search volume and difficulty |
+| Competitor Analysis | $0.01-0.05 | Analyze competitor rankings |
+
+**Cost Management Tips:**
+- Enable 24-hour caching (see below)
+- Batch requests for multiple keywords
+- Focus on high-priority keywords only
+- Set monthly budget alerts in DataForSEO dashboard
+
+## Cache Configuration
+
+Caching reduces API costs and rate limit issues by storing responses locally.
+
+```env
+# Cache Settings
+CACHE_ENABLED=true
+CACHE_TTL_HOURS=24
+```
+
+<AccordionGroup>
+  <Accordion title="How caching works">
+    - First API request is made and response stored in `data_sources/cache/`
+    - Subsequent requests for the same data return cached response
+    - Cache expires after TTL (time-to-live) period
+    - Expired cache automatically refreshes on next request
+  </Accordion>
+  
+  <Accordion title="Cache management">
+    **Clear all cache:**
+    ```bash
+    rm -rf data_sources/cache/*
+    ```
+    
+    **Clear specific source:**
+    ```bash
+    rm -rf data_sources/cache/ga4_*
+    rm -rf data_sources/cache/gsc_*
+    rm -rf data_sources/cache/dataforseo_*
+    ```
+    
+    **Check cache size:**
+    ```bash
+    du -sh data_sources/cache/
+    ```
+  </Accordion>
+  
+  <Accordion title="When to clear cache">
+    - After making changes to tracked keywords
+    - When you need real-time data (performance review)
+    - If seeing stale or incorrect data
+    - After significant traffic events
+  </Accordion>
+</AccordionGroup>
+
+## Complete .env Configuration
+
+Your final `data_sources/config/.env` file should look like:
+
+```env
+# Google Analytics 4
+GA4_PROPERTY_ID=123456789
+GA4_CREDENTIALS_PATH=credentials/ga4-credentials.json
+
+# Google Search Console
+GSC_SITE_URL=https://yourdomain.com
+GSC_CREDENTIALS_PATH=credentials/ga4-credentials.json
+
+# DataForSEO (optional)
+DATAFORSEO_LOGIN=your_email@domain.com
+DATAFORSEO_PASSWORD=your_api_password
+DATAFORSEO_BASE_URL=https://api.dataforseo.com
+
+# Cache Settings
+CACHE_ENABLED=true
+CACHE_TTL_HOURS=24
+
+# WordPress Publishing (optional)
+WP_SITE_URL=https://yourdomain.com
+WP_USERNAME=your_username
+WP_APP_PASSWORD=xxxx xxxx xxxx xxxx xxxx xxxx
+```
+
+## Test API Connections
+
+Verify each integration is working correctly:
+
+<CodeGroup>
+```bash Test GA4
+python3 test_dataforseo.py --test ga4
+```
+
+```bash Test Search Console
+python3 test_dataforseo.py --test gsc
+```
+
+```bash Test DataForSEO
+python3 test_dataforseo.py
+```
+</CodeGroup>
+
+<Info>
+  The `test_dataforseo.py` script validates API credentials and returns sample data to confirm connectivity.
+</Info>
+
+## Using Analytics Data
+
+### Performance Review Command
+
+Run a comprehensive performance analysis:
+
+```bash
+/performance-review
+```
+
+This command:
+1. Fetches data from GA4, GSC, and DataForSEO
+2. Identifies declining content
+3. Finds quick-win opportunities (keywords ranking 11-20)
+4. Prioritizes content updates
+5. Suggests new content topics
+6. Generates a detailed report in `reports/performance-review-YYYY-MM-DD.md`
+
+### Python Module Usage
+
+#### Fetch GA4 Data
+
+```python
+from data_sources.modules.google_analytics import GoogleAnalytics
+
+ga = GoogleAnalytics()
+
+# Get top performing articles (last 30 days)
+top_articles = ga.get_top_pages(days=30, limit=10)
+
+# Get traffic trends for specific URL
+trends = ga.get_page_trends(
+    url="/blog/podcast-monetization-guide",
+    days=90
+)
+
+# Get conversion data
+conversions = ga.get_conversions(days=30)
+```
+
+#### Fetch Search Console Data
+
+```python
+from data_sources.modules.google_search_console import GoogleSearchConsole
+
+gsc = GoogleSearchConsole()
+
+# Get keyword rankings
+rankings = gsc.get_keyword_positions(days=30)
+
+# Find quick win opportunities (position 11-20)
+quick_wins = gsc.get_quick_wins()
+
+# Get specific page performance
+page_data = gsc.get_page_performance(
+    url="/blog/podcast-monetization-guide"
+)
+```
+
+#### Fetch DataForSEO Data
+
+```python
+from data_sources.modules.dataforseo import DataForSEO
+
+dfs = DataForSEO()
+
+# Get keyword rankings
+rankings = dfs.get_rankings(
+    keywords=["podcast hosting", "podcast analytics"]
+)
+
+# Analyze competitor rankings
+competitor_data = dfs.analyze_competitor(
+    competitor_domain="competitor.com",
+    keywords=["podcast hosting"]
+)
+
+# Get SERP data
+serp = dfs.get_serp_data(keyword="podcast monetization")
+```
+
+#### Aggregate All Data Sources
+
+```python
+from data_sources.modules.data_aggregator import DataAggregator
+
+aggregator = DataAggregator()
+
+# Get comprehensive page performance
+performance = aggregator.get_page_performance(
+    url="/blog/podcast-monetization-guide"
+)
+
+print(performance)
+# Returns:
+# {
+#   'url': '/blog/podcast-monetization-guide',
+#   'ga4': {
+#     'pageviews': 12500,
+#     'avg_engagement_time': 245,
+#     'bounce_rate': 0.42
+#   },
+#   'gsc': {
+#     'impressions': 45000,
+#     'clicks': 3200,
+#     'avg_position': 8.5,
+#     'ctr': 0.071
+#   },
+#   'dataforseo': {
+#     'primary_keyword': 'podcast monetization',
+#     'position': 8,
+#     'search_volume': 2900
+#   }
+# }
+```
+
+## Data-Driven Decisions
+
+SEO Machine uses analytics data to:
+
+<CardGroup cols={2}>
+  <Card title="Identify Declining Content" icon="chart-line-down">
+    - Articles losing traffic (GA4)
+    - Keywords dropping in rankings (GSC + DataForSEO)
+    - Increased bounce rates (GA4)
+  </Card>
+  
+  <Card title="Find Quick Wins" icon="trophy">
+    - Keywords ranking 11-20 (GSC + DataForSEO)
+    - High impressions, low CTR (GSC)
+    - Competitor keyword gaps (DataForSEO)
+  </Card>
+  
+  <Card title="Prioritize Updates" icon="list-check">
+    - High-traffic articles with outdated data
+    - Page 2 rankings for valuable keywords
+    - Content gaps in topic clusters
+  </Card>
+  
+  <Card title="Suggest New Content" icon="lightbulb">
+    - Rising search queries (GSC)
+    - Competitor content gaps (DataForSEO)
+    - Related questions people ask (DataForSEO)
+  </Card>
+</CardGroup>
+
+## Rate Limits & Quotas
+
+### Google Analytics 4
+- **Free Tier:** 25,000 requests/day per property
+- **Standard Properties:** Unlimited (within quotas)
+- **Cost:** Free
+
+### Google Search Console
+- **Rate Limit:** Unlimited (reasonable use)
+- **Rows per Request:** 1,000 maximum
+- **Cost:** Free
+
+### DataForSEO
+- **Pricing:** Pay-per-request (see pricing table above)
+- **No Rate Limits:** Based on account balance
+- **Tip:** Enable aggressive caching to minimize costs
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Authentication failed (GA4/GSC)">
+    **Problem:** `google.auth.exceptions.DefaultCredentialsError`
+    
+    **Solutions:**
+    - Verify credentials JSON file exists at specified path
+    - Check service account has access to GA4/GSC property
+    - Ensure APIs are enabled in Google Cloud Console
+    - Confirm service account email is correct
+    - Try regenerating credentials JSON
+  </Accordion>
+  
+  <Accordion title="No data returned">
+    **Problem:** API returns empty results
+    
+    **Solutions:**
+    - Check date ranges (some properties have 24-48 hour data delay)
+    - Verify property IDs and site URLs are correct
+    - Ensure property has data for requested time period
+    - Confirm filters aren't too restrictive
+    - Check that site has traffic in that date range
+  </Accordion>
+  
+  <Accordion title="Rate limit exceeded (DataForSEO)">
+    **Problem:** `429 Too Many Requests` or insufficient balance
+    
+    **Solutions:**
+    - Enable caching to reduce API calls
+    - Increase cache TTL in `.env` to 24-48 hours
+    - Check DataForSEO account balance
+    - Reduce number of keywords tracked
+    - Batch requests instead of individual calls
+  </Accordion>
+  
+  <Accordion title="Module not found error">
+    **Problem:** `ModuleNotFoundError: No module named 'google'`
+    
+    **Solutions:**
+    - Install dependencies: `pip install -r data_sources/requirements.txt`
+    - Check Python path includes `data_sources` directory
+    - Verify using correct Python version (3.8+)
+    - Try: `python3 -m pip install -r data_sources/requirements.txt`
+  </Accordion>
+  
+  <Accordion title="Property ID not found">
+    **Problem:** GA4 returns "Property not found" error
+    
+    **Solutions:**
+    - Verify `GA4_PROPERTY_ID` is the numeric property ID, not measurement ID (starts with "G-")
+    - Check service account has Viewer access to property
+    - Confirm using correct Google account for property ownership
+    - Wait 24 hours after adding service account (propagation delay)
+  </Accordion>
+</AccordionGroup>
+
+## Security Best Practices
+
+<Warning>
+  **NEVER commit credentials to version control!**
+</Warning>
+
+- `.env` files are in `.gitignore`
+- Credential JSON files are in `.gitignore`
+- Use service accounts, not user accounts
+- Grant minimum required permissions (Viewer for GA4/GSC)
+- Rotate credentials every 90 days
+- Store credentials in secure password manager
+- Use separate service accounts for production/development
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="WordPress Integration" icon="wordpress" href="/integrations/wordpress">
+    Set up WordPress publishing with Yoast SEO metadata
+  </Card>
+  <Card title="Content Commands" icon="terminal" href="/essentials/commands">
+    Learn commands that use analytics data for content decisions
+  </Card>
+</CardGroup>

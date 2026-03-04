@@ -1,0 +1,362 @@
+---
+title: 'WordPress Integration'
+description: 'Connect SEO Machine to WordPress to publish content with Yoast SEO metadata via the REST API'
+---
+
+SEO Machine publishes content directly to WordPress using the REST API with full Yoast SEO metadata support. This integration enables automated publishing while maintaining complete control over SEO fields.
+
+## Prerequisites
+
+- WordPress site with REST API enabled (default in WP 4.7+)
+- Yoast SEO plugin installed and activated
+- User account with `edit_posts` capability
+- Application Password or Basic Auth credentials
+
+## Installation Methods
+
+Choose **one** of the following installation methods. Both accomplish the same goal: exposing Yoast SEO fields via the REST API.
+
+### Option A: MU-Plugin (Recommended)
+
+Must-Use (MU) plugins are automatically activated and cannot be accidentally deactivated, making them ideal for critical functionality.
+
+<Steps>
+  <Step title="Upload the plugin file">
+    Upload `seo-machine-yoast-rest.php` from the `wordpress/` directory to:
+    
+    ```
+    wp-content/mu-plugins/seo-machine-yoast-rest.php
+    ```
+    
+    <Info>Create the `mu-plugins` folder if it doesn't exist in your `wp-content` directory.</Info>
+  </Step>
+  
+  <Step title="Verify activation">
+    MU-plugins are automatically activated. No additional steps required.
+    
+    Verify the plugin is active by checking:
+    - Navigate to **Plugins → Must-Use** in WordPress admin
+    - You should see "SEO Machine - Yoast REST API Support" listed
+  </Step>
+</Steps>
+
+**Advantages:**
+- Survives theme updates and changes
+- Cannot be accidentally deactivated
+- Clean separation from theme code
+- Ideal for production environments
+
+### Option B: Functions.php Snippet
+
+Add the code directly to your theme's `functions.php` file or use a code snippets plugin.
+
+<Steps>
+  <Step title="Copy the code">
+    Copy the contents of `functions-snippet.php` from the `wordpress/` directory.
+  </Step>
+  
+  <Step title="Add to your site">
+    Choose one method:
+    
+    **Method 1: Child Theme (Recommended)**
+    
+    Paste the code at the end of your child theme's `functions.php`:
+    ```
+    wp-content/themes/your-child-theme/functions.php
+    ```
+    
+    **Method 2: Code Snippets Plugin**
+    
+    Install a code snippets plugin like [WPCode](https://wordpress.org/plugins/insert-headers-and-footers/) or [Code Snippets](https://wordpress.org/plugins/code-snippets/):
+    1. Create a new snippet
+    2. Paste the code
+    3. Set to run everywhere
+    4. Activate the snippet
+  </Step>
+</Steps>
+
+**Advantages:**
+- No new files to manage
+- Works well with code snippet plugins
+- Easy to modify for custom requirements
+
+**Disadvantages:**
+- Lost if theme is changed/updated (unless using child theme)
+- Can be accidentally deactivated (if using snippets plugin)
+
+## Plugin Code
+
+The MU-plugin registers custom REST API fields for Yoast SEO metadata:
+
+```php
+add_action('rest_api_init', function() {
+    // Only proceed if Yoast SEO is active
+    if (!defined('WPSEO_VERSION')) {
+        return;
+    }
+
+    register_rest_field('post', 'yoast_seo', [
+        'get_callback' => function($post) {
+            return [
+                'focus_keyphrase' => get_post_meta($post['id'], '_yoast_wpseo_focuskw', true),
+                'seo_title' => get_post_meta($post['id'], '_yoast_wpseo_title', true),
+                'meta_description' => get_post_meta($post['id'], '_yoast_wpseo_metadesc', true),
+            ];
+        },
+        'update_callback' => function($value, $post) {
+            if (!current_user_can('edit_post', $post->ID)) {
+                return new WP_Error('rest_forbidden', 'Permission denied.', ['status' => 403]);
+            }
+
+            if (isset($value['focus_keyphrase'])) {
+                update_post_meta($post->ID, '_yoast_wpseo_focuskw', sanitize_text_field($value['focus_keyphrase']));
+            }
+            if (isset($value['seo_title'])) {
+                update_post_meta($post->ID, '_yoast_wpseo_title', sanitize_text_field($value['seo_title']));
+            }
+            if (isset($value['meta_description'])) {
+                update_post_meta($post->ID, '_yoast_wpseo_metadesc', sanitize_text_field($value['meta_description']));
+            }
+
+            return true;
+        },
+    ]);
+});
+```
+
+## WordPress Configuration
+
+### Create Application Password
+
+<Steps>
+  <Step title="Navigate to user profile">
+    In WordPress admin, go to **Users → Profile** (or **Users → All Users** and edit your user).
+  </Step>
+  
+  <Step title="Generate application password">
+    Scroll to the **Application Passwords** section at the bottom.
+    
+    1. Enter a name: `SEO Machine`
+    2. Click **Add New Application Password**
+    3. Copy the generated password immediately (it's only shown once)
+  </Step>
+  
+  <Step title="Save credentials">
+    Store the username and application password securely. You'll need these for the SEO Machine configuration.
+  </Step>
+</Steps>
+
+<Warning>
+  Application passwords are only shown once. If you lose it, you'll need to revoke and create a new one.
+</Warning>
+
+### Configure SEO Machine
+
+Add your WordPress credentials to `data_sources/config/.env`:
+
+```env
+# WordPress Configuration
+WP_SITE_URL=https://yourdomain.com
+WP_USERNAME=your_username
+WP_APP_PASSWORD=xxxx xxxx xxxx xxxx xxxx xxxx
+```
+
+<Note>
+  The application password includes spaces - keep them in the configuration.
+</Note>
+
+## API Usage
+
+Once configured, SEO Machine can publish posts with Yoast SEO metadata using the WordPress REST API.
+
+### Example: Create Post with SEO Metadata
+
+```bash
+curl -X POST https://yourdomain.com/wp-json/wp/v2/posts \
+  -u "username:xxxx xxxx xxxx xxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "How to Start a Podcast in 2026",
+    "content": "<p>Your article content here...</p>",
+    "status": "draft",
+    "yoast_seo": {
+      "focus_keyphrase": "start a podcast",
+      "seo_title": "How to Start a Podcast: Complete 2026 Guide",
+      "meta_description": "Learn how to start a podcast with our step-by-step guide. Equipment, hosting, editing, and promotion strategies for beginners."
+    }
+  }'
+```
+
+### Example: Update Existing Post
+
+```bash
+curl -X POST https://yourdomain.com/wp-json/wp/v2/posts/123 \
+  -u "username:xxxx xxxx xxxx xxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "yoast_seo": {
+      "focus_keyphrase": "podcast monetization",
+      "seo_title": "Podcast Monetization: 12 Ways to Make Money",
+      "meta_description": "Discover 12 proven podcast monetization strategies including sponsorships, memberships, and affiliate marketing."
+    }
+  }'
+```
+
+### Using the Publish Command
+
+SEO Machine provides a built-in command for publishing:
+
+```bash
+/publish-draft drafts/podcast-guide.md
+```
+
+This automatically:
+1. Converts Markdown to WordPress blocks
+2. Uploads images to WordPress media library
+3. Sets Yoast SEO metadata (focus keyphrase, SEO title, meta description)
+4. Creates the post as a draft for review
+5. Returns the post URL and edit link
+
+## Metadata Mapping
+
+SEO Machine maps its internal metadata to Yoast SEO fields:
+
+| SEO Machine Field | Yoast SEO Field | WordPress Meta Key |
+|-------------------|-----------------|--------------------|
+| Focus Keyphrase | Focus Keyphrase | `_yoast_wpseo_focuskw` |
+| SEO Title | SEO Title | `_yoast_wpseo_title` |
+| Meta Description | Meta Description | `_yoast_wpseo_metadesc` |
+
+## Security
+
+The integration includes multiple security measures:
+
+<AccordionGroup>
+  <Accordion title="Authentication">
+    - Requires valid WordPress credentials (application password or basic auth)
+    - All requests must include authentication headers
+    - Failed authentication returns 401 Unauthorized
+  </Accordion>
+  
+  <Accordion title="Authorization">
+    - User must have `edit_posts` capability
+    - Updating existing posts requires `edit_post` permission for that specific post
+    - Insufficient permissions return 403 Forbidden
+  </Accordion>
+  
+  <Accordion title="Input Sanitization">
+    - All inputs sanitized with `sanitize_text_field()`
+    - HTML tags stripped from metadata fields
+    - XSS protection built-in
+  </Accordion>
+  
+  <Accordion title="Yoast Detection">
+    - Plugin only registers fields if Yoast SEO is active
+    - Gracefully degrades if Yoast is deactivated
+    - No errors if Yoast is not installed
+  </Accordion>
+</AccordionGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Authentication failed">
+    **Problem:** 401 Unauthorized error
+    
+    **Solutions:**
+    - Verify application password is correct (including spaces)
+    - Ensure username is correct
+    - Check if Application Passwords feature is enabled (Settings → Permalinks, must not be "Plain")
+    - Try regenerating the application password
+  </Accordion>
+  
+  <Accordion title="Yoast fields not appearing">
+    **Problem:** `yoast_seo` field not available in API response
+    
+    **Solutions:**
+    - Verify Yoast SEO plugin is installed and activated
+    - Check that MU-plugin or functions.php code is active
+    - Confirm user has `edit_posts` capability
+    - Test API endpoint: `GET /wp-json/wp/v2/posts/123`
+  </Accordion>
+  
+  <Accordion title="Permission denied errors">
+    **Problem:** 403 Forbidden when updating posts
+    
+    **Solutions:**
+    - Verify user has `edit_post` capability for the specific post
+    - Check user role (Editor or Administrator required)
+    - Ensure user owns the post or has sufficient privileges
+  </Accordion>
+  
+  <Accordion title="REST API not working">
+    **Problem:** Cannot connect to REST API
+    
+    **Solutions:**
+    - Verify permalinks are NOT set to "Plain" (Settings → Permalinks)
+    - Check `.htaccess` file for REST API rewrites
+    - Disable security plugins temporarily to test
+    - Confirm site URL is correct (https vs http)
+  </Accordion>
+</AccordionGroup>
+
+## Advanced Configuration
+
+### Custom Post Types
+
+To support custom post types, modify the plugin to register fields for additional post types:
+
+```php
+// Register for custom post type
+register_rest_field('your_post_type', 'yoast_seo', [
+    // ... same callbacks as above
+]);
+```
+
+### Additional Yoast Fields
+
+Extend the integration to include more Yoast SEO fields:
+
+```php
+'get_callback' => function($post) {
+    return [
+        'focus_keyphrase' => get_post_meta($post['id'], '_yoast_wpseo_focuskw', true),
+        'seo_title' => get_post_meta($post['id'], '_yoast_wpseo_title', true),
+        'meta_description' => get_post_meta($post['id'], '_yoast_wpseo_metadesc', true),
+        'canonical_url' => get_post_meta($post['id'], '_yoast_wpseo_canonical', true),
+        'meta_robots_noindex' => get_post_meta($post['id'], '_yoast_wpseo_meta-robots-noindex', true),
+        'meta_robots_nofollow' => get_post_meta($post['id'], '_yoast_wpseo_meta-robots-nofollow', true),
+    ];
+},
+```
+
+### Webhook Notifications
+
+Trigger webhooks when posts are published via SEO Machine:
+
+```php
+add_action('save_post', function($post_id, $post) {
+    // Check if published via REST API
+    if (defined('REST_REQUEST') && REST_REQUEST) {
+        // Trigger webhook
+        wp_remote_post('https://your-webhook-url.com', [
+            'body' => [
+                'post_id' => $post_id,
+                'post_title' => $post->post_title,
+                'post_url' => get_permalink($post_id),
+            ]
+        ]);
+    }
+}, 10, 2);
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Analytics Setup" icon="chart-line" href="/integrations/analytics-setup">
+    Configure GA4, Search Console, and DataForSEO to track performance
+  </Card>
+  <Card title="Publishing Workflow" icon="rocket" href="/essentials/commands">
+    Learn the complete content creation and publishing workflow
+  </Card>
+</CardGroup>

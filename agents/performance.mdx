@@ -1,0 +1,481 @@
+---
+title: "Performance Agent"
+description: "Data-driven content prioritization using GA4, Google Search Console, and DataForSEO to identify quick wins and high-impact opportunities"
+---
+
+The Performance Agent analyzes real performance metrics from Google Analytics, Google Search Console, and DataForSEO to identify the highest-value content opportunities and create an actionable, prioritized task queue.
+
+## What It Analyzes
+
+The Performance Agent examines:
+- **Quick wins** - Keywords ranking positions 11-20 (page 2)
+- **Declining content** - Pages losing traffic month-over-month
+- **Low CTR pages** - High impressions but low click-through rate
+- **Trending topics** - Queries showing rising search volume
+- **Competitor gaps** - Keywords competitors rank for but you don't
+- **High-value conversions** - Pages driving significant conversions despite lower traffic
+
+## Data Sources
+
+The agent pulls data from:
+
+1. **Google Analytics 4**: Traffic, engagement, conversions, trends
+2. **Google Search Console**: Rankings, impressions, clicks, CTR, queries
+3. **DataForSEO**: Competitive rankings, SERP data, keyword metrics
+
+## Opportunity Types
+
+### Quick Wins (Position 11-20)
+
+**What**: Keywords ranking on page 2
+
+**Why High Priority**:
+- Closest to page 1 (biggest traffic potential)
+- Small improvements = big gains
+- Easier than ranking new content from scratch
+
+**Action**: Optimize existing content
+
+**Example**:
+```
+Keyword: "podcast editing software"
+Current Position: 12
+Monthly Impressions: 5,400
+Current Clicks: 180
+If moved to position 5: +420 clicks/month
+Effort: 3-4 hours to optimize
+Priority: URGENT
+```
+
+### Declining Content
+
+**What**: Pages losing traffic month-over-month
+
+**Why High Priority**:
+- Revenue at risk
+- Previously successful (proven track record)
+- Often fixable with content refresh
+
+**Action**: Update and refresh content
+
+**Example**:
+```
+Article: "How to Start a Podcast in 2023"
+Previous Traffic: 2,500 pageviews/month
+Current Traffic: 1,400 pageviews/month
+Change: -44%
+Likely Cause: Outdated (2023 in title, need 2025 update)
+Effort: 2-3 hours to refresh
+Priority: HIGH
+```
+
+### Low CTR Pages
+
+**What**: High impressions but low click-through rate
+
+**Why High Priority**:
+- Already ranking well
+- Low-hanging fruit (just improve meta elements)
+- Can double clicks without ranking improvements
+
+**Action**: Improve meta title and description
+
+**Example**:
+```
+Page: "Podcast Hosting Guide"
+Monthly Impressions: 12,500
+Clicks: 380
+CTR: 3.0% (benchmark: 5.0%)
+Missed Clicks: 245/month
+Effort: 15 minutes to update meta
+Priority: URGENT (quick win)
+```
+
+### Trending Topics
+
+**What**: Queries showing rising search volume
+
+**Why Medium Priority**:
+- Growing interest = future opportunity
+- First-mover advantage
+- May be easier to rank initially
+
+**Action**: Create new content
+
+**Example**:
+```
+Query: "AI podcast editing"
+Growth: +167% impressions (last 90 days)
+Current Volume: 1,200 impressions/month
+Castos Content: None
+Competition: Medium
+Priority: MEDIUM (plan for next month)
+```
+
+### Competitor Gaps
+
+**What**: Keywords competitors rank for but you don't
+
+**Why Medium Priority**:
+- Proven demand
+- Competitive disadvantage
+- Strategic positioning opportunity
+
+**Action**: Create new content or update existing
+
+**Example**:
+```
+Keyword: "podcast transcription services"
+Competitor Position: buzzsprout.com (position 3)
+Castos Position: Not ranking
+Search Volume: 2,900/month
+Opportunity: High (we offer transcription)
+Priority: MEDIUM
+```
+
+### High-Value Conversions
+
+**What**: Pages driving conversions despite lower traffic
+
+**Why Medium Priority**:
+- Direct revenue impact
+- High-intent audience
+- Optimization multiplies value
+
+**Action**: Optimize for more traffic
+
+**Example**:
+```
+Page: "Podcast Analytics Guide"
+Monthly Traffic: 800 pageviews
+Conversions: 24 signups
+Conversion Rate: 3.0% (excellent)
+Opportunity: Increase traffic → multiply conversions
+Priority: MEDIUM
+```
+
+## Opportunity Scoring System
+
+Each opportunity gets a score (0-100) based on:
+
+**Impact** (0-40 points):
+- Potential traffic gain
+- Conversion potential
+- Business value
+- Strategic importance
+
+**Effort** (0-30 points, inverse):
+- Time required (less = more points)
+- Difficulty level (easier = more points)
+- Resources needed (fewer = more points)
+
+**Confidence** (0-30 points):
+- Data quality
+- Historical success rate
+- Competitive analysis
+- Trend stability
+
+**Formula**:
+```
+Opportunity Score = (Impact × 0.5) + (Effort × 0.3) + (Confidence × 0.2)
+```
+
+## Prioritization Matrix
+
+Opportunities fall into quadrants:
+
+**DO FIRST** (High Impact + Low Effort):
+- Quick wins (position 11-20)
+- Low CTR fixes
+- Minor content updates
+
+**STRATEGIC PROJECTS** (High Impact + High Effort):
+- Comprehensive rewrites
+- New pillar content
+- Competitive content gaps
+
+**QUICK TASKS** (Low Impact + Low Effort):
+- Small optimizations
+- Meta tweaks
+- Internal linking
+
+**DEPRIORITIZE** (Low Impact + High Effort):
+- Leave for later or skip
+
+## Output Format
+
+```markdown
+### Performance Review Report
+
+Report Date: 2025-03-04
+Analysis Period: Last 90 days
+Data Sources: GA4, Google Search Console, DataForSEO
+
+---
+
+### Executive Summary
+
+Overall Performance:
+- Total Pageviews: 45,200
+- Total Clicks (GSC): 8,400
+- Average Position: 12.3
+- Total Keywords Ranking: 1,247
+
+Key Trends:
+- Organic traffic up 12% vs. previous period
+- 5 articles showing significant decline (-30%+)
+- 23 keywords moved to page 2 (positions 11-20)
+- 12 low CTR pages with high impression volume
+
+Top Opportunities Identified: 31
+
+---
+
+### Priority Queue (Recommended Action Order)
+
+#### 🔥 URGENT (Do This Week)
+
+1. **Quick Win: "podcast hosting platform"**
+   - Type: Position 11-20 Optimization
+   - Target: /blog/podcast-hosting-guide
+   - Current Position: 12
+   - Monthly Impressions: 5,400
+   - Current Clicks: 180
+   - Potential Gain: +420 clicks if moved to position 5
+   - Estimated Effort: 3-4 hours
+   - Why Urgent: Closest to page 1, high volume keyword
+   - Action:
+     1. Add 600 words on pricing comparison
+     2. Update 2023 screenshots to 2025
+     3. Add comparison table (featured snippet opportunity)
+     4. Refresh meta description
+   - Opportunity Score: 92/100
+
+2. **Low CTR: "how to start a podcast"**
+   - Type: Meta Optimization
+   - Target: /blog/how-to-start-a-podcast
+   - Impressions: 12,500/month
+   - Clicks: 380 (3.0% CTR)
+   - Benchmark CTR: 5.0%
+   - Missed Clicks: 245/month
+   - Estimated Effort: 15 minutes
+   - Why Urgent: Quick win, high volume
+   - Current Meta: "How to Start a Podcast: Beginner's Guide"
+   - New Meta: "How to Start a Podcast in 2025: 10-Step Guide"
+   - Action: Update meta title and description
+   - Opportunity Score: 88/100
+
+3. **Declining: "podcast analytics guide"**
+   - Type: Content Refresh
+   - Target: /blog/podcast-analytics
+   - Previous Traffic: 2,500 pageviews/month
+   - Current Traffic: 1,400 pageviews/month
+   - Change: -44%
+   - Estimated Effort: 2-3 hours
+   - Why Urgent: Losing 1,100 pageviews/month
+   - Action:
+     1. Update statistics to 2025 data
+     2. Add GA4 analytics examples (old GA3)
+     3. Refresh conclusion
+     4. Add 2 internal links to new content
+   - Opportunity Score: 85/100
+
+---
+
+#### ⚡ HIGH PRIORITY (Do This Month)
+
+1. **Quick Win: "podcast editing tips"**
+   - Position: 15
+   - Impressions: 3,200/month
+   - Opportunity Score: 78/100
+
+2. **Trending: "AI podcast tools"**
+   - Growth: +145% (last 90 days)
+   - Volume: 1,800 impressions/month
+   - Castos Content: None
+   - Opportunity Score: 76/100
+
+[5-10 high-priority items...]
+
+---
+
+#### 📌 MEDIUM PRIORITY (Plan for Next Month)
+
+1. **Competitor Gap: "podcast transcription"**
+   - Competitor: buzzsprout.com (position 3)
+   - Volume: 2,900/month
+   - Opportunity Score: 72/100
+
+[5-10 medium-priority items...]
+
+---
+
+### Detailed Opportunity Analysis
+
+#### Quick Win Opportunities (Position 11-20)
+
+Found: 23 keywords on page 2
+
+| Keyword | Pos | Impressions | Clicks | Score |
+|---------|-----|-------------|--------|-------|
+| podcast hosting platform | 12 | 5,400 | 180 | 92/100 |
+| podcast editing tips | 15 | 3,200 | 95 | 78/100 |
+| best podcast microphone | 18 | 2,100 | 45 | 72/100 |
+
+---
+
+#### Low CTR Opportunities
+
+Found: 12 pages with high impressions, low CTR
+
+| Page | Impressions | CTR | Potential Clicks |
+|------|-------------|-----|------------------|
+| /blog/how-to-start-a-podcast | 12,500 | 3.0% | +245/month |
+| /blog/podcast-equipment | 8,900 | 2.5% | +225/month |
+| /blog/podcast-seo | 6,200 | 2.4% | +160/month |
+
+Recommended Meta Changes:
+
+Page: "How to Start a Podcast"
+Current Title: "How to Start a Podcast: Beginner's Guide" (48 chars)
+New Title: "How to Start a Podcast in 2025: 10-Step Guide" (52 chars)
+
+Current Desc: "Learn the steps to start your own podcast from
+planning to publishing."
+New Desc: "Start your podcast in 2025 with our 10-step guide.
+Equipment, hosting, editing, and promotion. Beginner-friendly
+with real examples. Launch today." (158 chars)
+
+Expected Impact: CTR from 3.0% → 4.5% = +187 clicks/month
+
+---
+
+### Content Health Dashboard
+
+Top 10 Performers (by traffic):
+1. How to Start a Podcast - 12,500 pageviews - ⚠️ Low CTR
+2. Best Podcast Hosting - 8,200 pageviews - ✅ Healthy
+3. Podcast Equipment Guide - 6,800 pageviews - ⚠️ Declining
+4. Podcast Editing Software - 5,400 pageviews - ⚡ Quick win
+5. Podcast Monetization - 4,200 pageviews - ✅ Rising
+
+Content Requiring Attention:
+- 🔴 Critical (5): Significant traffic loss or missed opportunity
+- 🟡 Warning (12): Moderate issues, declining or underperforming
+- ✅ Healthy (45): Performing well
+
+Coverage Gaps:
+- AI Tools: Only 1 article, competitors have 5+
+- Video Podcasting: No content, growing trend
+- Podcast Transcription: Indirect coverage, need dedicated guide
+
+---
+
+### Resource Allocation Recommendation
+
+Based on opportunity analysis, allocate effort:
+
+This Month:
+- 60% → Quick wins (position 11-20 optimizations)
+- 20% → Declining content updates
+- 15% → Low CTR meta improvements
+- 5% → New content for trending topics
+
+Reasoning: Quick wins provide best ROI. Address declining content
+to stop revenue leakage. Meta improvements are low-effort, high-return.
+Limited new content until existing content is optimized.
+
+---
+
+### Implementation Roadmap
+
+#### Week 1
+- [ ] Optimize "podcast hosting platform" (position 12 → target 8)
+- [ ] Update declining article: "Podcast Analytics Guide"
+- [ ] Fix meta on 3 low-CTR pages
+
+#### Week 2
+- [ ] Optimize "podcast editing tips" (position 15 → target 10)
+- [ ] Optimize "best podcast microphone" (position 18 → target 12)
+- [ ] Update declining article: "Equipment Guide"
+
+#### Week 3
+- [ ] Create new content: "AI Podcast Tools" (trending)
+- [ ] Fix meta on 5 more low-CTR pages
+- [ ] Internal linking audit and improvements
+
+#### Week 4
+- [ ] Address competitor gap: "podcast transcription"
+- [ ] Update statistics across top 10 articles
+- [ ] Performance review and adjust strategy
+
+---
+
+### Success Metrics
+
+Goals for Next 30 Days:
+1. Move 5 keywords from page 2 to page 1
+2. Recover 3,000 pageviews from declining content
+3. Increase CTR by 1.5% on optimized pages
+4. Publish 2 new articles on trending topics
+5. Close 3 major competitor gaps
+
+How We'll Measure:
+- Weekly ranking checks on target keywords
+- GA4 traffic monitoring on updated pages
+- GSC CTR tracking on meta improvements
+- DataForSEO competitor gap monitoring
+
+---
+
+Next Review: 2025-04-04 (30 days)
+```
+
+## When It Runs
+
+The Performance Agent runs when:
+- You use `/performance-review` command
+- Manually invoke with `@performance` agent
+- Monthly or quarterly content audits
+
+It does **not** run automatically after `/write`.
+
+## Integration with Commands
+
+The Performance Agent integrates with:
+- `/performance-review` - Generates full prioritization report
+- `/priorities` - Content prioritization matrix
+- `/analyze-existing` - Combines with Content Analyzer for deep dive
+
+## Best Practices
+
+**Trust the data**: Prioritize based on metrics, not hunches
+
+**Start with quick wins**: Build momentum with position 11-20 optimizations
+
+**Protect high performers**: Don't neglect content that's already working
+
+**Fix declining content fast**: Stop revenue leakage immediately
+
+**Track results**: Measure impact of changes to refine strategy
+
+**Resource reality**: Only commit to what you can actually accomplish
+
+**ROI over volume**: Better to do 3 high-impact tasks than 10 low-impact ones
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Content Analyzer" icon="chart-mixed" href="/agents/content-analyzer">
+    Deep content quality analysis
+  </Card>
+  <Card title="SEO Optimizer" icon="magnifying-glass" href="/agents/seo-optimizer">
+    Implement optimization recommendations
+  </Card>
+  <Card title="Commands" icon="terminal" href="/commands/overview">
+    Learn about content workflow commands
+  </Card>
+  <Card title="Research Commands" icon="magnifying-glass-chart" href="/commands/research">
+    Data-driven content research
+  </Card>
+</CardGroup>

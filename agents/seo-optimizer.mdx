@@ -1,0 +1,328 @@
+---
+title: "SEO Optimizer"
+description: "On-page SEO analysis with scored recommendations, quick wins, and strategic improvements for long-form content"
+---
+
+The SEO Optimizer agent analyzes completed articles and provides actionable recommendations to maximize search engine rankings while maintaining content quality.
+
+## What It Analyzes
+
+The SEO Optimizer performs a comprehensive audit across:
+- **Keyword optimization** - Placement, density, variations
+- **Content structure** - Heading hierarchy, organization, scannability
+- **Link strategy** - Internal and external linking opportunities
+- **Technical SEO** - Meta elements, URL slugs, images
+- **User experience** - Readability, engagement, practical value
+
+## Analysis Framework
+
+### 1. Keyword Optimization Audit
+
+**Primary Keyword Analysis**:
+- Calculates keyword density (target: 1-2%)
+- Maps instances in critical locations:
+  - H1 headline
+  - First 100 words
+  - H2 headings (should appear in 2-3)
+  - Body paragraphs (evenly distributed)
+  - Conclusion
+  - Meta elements
+
+**Semantic Keyword Analysis**:
+- Identifies LSI keywords and variations
+- Checks for natural language usage
+- Detects keyword stuffing or over-optimization
+
+**Example Output**:
+```
+Keyword Distribution Map:
+H1: ✓ "How to Grow Your Podcast Audience"
+First 100 words: ✓ (appears at word 47)
+H2 Sections: 2/5 (need 3/5 minimum)
+Body density: 1.2% ✓ (target 1-2%)
+Conclusion: ✗ Missing
+Meta title: ✓
+Meta description: ✓
+```
+
+### 2. Content Structure Optimization
+
+**Heading Hierarchy Check**:
+- Single H1 with primary keyword
+- 4-7 H2 sections with logical progression
+- Proper H3 nesting (no gaps)
+- 2-3 H2s include keyword variations
+
+**Content Organization**:
+- Introduction hooks reader, includes keyword early
+- Sections deliver on subheading promises
+- Logical flow: problem → solution → action
+- Balanced section lengths
+- Strong conclusion with CTA
+
+**Scannability Enhancement**:
+- Paragraph length: 2-4 sentences average
+- Lists for sequential or multiple items
+- Bold/italics for emphasis
+- Clear visual hierarchy
+
+### 3. Link Strategy Optimization
+
+**Internal Linking** (Target: 3-5+):
+- Counts current internal links
+- Evaluates link relevance and context
+- Assesses anchor text quality
+- Identifies opportunities to link to:
+  - Pillar content
+  - Related blog articles
+  - Product pages
+  - Resource pages
+
+**Provides specific recommendations**:
+```
+In "Content Strategy" section, link to:
+- URL: /blog/podcast-content-calendar
+- Anchor text: "creating a podcast content calendar"
+- Insert after: "Planning ahead ensures consistency."
+```
+
+**External Linking** (Target: 2-3+):
+- Counts authoritative external links
+- Verifies source credibility
+- Identifies claims needing citations
+- Recommends additional authoritative sources
+
+### 4. Technical SEO Elements
+
+**Meta Title Analysis**:
+- Current length (target: 50-60 characters)
+- Includes primary keyword?
+- Compelling and click-worthy?
+- Generates 3-5 improved alternatives
+
+**Meta Description Analysis**:
+- Current length (target: 150-160 characters)
+- Includes keyword and CTA?
+- Generates 3-5 improved alternatives
+
+**URL Slug Review**:
+- Concise and descriptive?
+- Includes primary keyword?
+- Lowercase with hyphens?
+
+**Image Optimization**:
+- Descriptive file names?
+- Alt text with keywords?
+- Strategic placement for text breaks?
+
+**Featured Snippet Opportunities**:
+- Identifies question-answering content
+- Checks for list-based formatting
+- Suggests table structures
+- Recommends definition formatting
+
+### 5. Readability & User Experience
+
+**Readability Metrics**:
+- Average sentence length (target: less than 25 words)
+- Paragraph length (target: 2-4 sentences)
+- Reading level (target: 8th-10th grade)
+- Active vs passive voice ratio
+- Transition word usage
+
+**Engagement Optimization**:
+- Introduction hooks immediately?
+- Content delivers on headline promise?
+- Practical, actionable advice provided?
+- Examples and use cases included?
+- Clear next steps in conclusion?
+
+## Output Format
+
+The SEO Optimizer generates a scored report:
+
+```markdown
+### SEO Optimization Score: 78/100
+
+- Keyword Optimization: 19/25
+- Content Structure: 22/25
+- Technical SEO: 18/25
+- User Experience: 19/25
+
+### Critical Issues (Fix Before Publishing)
+1. Primary keyword missing from conclusion (Section 7)
+2. Only 2 internal links (need minimum 3)
+3. Meta description 175 characters (trim to 160)
+
+### Quick Wins (5-10 minutes to implement)
+1. Add keyword to H2 in Section 3: "Understanding Your Listeners" → "Understanding Your Podcast Audience"
+2. Link to /blog/podcast-analytics in Section 5 after "Track your metrics carefully."
+3. Update meta description to: "Learn 12 proven strategies to grow your podcast audience in 2025. Expert tips on content, promotion, and engagement. Start growing today." (158 chars)
+4. Add keyword to conclusion paragraph 2
+
+### Strategic Improvements (Longer investment)
+1. Expand Section 4 by 300 words with specific promotion examples
+2. Add comparison table of growth tactics (featured snippet opportunity)
+3. Include 2 case study examples with specific numbers
+
+### Internal Linking Opportunities
+
+Section: "Promotion Strategies"
+- Link to: /blog/podcast-seo-guide
+- Anchor text: "optimizing your podcast for search engines"
+- Insert after: "Make your content discoverable."
+
+Section: "Analytics and Tracking"
+- Link to: /features/analytics
+- Anchor text: "Castos analytics dashboard"
+- Insert after: "Understanding your data is crucial."
+
+### Meta Element Recommendations
+
+Meta Title Options:
+1. "How to Grow Your Podcast Audience: 12 Proven Strategies" (59 chars) ⭐
+2. "Podcast Audience Growth Guide | 12 Expert Tips" (54 chars)
+3. "Grow Your Podcast Audience in 2025 | Complete Guide" (58 chars)
+
+Recommended: Option 1 - Most descriptive, includes number for specificity
+
+Meta Description Options:
+1. "Learn 12 proven strategies to grow your podcast audience. Expert tips on content, promotion, and engagement. Start growing today." (158 chars) ⭐
+2. "Discover how to grow your podcast audience with strategies from top podcasters. Actionable tips you can implement today." (157 chars)
+
+Recommended: Option 1 - Stronger CTA, includes specific number
+
+### Featured Snippet Optimization
+
+Opportunity Type: List
+Current Format: Prose paragraphs
+Recommended Changes: Convert Section 2 into numbered list
+Example Structure:
+```
+## 12 Strategies to Grow Your Podcast Audience
+
+1. **Create Consistent Content** - Publish weekly on the same day
+2. **Optimize for SEO** - Use keywords in titles and descriptions
+...
+```
+
+### Final Checklist
+- [x] Primary keyword in H1
+- [x] Primary keyword in first 100 words
+- [ ] Primary keyword in 2+ H2 headings (currently 2/5)
+- [x] Keyword density 1-2%
+- [ ] 3-5+ internal links (currently 2)
+- [x] 2-3+ external links
+- [ ] Meta title 50-60 characters (currently 65)
+- [ ] Meta description 150-160 characters (currently 175)
+- [x] 2000+ words
+- [x] Proper H1/H2/H3 hierarchy
+
+### Publishing Recommendation
+
+Status: Needs Minor Fixes
+Estimated Time to Fix: 20 minutes
+
+Priority Actions:
+1. Trim meta title and description to character limits
+2. Add 2 internal links (specific locations provided above)
+3. Add keyword to 1 more H2 heading
+```
+
+## When It Runs
+
+The SEO Optimizer runs automatically after:
+- `/write [topic]` - Analyzes the generated draft
+- `/optimize [file]` - Runs comprehensive optimization
+
+You can also invoke manually:
+```
+Use the @seo-optimizer agent on this article
+```
+
+## Scoring System
+
+Each category is scored out of 25 points:
+
+**Keyword Optimization** (25 points):
+- Density in optimal range: 10 points
+- Critical placements (H1, first 100, H2s): 10 points
+- Natural variations and LSI keywords: 5 points
+
+**Content Structure** (25 points):
+- Heading hierarchy: 8 points
+- Logical organization: 9 points
+- Scannability (paragraphs, lists): 8 points
+
+**Technical SEO** (25 points):
+- Meta elements optimized: 10 points
+- Internal/external links: 10 points
+- URL slug, images: 5 points
+
+**User Experience** (25 points):
+- Readability metrics: 10 points
+- Engagement quality: 10 points
+- Practical value: 5 points
+
+## Integration with Commands
+
+The SEO Optimizer integrates with:
+- `/write` - Auto-runs after article generation
+- `/optimize` - Comprehensive optimization pass
+- `/rewrite` - Ensures updated content maintains SEO
+
+## Best Practices
+
+**Prioritize quick wins**: Start with 5-10 minute fixes for immediate impact
+
+**Preserve readability**: Never sacrifice user experience for keyword optimization
+
+**Be specific**: Implement exact recommendations with provided locations
+
+**Check off items**: Use the final checklist to track progress
+
+**Review meta options**: Choose the meta title/description that best fits your brand voice
+
+**Natural linking**: Only add internal links where they genuinely add value
+
+## Example Optimization
+
+Before:
+```markdown
+## Understanding Listeners
+
+Knowing your audience helps you create better content.
+Many podcasters struggle with this.
+```
+
+After (implementing recommendations):
+```markdown
+## Understanding Your Podcast Audience
+
+Knowing your target podcast audience helps you create content that resonates.
+Use listener surveys and podcast analytics to identify demographics,
+interests, and listening habits.
+```
+
+Changes made:
+- Added keyword to H2
+- Specific, actionable advice
+- Added internal link opportunity to analytics guide
+- Improved from generic to specific
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Keyword Mapper" icon="location-dot" href="/agents/keyword-mapper">
+    Deep dive into keyword distribution analysis
+  </Card>
+  <Card title="Internal Linker" icon="link" href="/agents/internal-linker">
+    Strategic internal linking recommendations
+  </Card>
+  <Card title="Meta Creator" icon="tag" href="/agents/meta-creator">
+    Conversion-optimized meta elements
+  </Card>
+  <Card title="Editor" icon="pen" href="/agents/editor">
+    Make content sound human and engaging
+  </Card>
+</CardGroup>

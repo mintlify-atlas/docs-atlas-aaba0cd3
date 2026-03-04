@@ -1,0 +1,359 @@
+---
+title: Creating New Content
+description: Complete workflow for researching, writing, and optimizing new SEO-optimized blog content from scratch
+---
+
+The complete process for creating high-quality, SEO-optimized blog content in SEO Machine involves three main commands: `/research`, `/write`, and `/optimize`. Each command builds on the previous step to ensure your content ranks well and provides genuine value.
+
+## Overview
+
+The content creation workflow follows a systematic approach:
+
+1. **Research** - Understand keywords, competitors, and opportunities
+2. **Write** - Create comprehensive, optimized content
+3. **Optimize** - Polish and perfect before publishing
+
+<Tip>
+Always start with research. Skipping the `/research` step is one of the most common mistakes that leads to poorly optimized content.
+</Tip>
+
+## Step 1: Research the Topic
+
+Before writing, use the `/research` command to gather competitive intelligence and keyword data.
+
+### Command Usage
+
+```bash
+/research [topic]
+```
+
+### Example
+
+```bash
+/research content marketing strategies for B2B SaaS
+```
+
+### What It Does
+
+<Steps>
+  <Step title="Keyword Research">
+    Identifies primary and secondary keywords, search volume, difficulty, and long-tail variations
+  </Step>
+  
+  <Step title="Competitive Analysis">
+    Analyzes the top 10 ranking articles for your target keyword, noting word count, structure, and common themes
+  </Step>
+  
+  <Step title="Content Gap Analysis">
+    Identifies what competitors are missing and opportunities to provide unique value
+  </Step>
+  
+  <Step title="Creates Research Brief">
+    Generates a comprehensive brief with recommended outline, internal linking strategy, and meta elements preview
+  </Step>
+</Steps>
+
+### Output
+
+The research brief is saved to `research/brief-[topic-slug]-[date].md` and includes:
+
+- **SEO Foundation**: Primary keyword, secondary keywords, target word count
+- **Competitive Landscape**: Top competitor articles with key takeaways
+- **Recommended Outline**: H2/H3 structure based on SERP analysis
+- **Supporting Elements**: Statistics, examples, visual suggestions
+- **Internal Linking Strategy**: Specific pages to link from your site
+- **Meta Elements Preview**: Draft meta title, description, and URL slug
+
+<Tip>
+Review your research brief carefully before writing. The outline provided is based on what's already ranking—you'll want to cover these topics while adding your unique perspective.
+</Tip>
+
+## Step 2: Write the Article
+
+Once research is complete, use the `/write` command to create your article.
+
+### Command Usage
+
+```bash
+/write [topic or research brief]
+```
+
+### Example
+
+```bash
+/write content marketing strategies for B2B SaaS
+```
+
+### What It Does
+
+<Steps>
+  <Step title="Reviews Context">
+    Reads your brand voice, writing examples, style guide, and SEO guidelines
+  </Step>
+  
+  <Step title="Creates Full Article">
+    Generates 2000-3000+ word article with proper H1/H2/H3 structure, keyword integration, and internal/external links
+  </Step>
+  
+  <Step title="Includes Meta Elements">
+    Provides meta title, description, primary/secondary keywords, and URL slug
+  </Step>
+  
+  <Step title="Saves to Drafts">
+    Saves article to `drafts/[topic-slug]-[date].md`
+  </Step>
+  
+  <Step title="Automatic Scrubbing">
+    Removes AI watermarks and telltale patterns using the `/scrub` command
+  </Step>
+  
+  <Step title="Triggers Optimization Agents">
+    Automatically runs Content Analyzer, SEO Optimizer, Meta Creator, Internal Linker, and Keyword Mapper agents
+  </Step>
+</Steps>
+
+### Content Structure
+
+#### Introduction (150-200 words)
+
+The introduction must include:
+
+- **Compelling Hook**: Opens with a provocative question, specific scenario, surprising statistic, bold statement, or counterintuitive claim (NOT a generic definition)
+- **APP Formula**: Agree (acknowledge reader's belief), Promise (tell them what they'll learn), Preview (overview of content)
+- **Primary Keyword**: Appears in first 100 words
+- **Credibility**: Establishes authority
+
+#### Main Body (1800-2500+ words)
+
+- **4-7 H2 Sections**: Comprehensive topic coverage
+- **H3 Subsections**: Break complex sections into digestible pieces
+- **Keyword Integration**: 1-2% density with natural variations
+- **2-3 Mini-Stories**: Specific scenarios with names, details, and outcomes (we're 22x more likely to remember facts wrapped in stories)
+- **2-3 Contextual CTAs**: Distributed throughout, not just at the end
+- **Lists & Formatting**: Bullets, numbered lists, bold key concepts
+- **Data & Sources**: Statistics and studies to support claims
+
+#### Conclusion (150-200 words)
+
+- **Recap**: Summarize 3-5 key takeaways
+- **Action**: Clear next steps for reader
+- **CTA**: Relevant call-to-action
+- **Encouragement**: Empowering, forward-looking note
+
+### Quality Standards
+
+Every article must meet:
+
+- Minimum 2000 words (2500-3000+ preferred)
+- Primary keyword density 1-2%
+- Keyword in H1, first 100 words, and 2-3 H2s
+- 3-5 internal links with descriptive anchor text
+- 2-3 external authority links
+- Meta title 50-60 characters
+- Meta description 150-160 characters
+- Proper H1>H2>H3 hierarchy
+- 8th-10th grade reading level
+- Composite quality score ≥70
+
+<Warning>
+Articles scoring below 70 after automatic revisions are saved to `review-required/` for manual improvement. Pay special attention to the priority fixes in the review notes.
+</Warning>
+
+### Automatic Agent Analysis
+
+After writing, five agents automatically analyze your content:
+
+#### 1. Content Analyzer (NEW)
+
+Uses 5 specialized Python modules:
+- Search intent analysis (informational/navigational/transactional/commercial)
+- Keyword density & clustering with topic detection
+- Content length comparison vs top SERP competitors
+- Readability scoring (Flesch Reading Ease, Flesch-Kincaid Grade Level)
+- SEO quality rating (0-100 score with category breakdowns)
+
+#### 2. SEO Optimizer
+
+Analyzes:
+- Keyword optimization and density
+- Content structure and headings
+- Internal and external links
+- Meta elements
+- Readability and user experience
+- Featured snippet opportunities
+
+#### 3. Meta Creator
+
+Generates:
+- 5 meta title variations (50-60 chars)
+- 5 meta description variations (150-160 chars)
+- Testing recommendations
+- SERP preview
+
+#### 4. Internal Linker
+
+Provides:
+- 3-5 specific internal link suggestions
+- Exact placement locations
+- Anchor text recommendations
+- User journey mapping
+- SEO impact prediction
+
+#### 5. Keyword Mapper
+
+Analyzes:
+- Keyword density and distribution
+- Critical placement checklist
+- Natural language integration quality
+- LSI keyword coverage
+- Cannibalization risk
+
+## Step 3: Optimize Before Publishing
+
+After reviewing agent feedback and making improvements, run a final optimization pass.
+
+### Command Usage
+
+```bash
+/optimize [article file]
+```
+
+### Example
+
+```bash
+/optimize drafts/content-marketing-strategies-2025-03-04.md
+```
+
+### What It Does
+
+<Steps>
+  <Step title="Comprehensive SEO Audit">
+    Validates all elements meet requirements: keyword placement, heading structure, link quality
+  </Step>
+  
+  <Step title="Advanced Analysis">
+    Runs all 5 Content Analyzer modules for search intent, keyword clustering, competitive length, readability, and SEO quality rating
+  </Step>
+  
+  <Step title="Provides Optimization Score">
+    Generates overall SEO score (0-100) with category breakdowns
+  </Step>
+  
+  <Step title="Creates Action Plan">
+    Lists priority fixes, quick wins, and strategic improvements
+  </Step>
+  
+  <Step title="Publishing Readiness Assessment">
+    Determines if content is ready to publish or needs additional work
+  </Step>
+</Steps>
+
+### Output
+
+The optimization report (`drafts/optimization-report-[topic-slug]-[date].md`) includes:
+
+- **SEO Score (0-100)**: Breakdown by keyword optimization, technical SEO, content quality, and user experience
+- **Priority Fixes**: Critical issues to address before publishing
+- **Quick Wins**: 5-10 minute improvements (keyword placement, meta tweaks, link additions)
+- **Strategic Improvements**: Longer-term enhancements (content expansion, structural changes)
+- **Optimized Meta Options**: Multiple variations of meta titles and descriptions to choose from
+- **Link Enhancement**: Specific suggestions for internal and external links
+- **Keyword Distribution Map**: Visual representation of keyword placement
+- **Final Checklist**: 15-point publishing readiness checklist
+
+### Publishing Decision
+
+Based on optimization score:
+
+- **90-100**: Excellent - publish immediately
+- **80-89**: Good - minor tweaks recommended but publishable
+- **70-79**: Fair - address priority fixes before publishing
+- **Below 70**: Needs work - significant improvements required
+
+## Complete Workflow Example
+
+<Steps>
+  <Step title="Research">
+    ```bash
+    /research content marketing strategies
+    ```
+    Review the research brief in `research/brief-content-marketing-strategies-[date].md`
+  </Step>
+  
+  <Step title="Write">
+    ```bash
+    /write content marketing strategies
+    ```
+    Article is saved to `drafts/`, scrubbed, and analyzed by 5 agents automatically
+  </Step>
+  
+  <Step title="Review Agent Feedback">
+    Read all agent reports in `drafts/`:
+    - `content-analysis-[topic]-[date].md`
+    - `seo-report-[topic]-[date].md`
+    - `meta-options-[topic]-[date].md`
+    - `link-suggestions-[topic]-[date].md`
+    - `keyword-analysis-[topic]-[date].md`
+  </Step>
+  
+  <Step title="Make Improvements">
+    Edit your article based on high-priority agent recommendations
+  </Step>
+  
+  <Step title="Final Optimization">
+    ```bash
+    /optimize drafts/content-marketing-strategies-[date].md
+    ```
+    Review the optimization report and address any remaining issues
+  </Step>
+  
+  <Step title="Publish">
+    When ready, publish to WordPress:
+    ```bash
+    /publish-draft drafts/content-marketing-strategies-[date].md
+    ```
+    Or move to `published/` folder for manual publishing
+  </Step>
+</Steps>
+
+## Tips for Success
+
+### Before Writing
+
+- **Study Examples**: Read your `context/writing-examples.md` to internalize your brand voice
+- **Review Context**: Check brand voice guidelines and relevant existing content
+- **Plan Internal Links**: Review `context/internal-links-map.md` for linking opportunities
+
+### During Writing
+
+- **Follow the Brief**: Use your research brief as the outline foundation
+- **Natural Keywords**: Integrate keywords naturally—never force them
+- **Add Value**: Every section should provide actionable insights
+- **Use Examples**: Include real scenarios and use cases from your industry
+- **Cite Sources**: Link to statistics and data sources
+
+### After Writing
+
+- **Review Agent Output**: Read all agent recommendations carefully
+- **Address High-Priority First**: Fix critical issues before optimizing details
+- **Run Optimize**: Use `/optimize` for final polish
+- **Self-Edit**: Read article as if you're the target reader
+- **Verify Checklist**: Ensure all quality requirements are met
+
+## Common Mistakes to Avoid
+
+<Warning>
+- ❌ Skipping the research phase
+- ❌ Ignoring brand voice guidelines
+- ❌ Forcing keywords unnaturally
+- ❌ Forgetting internal links
+- ❌ Not citing data sources
+- ❌ Publishing without optimization
+- ❌ Copying competitor content instead of differentiating
+</Warning>
+
+## Next Steps
+
+- Learn about [Updating Content](/workflows/updating-content) for existing posts
+- Explore [Landing Pages](/workflows/landing-pages) for conversion-focused content
+- Understand [Publishing](/workflows/publishing) options

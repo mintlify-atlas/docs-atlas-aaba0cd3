@@ -1,0 +1,436 @@
+---
+title: /rewrite Command
+description: Update and improve existing blog posts based on analysis findings with SEO optimization
+---
+
+The `/rewrite` command updates and improves existing content based on analysis findings, competitive changes, or content decay.
+
+## Usage
+
+```bash
+/rewrite [topic or analysis file]
+```
+
+<ParamField path="topic" type="string" required>
+  The topic to rewrite or path to analysis file from `/analyze-existing`
+</ParamField>
+
+## Examples
+
+```bash
+/rewrite product comparison
+```
+
+```bash
+/rewrite marketing guide
+```
+
+## What It Does
+
+### Pre-Rewrite Review
+
+1. **Reads existing article** thoroughly
+2. **Reviews analysis report** from `/analyze-existing` if available
+3. **Checks research brief** for updated angles
+4. **Verifies brand voice** alignment with `context/brand-voice.md`
+5. **Applies SEO guidelines** from `context/seo-guidelines.md`
+6. **Understands competitive changes** in SERP
+
+### Rewrite Strategy
+
+Determines scope based on analysis:
+
+<Tabs>
+  <Tab title="Light Update (20-30%)">
+    - Fix outdated statistics
+    - Add missing keywords
+    - Improve meta elements
+    - Update examples
+    - Add internal links
+  </Tab>
+  
+  <Tab title="Moderate Refresh (40-60%)">
+    - Restructure sections
+    - Expand content significantly
+    - Update all examples
+    - Rewrite introduction
+    - Add new H2 sections
+  </Tab>
+  
+  <Tab title="Major Rewrite (70-90%)">
+    - New outline structure
+    - Significant content expansion
+    - Fresh angle or perspective
+    - Complete SEO overhaul
+    - New supporting data
+  </Tab>
+  
+  <Tab title="Complete Overhaul (90%+)">
+    - Essentially new article
+    - Same topic, new approach
+    - Full competitive repositioning
+    - Comprehensive update
+  </Tab>
+</Tabs>
+
+## Rewrite Process
+
+<Steps>
+  <Step title="Determine What to Keep">
+    - Sections still accurate and comprehensive
+    - Unique insights that remain valuable
+    - Well-performing structure or formatting
+    - Relevant examples or case studies
+    - Appropriate internal links
+  </Step>
+  
+  <Step title="Determine What to Update">
+    - Outdated statistics with current data
+    - Old screenshots or examples
+    - Deprecated terminology or processes
+    - Missing keywords in headings and body
+    - Weak meta title/description
+    - Insufficient internal links
+  </Step>
+  
+  <Step title="Determine What to Add">
+    - New sections for competitive content gaps
+    - Recent industry trends or developments
+    - Additional examples or use cases
+    - Better introduction hook
+    - Stronger conclusion and CTA
+    - Missing SEO elements
+  </Step>
+  
+  <Step title="Determine What to Remove">
+    - Deprecated/inaccurate information
+    - Redundant or repetitive sections
+    - Overly promotional language
+    - Outdated examples or references
+    - Fluff or filler content
+  </Step>
+</Steps>
+
+## Content Structure
+
+### Updated Headline (H1)
+
+- Optimize with primary keyword if not present
+- Refresh if original title is dated or weak
+- Maintain if it's strong and still optimized
+
+### Refreshed Introduction
+
+- Update hook with current statistics or trends
+- Clarify value proposition if needed
+- Ensure primary keyword in first 100 words
+- Make it compelling for today's reader
+
+### Improved Body
+
+<CardGroup cols={2}>
+  <Card title="Maintain" icon="check">
+    Keep effective sections that are still accurate
+  </Card>
+  
+  <Card title="Expand" icon="arrows-maximize">
+    Deepen shallow sections with more detail
+  </Card>
+  
+  <Card title="Add" icon="plus">
+    Insert new sections to cover content gaps
+  </Card>
+  
+  <Card title="Update" icon="rotate">
+    Refresh stats, examples, and references
+  </Card>
+  
+  <Card title="Restructure" icon="sitemap">
+    Reorganize if flow can be improved
+  </Card>
+  
+  <Card title="Optimize" icon="wand-magic-sparkles">
+    Integrate keywords more naturally
+  </Card>
+</CardGroup>
+
+### Strengthened Conclusion
+
+- Update takeaways to reflect new/expanded content
+- Refresh CTA to align with current priorities
+- End with forward-looking perspective
+
+## SEO Enhancement
+
+### Keyword Optimization
+
+<Tabs>
+  <Tab title="Primary Keyword">
+    - Ensure 1-2% density throughout
+    - Add to H2s if missing
+    - Confirm appears in first 100 words
+  </Tab>
+  
+  <Tab title="Semantic Variations">
+    - Use related keywords naturally
+    - Add LSI keywords
+    - Avoid keyword stuffing
+  </Tab>
+</Tabs>
+
+### Internal Linking
+
+<Steps>
+  <Step title="Review Existing Links">
+    Ensure all internal links still work and are relevant
+  </Step>
+  
+  <Step title="Add New Links">
+    Reference newer content published since original
+  </Step>
+  
+  <Step title="Strategic Placement">
+    Link to pillar content and related articles (3-5+ links)
+  </Step>
+  
+  <Step title="Anchor Text">
+    Use keyword-rich, descriptive anchor text
+  </Step>
+</Steps>
+
+### External Linking
+
+- **Update broken links** - Replace any dead external links
+- **Fresher sources** - Replace old statistics with recent data
+- **Authority** - Ensure external links are to credible sources
+- **Relevance** - Remove outdated external references
+
+### Meta Elements
+
+<ParamField path="Meta Title" type="string">
+  Rewrite if not optimized or compelling (50-60 characters)
+</ParamField>
+
+<ParamField path="Meta Description" type="string">
+  Refresh to highlight updated content (150-160 characters)
+</ParamField>
+
+<ParamField path="URL Slug" type="string">
+  Generally keep original to preserve rankings
+</ParamField>
+
+## Output
+
+Creates updated article saved to:
+
+```
+rewrites/[topic-slug]-rewrite-[YYYY-MM-DD].md
+```
+
+### Change Summary
+
+<CodeGroup>
+```markdown Change Tracking
+---
+Original Publication Date: [if known]
+Rewrite Date: [YYYY-MM-DD]
+Rewrite Scope: Light / Moderate / Major / Complete
+Word Count Change: [original count] → [new count]
+Primary Keyword: [keyword]
+SEO Score Improvement: [estimated improvement]
+
+Major Changes:
+- [Summary of significant updates]
+- [New sections added]
+- [Content removed/consolidated]
+
+SEO Improvements:
+- [Keyword optimization details]
+- [Internal links added]
+- [Meta element updates]
+
+Content Updates:
+- [Statistics refreshed]
+- [Examples updated]
+- [New industry trends added]
+---
+```
+
+```markdown Before/After Comparison
+## Before/After Comparison
+
+**Original Headline**: [old H1]
+**New Headline**: [new H1]
+
+**Original Intro**: [old opening]
+**New Intro**: [new opening]
+
+**Sections Added**: 3 new H2 sections
+**Sections Removed**: 1 outdated section
+**Word Count**: 1,800 → 2,600 words
+**SEO Score**: 65 → 85
+```
+</CodeGroup>
+
+Change summary also saved separately to:
+
+```
+rewrites/changes-[topic-slug]-[YYYY-MM-DD].md
+```
+
+## Automatic Post-Processing
+
+After saving the rewritten article:
+
+### 1. Content Scrubbing
+
+Automatically removes:
+- Invisible Unicode watermarks
+- AI detection patterns (em-dash overuse)
+- Format-control characters
+
+### 2. Agent Auto-Execution
+
+These agents analyze the rewrite:
+
+<CardGroup cols={2}>
+  <Card title="SEO Optimizer" icon="magnifying-glass-chart">
+    Reviews rewritten content, compares to original SEO metrics
+  </Card>
+  
+  <Card title="Meta Creator" icon="tags">
+    Generates fresh meta title/description options
+  </Card>
+  
+  <Card title="Internal Linker" icon="link">
+    Ensures links are current, suggests additional opportunities
+  </Card>
+  
+  <Card title="Keyword Mapper" icon="map">
+    Verifies keyword integration improvements
+  </Card>
+</CardGroup>
+
+## Real Example
+
+<Accordion title="Example: Rewriting a Podcast Hosting Guide">
+  ```markdown
+  # Analysis Summary (from /analyze-existing)
+  
+  **Original Article**: "Best Podcast Hosting Platforms 2023"
+  **Word Count**: 1,850
+  **Content Health Score**: 62/100
+  **Priority**: High (outdated year in title, missing new platforms)
+  
+  ## Rewrite Plan
+  
+  **Scope**: Moderate Refresh (50% changes)
+  
+  **Updates Needed**:
+  - Update title to "Best Podcast Hosting Platforms 2025"
+  - Add 3 new hosting platforms launched since 2023
+  - Update all pricing information
+  - Refresh all screenshots
+  - Add new comparison table with 2025 features
+  - Update statistics (podcast hosting market size, user counts)
+  - Add section on AI features in hosting platforms (new trend)
+  - Optimize keyword density (currently 0.8%, need 1.5%)
+  - Add 2 more internal links
+  
+  **Word Count Target**: 2,400 words (600 word increase)
+  
+  ## Rewrite Execution
+  
+  /rewrite podcast hosting guide
+  
+  ## Result
+  
+  **New Article**: "Best Podcast Hosting Platforms 2025: Complete Comparison"
+  **New Word Count**: 2,550
+  **New Content Health Score**: 88/100
+  **SEO Improvement**: +23 points
+  
+  **Changes Made**:
+  - Updated headline with 2025
+  - Rewrote introduction with current market stats
+  - Added 3 new platforms (Podbean, RedCircle updates, new AI features)
+  - Updated all pricing tables
+  - Refreshed 8 screenshots
+  - Added new H2: "AI-Powered Features in Modern Hosting"
+  - Updated keyword density to 1.6%
+  - Added 3 internal links to Castos feature pages
+  - Improved meta description
+  ```
+</Accordion>
+
+## Quality Assurance
+
+<AccordionGroup>
+  <Accordion title="Content Accuracy">
+    - Verify all updated statistics and data
+    - Ensure technical information is current
+    - Confirm examples reflect current landscape
+    - Check product references are up-to-date
+  </Accordion>
+  
+  <Accordion title="Brand Alignment">
+    - Maintain brand voice from `context/brand-voice.md`
+    - Follow formatting from `context/style-guide.md`
+    - Ensure messaging aligns with current positioning
+    - Keep focus on target audience needs
+  </Accordion>
+  
+  <Accordion title="Readability">
+    - Improve sentence structure if needed
+    - Break up long paragraphs
+    - Add subheadings for scannability
+    - Use formatting for clarity
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+After rewrite completion:
+
+1. **Review change summary** - Ensure all updates are intentional
+2. **Compare to original** - Verify improvements
+3. **Run optimize** - Use `/optimize` for final polish if needed
+
+```bash
+/optimize rewrites/[article-name]-rewrite-2025-03-04.md
+```
+
+4. **Publish** - Move to `published/` when ready
+5. **Note original URL** - Ensure proper redirect/replacement
+
+## Tips
+
+<CardGroup cols={2}>
+  <Card title="Analyze First" icon="chart-line">
+    Always run `/analyze-existing` before `/rewrite` to understand scope.
+  </Card>
+  
+  <Card title="Preserve Rankings" icon="shield-check">
+    Keep the original URL slug to maintain any existing rankings.
+  </Card>
+  
+  <Card title="Update Everything" icon="rotate">
+    When updating stats, check ALL numbers and dates throughout.
+  </Card>
+  
+  <Card title="Competitive Gaps" icon="magnifying-glass">
+    Focus on adding what competitors have that you're missing.
+  </Card>
+</CardGroup>
+
+## Related Commands
+
+<CardGroup cols={2}>
+  <Card title="/analyze-existing" icon="chart-line" href="/commands/analyze-existing">
+    Analyze before rewriting
+  </Card>
+  
+  <Card title="/optimize" icon="wand-magic-sparkles" href="/commands/optimize">
+    Final polish after rewrite
+  </Card>
+</CardGroup>

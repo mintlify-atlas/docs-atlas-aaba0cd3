@@ -1,0 +1,263 @@
+---
+title: 'CTA Analyzer'
+description: 'Analyze Call-to-Action elements: quality, distribution, and goal alignment'
+---
+
+## Overview
+
+The `CTAAnalyzer` class analyzes Call-to-Action (CTA) elements in landing pages, evaluating quality, placement distribution, and alignment with conversion goals.
+
+## Installation
+
+```python
+from data_sources.modules.cta_analyzer import CTAAnalyzer, analyze_ctas
+```
+
+## Initialization
+
+```python
+analyzer = CTAAnalyzer(conversion_goal='trial')
+```
+
+<ParamField path="conversion_goal" type="str" default="trial">
+  Conversion goal: 'trial', 'demo', or 'lead'
+</ParamField>
+
+## Methods
+
+### analyze
+
+Analyze CTAs in landing page content.
+
+```python
+result = analyzer.analyze(content)
+```
+
+<ParamField path="content" type="str" required>
+  Landing page content (markdown)
+</ParamField>
+
+<ResponseField name="result" type="dict">
+  <ResponseField name="summary" type="dict">
+    High-level metrics
+    <ResponseField name="total_ctas" type="int">
+      Total number of CTAs found
+    </ResponseField>
+    <ResponseField name="average_quality_score" type="float">
+      Average quality score (0-100)
+    </ResponseField>
+    <ResponseField name="distribution_score" type="float">
+      Distribution score (0-100)
+    </ResponseField>
+    <ResponseField name="goal_alignment_score" type="float">
+      Goal alignment score (0-100)
+    </ResponseField>
+    <ResponseField name="overall_effectiveness" type="float">
+      Weighted overall score (0-100)
+    </ResponseField>
+  </ResponseField>
+  <ResponseField name="ctas" type="list">
+    Individual CTAs with quality scores
+  </ResponseField>
+  <ResponseField name="distribution" type="dict">
+    CTA placement analysis
+  </ResponseField>
+  <ResponseField name="goal_alignment" type="dict">
+    Goal alignment details
+  </ResponseField>
+  <ResponseField name="recommendations" type="list">
+    Prioritized recommendations
+  </ResponseField>
+</ResponseField>
+
+## CTA Quality Scoring
+
+Each CTA is scored (0-100) based on:
+
+### Action Verb Strength (+5 to +30)
+- **Strongest (+30)**: start, get, claim, unlock, discover
+- **Strong (+25)**: try, begin, launch, create, download, book, schedule
+- **Moderate (+15)**: learn, see, find, explore, read, watch
+- **Weak (+5)**: submit, click, enter, continue, next
+- **None (-10)**: No clear action verb
+
+### Benefit Words (+10 to +15)
+- free, instant, immediate, today, now
+- unlimited, exclusive, premium, full
+- easy, fast, quick, simple
+
+### Urgency (+10)
+- now, today, immediately, instant
+- limited, hurry, soon, before
+- don't miss, last chance, expires, only
+
+### Specificity (+10)
+- Numbers: "14-day trial", "30-day guarantee"
+- Amounts: "$100 off", "50% discount"
+- Time: "in 5 minutes", "instant access"
+- No requirements: "no credit card", "no commitment"
+
+### Length Optimization
+- **Optimal (+5)**: 2-5 words
+- **Too long (-10)**: 8+ words
+
+### Format Bonus (+5)
+- Button-style CTAs: `[Text]`, `**[Text]**`, `[Text →]`
+
+## CTA Distribution
+
+CTAs should be distributed throughout the page:
+
+- **Above the fold** (first 20%): Essential
+- **Mid-page** (30-70%): Recommended
+- **Closing** (last 20%): Recommended
+
+Distribution quality:
+- **Excellent**: CTAs in all three zones
+- **Good**: CTAs in two zones
+- **Poor**: CTAs in one zone
+- **None**: No CTAs found
+
+## Goal Alignment
+
+### Trial Goal Patterns
+Primary:
+- "start your free trial"
+- "try free for 14 days"
+- "get started free"
+
+Secondary:
+- "sign up free"
+- "create account"
+- "launch your [product]"
+
+### Demo Goal Patterns
+Primary:
+- "book a demo"
+- "get a demo"
+- "see it in action"
+
+Secondary:
+- "schedule a call"
+- "talk to sales"
+- "contact us"
+
+### Lead Goal Patterns
+Primary:
+- "download the guide"
+- "get instant access"
+- "claim your free [asset]"
+
+Secondary:
+- "subscribe"
+- "join newsletter"
+- "get updates"
+
+## Recommendations
+
+The analyzer generates prioritized recommendations:
+
+### High Priority
+- Missing CTA above the fold
+- No closing CTA
+- CTAs don't align with conversion goal
+
+### Medium Priority
+- Too few CTAs (< 3 for SEO, < 2 for PPC)
+- Low quality CTAs (score < 60)
+- Poor action verbs
+
+### Low Priority
+- Consider adding more goal-specific language
+- Add benefit words to CTAs
+- Improve CTA placement
+
+## Convenience Function
+
+```python
+from data_sources.modules.cta_analyzer import analyze_ctas
+
+result = analyze_ctas(
+    content=page_content,
+    conversion_goal='trial'
+)
+```
+
+## Example Usage
+
+```python
+from data_sources.modules.cta_analyzer import CTAAnalyzer
+
+# Read landing page
+with open('landing-pages/podcast-hosting.md', 'r') as f:
+    content = f.read()
+
+# Analyze CTAs
+analyzer = CTAAnalyzer(conversion_goal='trial')
+result = analyzer.analyze(content)
+
+print("=== CTA Analysis Report ===")
+print(f"\nSummary:")
+print(f"  Total CTAs: {result['summary']['total_ctas']}")
+print(f"  Average Quality: {result['summary']['average_quality_score']}/100")
+print(f"  Distribution Score: {result['summary']['distribution_score']}/100")
+print(f"  Goal Alignment: {result['summary']['goal_alignment_score']}/100")
+print(f"  Overall Effectiveness: {result['summary']['overall_effectiveness']}/100")
+
+print(f"\nCTAs Found:")
+for cta in result['ctas']:
+    print(f"  [{cta['position_pct']:.0f}%] \"{cta['text']}\" (Score: {cta['quality_score']})")
+    if cta.get('scoring_factors'):
+        for factor in cta['scoring_factors'][:3]:
+            print(f"    {factor}")
+
+print(f"\nDistribution: {result['distribution']['distribution_quality']}")
+for issue in result['distribution']['issues']:
+    print(f"  ⚠️  {issue}")
+
+print(f"\nGoal Alignment ({result['goal_alignment']['goal']}):")
+print(f"  Primary matches: {result['goal_alignment']['primary_matches']}")
+print(f"  Secondary matches: {result['goal_alignment']['secondary_matches']}")
+
+if result['recommendations']:
+    print(f"\nTop Recommendations:")
+    for rec in result['recommendations'][:3]:
+        print(f"  [{rec['priority'].upper()}] {rec['recommendation']}")
+```
+
+## Example CTA Scoring
+
+```python
+# Excellent CTA (Score: 95)
+"[Start Your Free Trial Today →]"  
+# +30 (strongest verb: start)
+# +15 (benefit words: free, today)
+# +10 (urgency: today)
+# +10 (specificity implied)
+# +5 (optimal length: 5 words)
+# +5 (button format)
+# Total: 75 base + bonuses = 95
+
+# Good CTA (Score: 75)
+"[Try Free for 14 Days]"
+# +25 (strong verb: try)
+# +15 (benefit words: free)
+# +10 (specificity: 14 days)
+# +5 (optimal length: 5 words)
+# +5 (button format)
+# Total: 60 base + bonuses = 75
+
+# Weak CTA (Score: 45)
+"[Submit]"
+# +5 (weak verb: submit)
+# -10 (too short, no context)
+# Total: 45
+```
+
+## Source Code Reference
+
+Location: `data_sources/modules/cta_analyzer.py:16`
+
+See also:
+- [Landing Page Scorer](/api/landing-page-scorer) - Overall landing page scoring
+- [Trust Signal Analyzer](/api/trust-signal-analyzer) - Trust signal analysis

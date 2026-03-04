@@ -1,0 +1,694 @@
+---
+title: Troubleshooting Guide
+description: Solutions for common issues in SEO Machine
+---
+
+Common problems and solutions for SEO Machine.
+
+## Content Quality Issues
+
+### "Content doesn't sound like my brand"
+
+**Symptoms**:
+
+- Generic voice
+- Doesn't match brand personality
+- Tone feels off
+
+**Solutions**:
+
+1. **Update `context/brand-voice.md`** with more specific guidance:
+   - Add voice pillars with examples
+   - Define tone for different content types
+   - Include "Do" and "Don't" examples
+   - Add brand personality traits
+
+2. **Add better examples to `context/writing-examples.md`**:
+   - Include 3-5 exemplary posts
+   - Add notes on what makes each great
+   - Cover different content types
+   - Show voice variation examples
+
+3. **Reference examples in commands**:
+   ```
+   /write content marketing guide [use tone from writing-examples.md post #2]
+   ```
+
+4. **Use the Editor agent**:
+   - Reviews humanity score
+   - Identifies robotic patterns
+   - Suggests voice improvements
+
+### "Keyword density too high/low"
+
+**Problem**: Keyword density outside 1-2% range
+
+**Too High (>3%)**:
+
+1. **Check current density**:
+   - Use Keyword Analyzer module
+   - Look for stuffing warnings
+
+2. **Reduce naturally**:
+   - Replace some mentions with synonyms
+   - Use "it", "this", "that" for subsequent references
+   - Use related terms instead
+   - Focus on semantic variations
+
+3. **Re-test**:
+   ```bash
+   python3 -c "from data_sources.modules.keyword_analyzer import KeywordAnalyzer; \
+               analyzer = KeywordAnalyzer(); \
+               result = analyzer.analyze('content.md', 'your keyword'); \
+               print(f'Density: {result['density']:.2f}%')"
+   ```
+
+**Too Low (less than 0.5%)**:
+
+1. **Add keyword naturally**:
+   - In introduction
+   - In 2-3 H2 headings
+   - In conclusion
+   - Throughout body (don't force)
+
+2. **Check placement**:
+   - [ ] H1 title
+   - [ ] First 100 words
+   - [ ] 2-3 H2 headings
+   - [ ] Meta title and description
+
+3. **Use Keyword Mapper agent** for placement analysis
+
+### "Internal links aren't relevant"
+
+**Problem**: Suggested links don't make sense
+
+**Solutions**:
+
+1. **Update `context/internal-links-map.md`**:
+   - Add more current pages
+   - Remove outdated links
+   - Add descriptions of what each page covers
+   - Organize by topic cluster
+
+2. **Format for better matching**:
+   ```markdown
+   ## Topic Cluster: Content Marketing
+   
+   ### Pillar Page
+   - URL: /content-marketing-guide
+   - Topic: Complete guide to content marketing
+   - Keywords: content marketing, content strategy
+   
+   ### Cluster Articles
+   - /content-calendar-template - Planning and organizing content
+   - /content-distribution - Promoting published content
+   ```
+
+3. **Be specific in commands**:
+   ```
+   /write content marketing strategies [link to pages in content marketing cluster]
+   ```
+
+4. **Manually review and adjust** suggested links before publishing
+
+### "Articles too similar to competitors"
+
+**Problem**: Content lacks differentiation
+
+**Solutions**:
+
+1. **Update `context/competitor-analysis.md`**:
+   - Document what competitors do well
+   - Identify their weaknesses
+   - Note your unique advantages
+   - Add differentiation angles
+
+2. **Add unique value in `context/features.md`**:
+   - Your specific product features
+   - Unique methodologies
+   - Proprietary data or research
+   - Customer success stories
+
+3. **Specify unique angles in commands**:
+   ```
+   /research content marketing [focus on our unique multi-channel approach]
+   /write content marketing [include our proprietary framework from features.md]
+   ```
+
+4. **Add original elements**:
+   - Your own data and statistics
+   - Custom graphics and diagrams
+   - Real customer examples
+   - Unique insights from your experience
+
+## SEO Issues
+
+### "SEO score is low"
+
+**Problem**: SEO Optimizer or quality rater returns score less than 70
+
+**Diagnostic Steps**:
+
+1. **Run SEO Quality Rater**:
+   ```bash
+   python3 data_sources/modules/seo_quality_rater.py drafts/your-article.md
+   ```
+
+2. **Check category breakdowns**:
+   - Content: less than 70?
+   - Keywords: less than 70?
+   - Meta: less than 70?
+   - Structure: less than 70?
+   - Links: less than 70?
+   - Readability: less than 70?
+
+3. **Fix lowest categories first**:
+
+**If Content is low**:
+
+- Add more depth (aim for 2,500+ words)
+- Include more examples
+- Add data and statistics
+- Improve introduction and conclusion
+
+**If Keywords is low**:
+
+- Check keyword density (should be 1-2%)
+- Verify keyword in H1, first 100 words, 2-3 H2s
+- Add LSI keywords
+- Fix keyword stuffing if density >3%
+
+**If Meta is low**:
+
+- Add/optimize meta title (50-60 chars)
+- Add/optimize meta description (150-160 chars)
+- Include keyword in both
+- Make them compelling
+
+**If Structure is low**:
+
+- Fix heading hierarchy (H1>H2>H3)
+- Add more H2 subheadings (every 300-400 words)
+- Use proper heading format
+- Improve scannability
+
+**If Links is low**:
+
+- Add 3-5 internal links
+- Add 2-3 external authority links
+- Use descriptive anchor text
+- Link to relevant content
+
+**If Readability is low**:
+
+- Shorten sentences (average 15-20 words)
+- Simplify vocabulary
+- Break up paragraphs (2-4 sentences)
+- Add more lists and formatting
+
+### "Content not ranking"
+
+**Problem**: Published content not appearing in search results
+
+**Diagnostic Steps**:
+
+1. **Check indexing** (Google Search Console):
+   ```
+   site:yoursite.com "article title"
+   ```
+   - Not found? Not indexed yet (wait 1-2 weeks)
+   - Found? Indexing not the issue
+
+2. **Check on-page SEO**:
+   - [ ] Primary keyword in H1
+   - [ ] Keyword in first 100 words
+   - [ ] Meta title and description optimized
+   - [ ] 3-5 internal links
+   - [ ] Proper heading structure
+
+3. **Check technical SEO**:
+   - [ ] No noindex tag
+   - [ ] Robots.txt allows crawling
+   - [ ] Canonical URL correct
+   - [ ] Page loads less than 3 seconds
+   - [ ] Mobile-responsive
+
+4. **Check competition**:
+   - Run SERP analysis: `/research-serp [keyword]`
+   - Is difficulty "very high"?
+   - Do top 10 have high domain authority?
+   - Are you matching content length and depth?
+
+5. **Check content quality**:
+   - Run Content Analyzer
+   - Is score >80?
+   - Does it provide unique value?
+   - Is it better than competitors?
+
+**Solutions**:
+
+- **Wait**: New content takes 2-8 weeks to rank
+- **Build links**: Get backlinks from related sites
+- **Improve content**: Add 500+ words, more examples, better formatting
+- **Target easier keywords**: Lower difficulty alternatives
+- **Build topic authority**: Create supporting cluster content
+
+### "Rankings dropped"
+
+**Problem**: Content was ranking, now it's not
+
+**Common Causes**:
+
+1. **Content outdated**:
+   - Old statistics (update yearly)
+   - Outdated examples
+   - Missing current year
+   - Solution: `/analyze-existing [URL]` then `/rewrite`
+
+2. **Competitor improved**:
+   - Check who now ranks above you
+   - Run competitor analysis
+   - Study what they did better
+   - Solution: Update to exceed their quality
+
+3. **Technical issue**:
+   - Check GSC for errors
+   - Verify page still indexed
+   - Check for broken links
+   - Solution: Fix technical problems
+
+4. **Algorithm update**:
+   - Check SEO news for recent updates
+   - Review E-E-A-T signals
+   - Add author bios, citations
+   - Solution: Align with new algorithm requirements
+
+5. **Cannibalization**:
+   - Do you have multiple pages targeting same keyword?
+   - Check GSC for competing pages
+   - Solution: Consolidate or differentiate
+
+## API and Integration Issues
+
+### "DataForSEO Error: 401 Unauthorized"
+
+**Problem**: Authentication failed
+
+**Solutions**:
+
+1. **Check credentials** in `data_sources/config/.env`:
+   ```bash
+   DATAFORSEO_LOGIN=your_login
+   DATAFORSEO_PASSWORD=your_password
+   ```
+
+2. **Verify credentials** on DataForSEO dashboard
+
+3. **Test connection**:
+   ```bash
+   python3 test_dataforseo.py
+   ```
+
+4. **Common mistakes**:
+   - Extra spaces in .env file
+   - Using API key instead of login/password
+   - Expired trial account
+
+### "GSC Error: 403 Forbidden"
+
+**Problem**: Google Search Console access denied
+
+**Solutions**:
+
+1. **Check service account access**:
+   - Go to GSC Settings > Users and permissions
+   - Verify service account email added as owner
+   - Email is in `credentials/ga4-credentials.json`
+
+2. **Verify credentials file**:
+   ```bash
+   ls -la credentials/ga4-credentials.json
+   # Should exist and be readable
+   ```
+
+3. **Check .env configuration**:
+   ```bash
+   GSC_SITE_URL=https://yoursite.com
+   GOOGLE_APPLICATION_CREDENTIALS=credentials/ga4-credentials.json
+   ```
+
+4. **Test connection**:
+   ```python
+   from modules.google_search_console import GoogleSearchConsole
+   gsc = GoogleSearchConsole()
+   keywords = gsc.get_keyword_positions(days=7)
+   print(f"Found {len(keywords)} keywords")
+   ```
+
+### "GA4 Error: No data available"
+
+**Problem**: Google Analytics returns empty results
+
+**Solutions**:
+
+1. **Check property ID** in `.env`:
+   ```bash
+   GA4_PROPERTY_ID=123456789
+   ```
+   - Find ID in GA4: Admin > Property Settings
+
+2. **Verify service account access**:
+   - GA4: Admin > Property Access Management
+   - Add service account as Viewer
+
+3. **Check date range**:
+   - GA4 data delayed 24-48 hours
+   - Try `days=7` instead of `days=1`
+
+4. **Verify data exists**:
+   - Check GA4 dashboard manually
+   - Ensure site has traffic
+
+### "WordPress publish failed"
+
+**Problem**: `/publish-draft` command fails
+
+**Solutions**:
+
+1. **Check WordPress credentials** in `.env`:
+   ```bash
+   WP_URL=https://yoursite.com
+   WP_USERNAME=your_username
+   WP_APP_PASSWORD=xxxx xxxx xxxx xxxx xxxx xxxx
+   ```
+
+2. **Verify application password**:
+   - WordPress: Users > Profile
+   - Generate new application password
+   - Use spaces as shown (not one continuous string)
+
+3. **Check MU-plugin installed**:
+   ```bash
+   # Should exist:
+   wp-content/mu-plugins/seo-machine-yoast-rest.php
+   ```
+
+4. **Test REST API**:
+   ```bash
+   curl -X GET https://yoursite.com/wp-json/wp/v2/posts \
+     -u "username:xxxx xxxx xxxx xxxx xxxx xxxx"
+   ```
+
+5. **Common issues**:
+   - Application password not created
+   - MU-plugin not installed
+   - REST API disabled
+   - Incorrect URL (http vs https)
+
+## Research Script Issues
+
+### "No quick wins found"
+
+**Problem**: `research_quick_wins.py` returns no results
+
+**Possible Causes**:
+
+1. **No keywords ranking 11-20**:
+   - You're either dominating (all page 1) or need more content
+   - Check GSC manually for positions 11-20
+
+2. **Thresholds too high**:
+   ```python
+   # In script, try lower thresholds:
+   quick_wins = gsc.get_quick_wins(
+       days=30,
+       position_min=11,
+       position_max=20,
+       min_impressions=10  # Lower from 50 to 10
+   )
+   ```
+
+3. **Not enough data**:
+   - Site too new (less than 3 months)
+   - Not enough content
+   - Very low traffic
+   - Solution: Wait or create more content
+
+### "Competitor gaps empty"
+
+**Problem**: `research_competitor_gaps.py` finds no gaps
+
+**Solutions**:
+
+1. **Check competitors configured** in `config/competitors.json`:
+   ```json
+   {
+     "direct_competitors": ["competitor1.com", "competitor2.com"],
+     "relevant_terms": ["your", "industry", "keywords"]
+   }
+   ```
+
+2. **Adjust relevant_terms**:
+   - Too specific? Won't find gaps
+   - Too broad? Too many irrelevant results
+   - Try removing relevant_terms temporarily
+
+3. **Check API limits**:
+   ```python
+   # In script, increase limit:
+   comp_keywords = dfs.get_domain_keywords(
+       domain=competitor,
+       position_max=20,
+       limit=500  # Increase from 300
+   )
+   ```
+
+4. **Verify competitors have data**:
+   - Check manually if competitor ranks for anything
+   - Try well-known competitor (buzzsprout.com, etc.)
+
+### "High API costs"
+
+**Problem**: DataForSEO charges too high
+
+**Solutions**:
+
+1. **Reduce frequency**:
+   - Run comprehensive analysis monthly (not daily)
+   - Run trending/quick wins weekly
+   - Cache results when possible
+
+2. **Lower limits**:
+   ```python
+   # In scripts:
+   position_max=30  # Instead of 100
+   limit=100        # Instead of 500
+   ```
+
+3. **Reduce competitor count**:
+   - Focus on 3-5 direct competitors
+   - Remove content competitors if budget tight
+
+4. **Use GSC data when possible**:
+   - GSC is free
+   - Only use DataForSEO for competitor data
+   - Skip DataForSEO enrichment if not critical
+
+5. **Expected costs per script**:
+   - Quick wins: $0.10-$0.20
+   - Competitor gaps: $0.50-$1.00
+   - Baseline analysis: $0.20-$0.40
+   - SERP analysis: $0.02-$0.03 per keyword
+
+## Performance Issues
+
+### "Commands are slow"
+
+**Problem**: Commands take >2 minutes
+
+**Solutions**:
+
+1. **Check context files size**:
+   ```bash
+   du -sh context/*.md
+   # Each should be less than 50KB
+   ```
+   - Trim `writing-examples.md` if >100KB
+   - Keep 3-5 examples max
+
+2. **Reduce agent auto-execution**:
+   - Edit command files in `.claude/commands/`
+   - Comment out less critical agents
+
+3. **Use faster commands**:
+   - `/article` instead of `/write` (fewer agents)
+   - Manual agents instead of auto-trigger
+
+4. **Check API response times**:
+   - DataForSEO slow? Try different time of day
+   - GSC timeout? Reduce date range
+
+### "Out of memory errors"
+
+**Problem**: Python scripts crash with memory errors
+
+**Solutions**:
+
+1. **Reduce batch sizes**:
+   ```python
+   # Process in smaller batches:
+   for i in range(0, len(keywords), 50):
+       batch = keywords[i:i+50]
+       # Process batch
+   ```
+
+2. **Clear cache**:
+   ```bash
+   rm -rf data_sources/cache/*
+   ```
+
+3. **Reduce concurrent requests**:
+   - Scripts process one at a time
+   - Don't run multiple scripts simultaneously
+
+4. **Increase system memory**:
+   - Close other applications
+   - Restart computer
+   - Upgrade RAM if persistent
+
+## File and Directory Issues
+
+### "Config file not found"
+
+**Problem**: `config/competitors.json not found`
+
+**Solutions**:
+
+1. **Create from example**:
+   ```bash
+   cp config/competitors.example.json config/competitors.json
+   ```
+
+2. **Edit with your data**:
+   ```bash
+   # Open in editor
+   code config/competitors.json
+   ```
+
+3. **Verify file exists**:
+   ```bash
+   ls -la config/competitors.json
+   ```
+
+### "Cannot write to directory"
+
+**Problem**: Permission denied writing to research/ or drafts/
+
+**Solutions**:
+
+1. **Check directory exists**:
+   ```bash
+   mkdir -p research drafts published rewrites landing-pages audits
+   ```
+
+2. **Check permissions**:
+   ```bash
+   chmod 755 research drafts published
+   ```
+
+3. **Check disk space**:
+   ```bash
+   df -h .
+   ```
+
+### "File encoding errors"
+
+**Problem**: UnicodeDecodeError or encoding issues
+
+**Solutions**:
+
+1. **Ensure UTF-8 encoding**:
+   ```python
+   # When reading files:
+   with open(file, 'r', encoding='utf-8') as f:
+       content = f.read()
+   ```
+
+2. **Convert file encoding**:
+   ```bash
+   iconv -f ISO-8859-1 -t UTF-8 file.md > file_utf8.md
+   ```
+
+3. **Check for special characters**:
+   - Em-dashes (—)
+   - Smart quotes (“”)
+   - Ensure file saved as UTF-8
+
+## Getting More Help
+
+### Diagnostic Information
+
+When asking for help, provide:
+
+```bash
+# Python version
+python3 --version
+
+# Installed packages
+pip list | grep -E "google|dataforseo|anthropic"
+
+# File structure
+tree -L 2 .
+
+# Error output
+python3 script.py 2>&1 | tee error.log
+```
+
+### Error Logs
+
+Check log files:
+
+```bash
+# Claude Code logs
+ls ~/.claude/logs/
+
+# Python errors
+python3 script.py 2>&1 | tee error.log
+```
+
+### Resources
+
+- **README.md**: Full documentation
+- **data_sources/README.md**: API setup guide
+- **wordpress/README.md**: Publishing setup
+- **GitHub Issues**: Report bugs
+- **Examples**: `examples/castos/` for reference
+
+### Common Error Messages
+
+| Error | Cause | Solution |
+|-------|-------|----------|
+| `ModuleNotFoundError` | Missing dependency | `pip install -r requirements.txt` |
+| `FileNotFoundError` | Wrong directory | Check file paths, use absolute paths |
+| `401 Unauthorized` | Bad credentials | Verify API keys in `.env` |
+| `403 Forbidden` | No access | Add service account to GSC/GA4 |
+| `RateLimitError` | API limit exceeded | Wait, reduce request frequency |
+| `KeyError` | Missing config | Add required field to config file |
+| `ValueError` | Invalid input | Check data format matches expected |
+| `TimeoutError` | Request too slow | Reduce date range, check connection |
+
+### Quick Fixes Checklist
+
+Before asking for help:
+
+- [ ] Restarted terminal/IDE
+- [ ] Checked .env file configured
+- [ ] Verified API credentials valid
+- [ ] Ran `pip install -r requirements.txt`
+- [ ] Created config/competitors.json
+- [ ] Checked file permissions
+- [ ] Verified directory structure correct
+- [ ] Checked error logs
+- [ ] Tried example from documentation
+- [ ] Searched existing issues

@@ -1,0 +1,378 @@
+---
+title: DataForSEO
+description: Connect DataForSEO for competitive keyword research, SERP analysis, and ranking data
+---
+
+DataForSEO provides keyword research data, search volume, competition metrics, SERP analysis, and competitor intelligence that complement Google Analytics and Search Console.
+
+## What You'll Get
+
+- Keyword rankings (daily updates)
+- Competitor analysis and rankings
+- SERP features and positions
+- Search volume and keyword difficulty
+- Related keywords and questions
+- Domain metrics and authority
+- Complete SERP snapshots
+
+## Prerequisites
+
+- A DataForSEO account
+- API credits (free trial available, or paid plan)
+
+## Setup Instructions
+
+<Steps>
+  <Step title="Create a DataForSEO Account">
+    1. Go to [DataForSEO](https://dataforseo.com/)
+    2. Click **Sign Up** or **Get Started**
+    3. Complete the registration process
+    4. Verify your email address
+  </Step>
+  
+  <Step title="Get Your API Credentials">
+    1. Log in to your DataForSEO account
+    2. Go to the [Dashboard](https://app.dataforseo.com/)
+    3. Navigate to **API Access** or **API Credentials**
+    4. You'll see your:
+       - **Login** (username/email)
+       - **Password** (API password, different from account password)
+    5. Copy both values
+    
+    <Note>
+      DataForSEO uses Basic Authentication with login/password, not API keys.
+    </Note>
+  </Step>
+  
+  <Step title="Add Credits to Your Account">
+    1. In the DataForSEO dashboard, go to **Billing** or **Add Credits**
+    2. Choose a payment option:
+       - **Free Trial**: Usually provides $1-5 in credits to test
+       - **Pay As You Go**: Add credits as needed
+       - **Monthly Plan**: Subscribe for discounted rates
+    3. Complete the payment process
+    
+    <Tip>
+      Start with the free trial to test the integration, then add credits based on your usage needs.
+    </Tip>
+  </Step>
+  
+  <Step title="Configure SEO Machine">
+    Add to your `.env` file:
+    
+    ```bash
+    DATAFORSEO_LOGIN=your_username_or_email
+    DATAFORSEO_PASSWORD=your_api_password
+    ```
+  </Step>
+</Steps>
+
+## Available Methods
+
+The `DataForSEO` class provides these methods:
+
+### Get Rankings
+
+Check ranking positions for specific keywords:
+
+```python
+from data_sources.modules.dataforseo import DataForSEO
+
+dfs = DataForSEO()
+
+# Check rankings for your domain
+rankings = dfs.get_rankings(
+    domain="yoursite.com",
+    keywords=["podcast hosting", "podcast analytics", "private podcast"],
+    location_code=2840,  # USA
+    language_code="en"
+)
+
+for rank in rankings:
+    print(f"{rank['keyword']}")
+    print(f"  Position: {rank['position'] or 'Not ranking'}")
+    print(f"  URL: {rank['url']}")
+    print(f"  Search Volume: {rank['search_volume']:,}")
+    print(f"  CPC: ${rank['cpc']:.2f}")
+```
+
+### Get SERP Data
+
+Get complete SERP snapshot for a keyword:
+
+```python
+serp = dfs.get_serp_data(
+    keyword="podcast monetization",
+    location_code=2840,
+    limit=100
+)
+
+print(f"Keyword: {serp['keyword']}")
+print(f"Search Volume: {serp['search_volume']:,}")
+print(f"CPC: ${serp['cpc']:.2f}")
+print(f"Competition: {serp['competition']}")
+
+print("\nSERP Features:")
+for feature in serp['features']:
+    print(f"  - {feature}")
+
+print("\nTop 10 Results:")
+for result in serp['organic_results'][:10]:
+    print(f"{result['position']}. {result['domain']}")
+    print(f"   {result['title']}")
+    print(f"   {result['url']}")
+```
+
+Returns data including:
+- Organic ranking results
+- SERP features (featured snippets, people also ask, etc.)
+- Title tags and meta descriptions
+- Search volume and CPC
+
+### Analyze Competitors
+
+Compare your rankings vs competitors:
+
+```python
+comparison = dfs.analyze_competitor(
+    competitor_domain="competitor.com",
+    keywords=["podcast hosting", "podcast analytics"],
+    your_domain="yoursite.com"  # Optional
+)
+
+print(f"Competitor: {comparison['competitor']}")
+print(f"Your Domain: {comparison['your_domain']}")
+
+for kw in comparison['comparison']:
+    print(f"\n{kw['keyword']}")
+    print(f"  Competitor: Position {kw['competitor_position'] or 'Not ranking'}")
+    print(f"  You: Position {kw['your_position'] or 'Not ranking'}")
+    print(f"  Gap: {kw['gap']}")
+    print(f"  Opportunity: {kw['opportunity']}")
+```
+
+Opportunity levels:
+- **High**: Competitor ranks, you don't
+- **Medium**: You rank, but 10+ positions behind
+- **Low**: Competitive parity
+
+### Get Keyword Ideas
+
+Find related keywords:
+
+```python
+ideas = dfs.get_keyword_ideas(
+    seed_keyword="podcast monetization",
+    location_code=2840,
+    limit=100
+)
+
+for kw in ideas[:20]:
+    print(f"{kw['keyword']}")
+    print(f"  Volume: {kw['search_volume']:,}")
+    print(f"  CPC: ${kw['cpc']:.2f}")
+    print(f"  Competition: {kw['competition']}")
+```
+
+Results are sorted by search volume by default.
+
+### Get Question Queries
+
+Find question-based search queries:
+
+```python
+questions = dfs.get_questions(
+    keyword="podcast monetization",
+    location_code=2840,
+    limit=50
+)
+
+for q in questions[:10]:
+    print(f"Q: {q['question']}")
+    print(f"   Volume: {q['search_volume']:,}")
+```
+
+Filters for questions starting with:
+- how, what, why, when, where, who
+- can, should, is, are, does
+
+Perfect for FAQ sections and H2 subheadings.
+
+### Get Domain Metrics
+
+Analyze domain authority and metrics:
+
+```python
+metrics = dfs.get_domain_metrics(domain="yoursite.com")
+
+print(f"Domain: {metrics['domain']}")
+print(f"Organic Keywords: {metrics['organic_keywords']:,}")
+print(f"Organic Traffic: {metrics['organic_traffic']:,}")
+print(f"Domain Rank: {metrics['domain_rank']}")
+```
+
+## Location Codes
+
+Common DataForSEO location codes:
+
+- **2840**: United States
+- **2826**: United Kingdom
+- **2124**: Canada
+- **2036**: Australia
+- **2276**: Germany
+
+[Full list of location codes](https://docs.dataforseo.com/v3/appendix/locations/)
+
+## API Usage and Costs
+
+DataForSEO charges per API request:
+
+<AccordionGroup>
+  <Accordion title="SERP Requests">
+    - **Organic SERP**: ~$0.006 per keyword
+    - **Live mode**: Results in seconds
+    - **Cost per 100 keywords**: ~$0.60
+  </Accordion>
+  
+  <Accordion title="Keyword Research">
+    - **Related keywords**: ~$0.006 per seed keyword
+    - **Keyword ideas**: Returns 100+ suggestions per request
+    - **Search volume data**: Included in keyword requests
+  </Accordion>
+  
+  <Accordion title="Domain Metrics">
+    - **Domain overview**: ~$0.10 per domain
+    - **Ranking keywords**: ~$0.20 per 1000 keywords
+    - **Backlink data**: Additional cost
+  </Accordion>
+  
+  <Accordion title="Cost Optimization">
+    - Use aggressive caching (24-hour default)
+    - Batch multiple keywords in single requests
+    - Set monthly budget limits in DataForSEO dashboard
+    - Focus on high-value competitive keywords
+  </Accordion>
+</AccordionGroup>
+
+## Integration with Research Commands
+
+DataForSEO powers multiple research commands:
+
+### Keyword Research
+
+```bash
+/research [topic]
+```
+
+Uses DataForSEO to:
+- Get search volume for target keywords
+- Find related keywords and variations
+- Identify question-based queries
+- Analyze SERP competitors
+
+### Competitor Analysis
+
+```python
+# In research_competitor_gaps.py
+dfs = DataForSEO()
+
+# Find competitor keyword gaps
+for competitor in competitors:
+    rankings = dfs.get_rankings(
+        domain=competitor,
+        keywords=target_keywords
+    )
+    # Identify gaps where they rank but you don't
+```
+
+### SERP Analysis
+
+```python
+# In research_serp_analysis.py
+serp_data = dfs.get_serp_data(
+    keyword="target keyword",
+    limit=100
+)
+
+# Analyze:
+# - SERP features
+# - Top ranking domains
+# - Content types
+# - Average content length
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Error: Authentication failed">
+    - Verify your login/password in `.env` are correct
+    - Make sure you're using the **API password**, not your account password
+    - Check for any extra spaces in the credentials
+    - Confirm credentials in DataForSEO dashboard
+  </Accordion>
+  
+  <Accordion title="Error: Insufficient credits">
+    - Check your account balance at [app.dataforseo.com](https://app.dataforseo.com/)
+    - Add more credits or upgrade your plan
+    - Review your usage history to identify high-cost requests
+  </Accordion>
+  
+  <Accordion title="Error: Rate limit exceeded">
+    - DataForSEO has rate limits per minute
+    - Wait a few minutes before retrying
+    - Enable caching to reduce API calls
+    - Consider spreading requests over time
+  </Accordion>
+  
+  <Accordion title="Error: No ranking data returned">
+    - Verify the domain format (exclude https://)
+    - Check if keywords actually rank for that domain
+    - Try increasing the SERP depth limit
+    - Some keywords may have no data for that location
+  </Accordion>
+</AccordionGroup>
+
+## Testing Your Integration
+
+Verify DataForSEO is working:
+
+```bash
+python3 test_dataforseo.py
+```
+
+Or test directly:
+
+```bash
+python3 -c "from data_sources.modules.dataforseo import DataForSEO; dfs = DataForSEO(); print(dfs.get_serp_data('podcast hosting'))"
+```
+
+Expected output: SERP data with organic results and search volume.
+
+## Best Practices
+
+1. **Cache Aggressively**: Use 24-hour cache for historical SERP data
+2. **Batch Keywords**: Request multiple keywords in single API calls
+3. **Monitor Costs**: Track usage in DataForSEO dashboard
+4. **Set Budgets**: Configure monthly spending limits
+5. **Focus on Value**: Prioritize high-traffic, commercial-intent keywords
+6. **Validate Data**: Cross-reference with Search Console for accuracy
+
+## Data Quality
+
+DataForSEO provides:
+- **Real-time SERP data**: Live scraping from Google
+- **Daily updates**: Fresh search volume and ranking data
+- **Historical tracking**: Position changes over time
+- **Location-specific**: Target exact geographic markets
+- **Accurate metrics**: Direct from Google's API where possible
+
+## What's Next
+
+<CardGroup cols={2}>
+  <Card title="Research Commands" icon="magnifying-glass-chart" href="/commands/research">
+    Learn how research commands use DataForSEO
+  </Card>
+  <Card title="Performance Agent" icon="chart-mixed" href="/agents/performance">
+    See how DataForSEO powers opportunity scoring
+  </Card>
+</CardGroup>

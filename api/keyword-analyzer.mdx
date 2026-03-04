@@ -1,0 +1,402 @@
+---
+title: "Keyword Analyzer"
+description: "Analyze keyword density, distribution, clustering, and detect keyword stuffing in content"
+---
+
+The Keyword Analyzer calculates keyword density, analyzes distribution across content sections, performs semantic clustering, and detects keyword stuffing risks. It provides comprehensive keyword usage analysis for SEO optimization.
+
+## Basic Usage
+
+Use the convenience function for quick analysis:
+
+```python
+from data_sources.modules.keyword_analyzer import analyze_keywords
+
+result = analyze_keywords(
+    content=article_content,
+    primary_keyword="start a podcast",
+    secondary_keywords=["podcast hosting", "podcast equipment"],
+    target_density=1.5
+)
+
+print(f"Density: {result['primary_keyword']['density']}%")
+print(f"Status: {result['primary_keyword']['density_status']}")
+print(f"Stuffing Risk: {result['keyword_stuffing']['risk_level']}")
+```
+
+## Class API
+
+### KeywordAnalyzer
+
+The main analyzer class:
+
+```python
+from data_sources.modules.keyword_analyzer import KeywordAnalyzer
+
+analyzer = KeywordAnalyzer()
+result = analyzer.analyze(
+    content=article_content,
+    primary_keyword="start a podcast",
+    secondary_keywords=["podcast hosting", "podcast equipment"],
+    target_density=1.5
+)
+```
+
+### analyze()
+
+Perform comprehensive keyword analysis.
+
+<ParamField path="content" type="string" required>
+  Article content to analyze (full text including headers)
+</ParamField>
+
+<ParamField path="primary_keyword" type="string" required>
+  Main target keyword or keyphrase
+</ParamField>
+
+<ParamField path="secondary_keywords" type="list[string]">
+  List of secondary keywords to analyze. Default: `[]`
+</ParamField>
+
+<ParamField path="target_density" type="float">
+  Target keyword density percentage. Default: `1.5` (1.5%)
+</ParamField>
+
+<ResponseField name="word_count" type="int">
+  Total word count of content
+</ResponseField>
+
+<ResponseField name="primary_keyword" type="object">
+  Primary keyword analysis:
+  - `keyword` (string): The analyzed keyword
+  - `exact_matches` (int): Number of exact keyword matches
+  - `total_occurrences` (int): Total occurrences including variations
+  - `density` (float): Keyword density percentage
+  - `target_density` (float): Target density
+  - `density_status` (string): Status - `too_low`, `slightly_low`, `optimal`, `slightly_high`, `too_high`
+  - `positions` (list[int]): Character positions where keyword appears
+  - `critical_placements` (dict): Keyword presence in critical locations
+  - `section_distribution` (list[dict]): Distribution across content sections
+</ResponseField>
+
+<ResponseField name="secondary_keywords" type="list[object]">
+  Array of secondary keyword analyses with same structure as primary_keyword
+</ResponseField>
+
+<ResponseField name="keyword_stuffing" type="object">
+  Keyword stuffing detection:
+  - `risk_level` (string): `none`, `low`, `medium`, `high`
+  - `warnings` (list[string]): Specific stuffing warnings
+  - `safe` (boolean): True if risk is none or low
+</ResponseField>
+
+<ResponseField name="topic_clusters" type="object">
+  Topic clustering analysis using TF-IDF and k-means:
+  - `clusters_found` (int): Number of topic clusters identified
+  - `clusters` (list[dict]): Cluster details with top terms
+</ResponseField>
+
+<ResponseField name="distribution_heatmap" type="list[object]">
+  Visual heatmap of keyword distribution:
+  - `section` (string): Section header
+  - `keyword_count` (int): Keyword count in section
+  - `heat_level` (int): Heat level 0-5
+  - `density` (float): Section keyword density
+</ResponseField>
+
+<ResponseField name="lsi_keywords" type="list[string]">
+  LSI (Latent Semantic Indexing) keywords - semantically related terms found in content
+</ResponseField>
+
+<ResponseField name="recommendations" type="list[string]">
+  Actionable recommendations for keyword optimization
+</ResponseField>
+
+## Keyword Density Analysis
+
+The analyzer calculates both exact matches and variations:
+
+```python
+result = analyze_keywords(
+    content=article_content,
+    primary_keyword="podcast hosting"
+)
+
+print(f"Exact matches: {result['primary_keyword']['exact_matches']}")
+print(f"Total occurrences: {result['primary_keyword']['total_occurrences']}")
+print(f"Density: {result['primary_keyword']['density']}%")
+print(f"Target: {result['primary_keyword']['target_density']}%")
+print(f"Status: {result['primary_keyword']['density_status']}")
+```
+
+### Density Status Values
+
+- **`too_low`**: < 50% of target density
+- **`slightly_low`**: 50-80% of target density
+- **`optimal`**: 80-120% of target density ✅
+- **`slightly_high`**: 120-150% of target density
+- **`too_high`**: > 150% of target density ⚠️
+
+## Critical Placements
+
+Check if keywords appear in strategic locations:
+
+```python
+placements = result['primary_keyword']['critical_placements']
+
+print(f"In first 100 words: {placements['in_first_100_words']}")
+print(f"In H1: {placements['in_h1']}")
+print(f"In H2 headings: {placements['in_h2_headings']}")
+print(f"In conclusion: {placements['in_conclusion']}")
+print(f"H2 keyword ratio: {placements['h2_keyword_ratio']}")
+```
+
+Output:
+```python
+{
+    'in_first_100_words': True,
+    'in_h1': True,
+    'in_h2_headings': '2/5',
+    'in_conclusion': True,
+    'h2_keyword_ratio': 0.4
+}
+```
+
+## Section Distribution
+
+Analyze how keywords are distributed across content sections:
+
+```python
+for section in result['primary_keyword']['section_distribution']:
+    print(f"Section: {section['header']}")
+    print(f"  Keyword count: {section['keyword_count']}")
+    print(f"  Section density: {section['density']}%")
+    print(f"  Word count: {section['word_count']}")
+```
+
+## Keyword Stuffing Detection
+
+Detect potential keyword stuffing issues:
+
+```python
+stuffing = result['keyword_stuffing']
+
+print(f"Risk level: {stuffing['risk_level']}")
+print(f"Safe: {stuffing['safe']}")
+
+if not stuffing['safe']:
+    print("Warnings:")
+    for warning in stuffing['warnings']:
+        print(f"  - {warning}")
+```
+
+### Stuffing Detection Criteria
+
+1. **High Density**: > 3% triggers high risk, > 2.5% triggers medium risk
+2. **Paragraph Clustering**: Paragraphs with > 5% density
+3. **Consecutive Sentences**: Keyword in 5+ consecutive sentences (high risk) or 3+ (low risk)
+
+Example output:
+```python
+{
+    'risk_level': 'medium',
+    'warnings': [
+        'Keyword density 2.8% is high (over 2.5%)',
+        'Paragraph 3 has very high keyword density (6.2%)'
+    ],
+    'safe': False
+}
+```
+
+## Topic Clustering
+
+Identify content themes using TF-IDF and k-means clustering:
+
+```python
+clusters = result['topic_clusters']
+
+print(f"Clusters found: {clusters['clusters_found']}")
+
+for cluster in clusters['clusters']:
+    print(f"\nCluster {cluster['cluster_id']}:")
+    print(f"  Top terms: {', '.join(cluster['top_terms'])}")
+    print(f"  Sections: {cluster['section_count']}")
+```
+
+Example output:
+```python
+{
+    'clusters_found': 3,
+    'clusters': [
+        {
+            'cluster_id': 0,
+            'top_terms': ['podcast', 'hosting', 'platform', 'audio', 'upload'],
+            'section_count': 4,
+            'sections': [0, 2, 5, 8]
+        },
+        {
+            'cluster_id': 1,
+            'top_terms': ['equipment', 'microphone', 'recording', 'audio quality'],
+            'section_count': 2,
+            'sections': [3, 6]
+        }
+    ]
+}
+```
+
+## Distribution Heatmap
+
+Visualize keyword distribution across sections:
+
+```python
+for section in result['distribution_heatmap']:
+    heat_bar = '█' * section['heat_level']
+    print(f"{section['section']:30} {heat_bar:10} ({section['keyword_count']} / {section['density']}%)")
+```
+
+Output:
+```
+Introduction                   ███        (3 / 2.1%)
+What is Podcast Hosting?       ████       (5 / 2.8%)
+Choosing a Platform            ██         (2 / 1.2%)
+Pricing and Features           ███        (4 / 2.3%)
+```
+
+### Heat Level Scale
+
+- **0**: No keyword mentions
+- **1**: < 0.5% density
+- **2**: 0.5-1.0% density
+- **3**: 1.0-2.0% density
+- **4**: 2.0-3.0% density
+- **5**: > 3.0% density
+
+## LSI Keywords
+
+Discover semantically related terms already in your content:
+
+```python
+print("LSI Keywords found:")
+for keyword in result['lsi_keywords'][:10]:
+    print(f"  - {keyword}")
+```
+
+Example output:
+```python
+[
+    'hosting platform',
+    'audio quality',
+    'podcast episodes',
+    'recording software',
+    'distribute podcast',
+    'podcast directories',
+    'monthly listeners',
+    'podcast analytics'
+]
+```
+
+## Secondary Keywords
+
+Analyze multiple secondary keywords:
+
+```python
+for secondary in result['secondary_keywords']:
+    print(f"\nKeyword: {secondary['keyword']}")
+    print(f"  Occurrences: {secondary['total_occurrences']}")
+    print(f"  Density: {secondary['density']}%")
+    print(f"  Status: {secondary['density_status']}")
+```
+
+Secondary keywords have lower target density (50% of primary target by default).
+
+## Recommendations
+
+Get actionable recommendations based on analysis:
+
+```python
+print("Recommendations:")
+for rec in result['recommendations']:
+    print(f"  {rec}")
+```
+
+Example output:
+```
+Recommendations:
+  ⚠️ Primary keyword density is too low (0.8%). Target is 1.5%. Add 'start a podcast' naturally in more paragraphs.
+  ⚠️ Primary keyword missing from H1 headline - include it in the title
+  ℹ️ Primary keyword appears in only 1/6 H2 headings. Aim for 2-3 H2s with keyword variations.
+  ℹ️ Secondary keyword 'podcast equipment' not found in content - consider adding it
+```
+
+## Real-World Example
+
+Complete analysis workflow:
+
+```python
+from data_sources.modules.keyword_analyzer import analyze_keywords
+
+# Your article content
+article = """
+# How to Start a Podcast: Complete Guide
+
+Starting a podcast has never been easier. In this guide, you'll learn how to start a podcast from scratch.
+
+## Choosing Your Podcast Topic
+
+When you start a podcast, the first step is choosing your topic. Your podcast topic should be something you're passionate about.
+
+## Getting Podcast Equipment
+
+To start a podcast, you need basic equipment. A good microphone is essential for podcast recording.
+
+## Podcast Hosting Platforms
+
+Podcast hosting is crucial. Choose a reliable podcast hosting platform for your show.
+"""
+
+# Analyze keywords
+result = analyze_keywords(
+    content=article,
+    primary_keyword="start a podcast",
+    secondary_keywords=["podcast hosting", "podcast equipment", "podcast recording"],
+    target_density=1.5
+)
+
+# Check results
+print(f"Word Count: {result['word_count']}")
+print(f"\nPrimary Keyword: {result['primary_keyword']['keyword']}")
+print(f"Density: {result['primary_keyword']['density']}% ({result['primary_keyword']['density_status']})")
+print(f"Exact matches: {result['primary_keyword']['exact_matches']}")
+
+print(f"\nCritical Placements:")
+for key, value in result['primary_keyword']['critical_placements'].items():
+    print(f"  {key}: {value}")
+
+print(f"\nKeyword Stuffing Risk: {result['keyword_stuffing']['risk_level']}")
+
+if result['keyword_stuffing']['warnings']:
+    print("Warnings:")
+    for warning in result['keyword_stuffing']['warnings']:
+        print(f"  - {warning}")
+
+print(f"\nRecommendations:")
+for rec in result['recommendations']:
+    print(f"  {rec}")
+```
+
+## Best Practices
+
+1. **Target 1.5% density** for primary keywords (optimal range: 1.2-1.8%)
+2. **Include keyword in H1** - critical for SEO
+3. **Add keyword to first 100 words** - establishes topic immediately
+4. **Use in 2-3 H2 headings** - but vary the phrasing
+5. **Avoid stuffing** - keep density under 2.5%
+6. **Analyze secondary keywords** - ensure comprehensive coverage
+7. **Check LSI keywords** - use related terms naturally
+8. **Monitor distribution** - avoid clustering in one section
+
+## Related Modules
+
+- [Search Intent Analyzer](/api/search-intent-analyzer) - Determine intent before keyword optimization
+- [SEO Quality Rater](/api/seo-quality-rater) - Uses keyword density in overall SEO score
+- [Content Length Comparator](/api/content-length-comparator) - Affects keyword count calculations

@@ -1,0 +1,582 @@
+---
+title: SEO Guidelines Configuration
+description: Define SEO optimization standards for maximum search visibility and rankings
+---
+
+The `seo-guidelines.md` context file defines SEO best practices and requirements for all content. It ensures articles are optimized for search engines while maintaining quality and readability.
+
+## Location
+
+**Template:** `~/workspace/source/context/seo-guidelines.md`
+
+**Example:** Included in template (comprehensive SEO standards)
+
+## What It Defines
+
+The SEO guidelines file contains:
+
+- **Content Length Requirements** - Target word counts by content type
+- **Keyword Optimization** - Density, placement, and integration rules
+- **Content Structure** - Heading hierarchy and article templates
+- **Meta Elements** - Title, description, and URL standards
+- **Internal Linking** - Strategy and requirements
+- **External Linking** - Authority and citation guidelines
+- **Readability** - Target reading level and formatting
+- **Featured Snippets** - Optimization for position 0
+- **Mobile Optimization** - Mobile-first considerations
+
+## Content Length Requirements
+
+### Target Word Counts
+
+Define word count expectations by content type:
+
+```markdown
+**Standard Blog Post:** 1,500-3,000 words (target: 2,000-2,500)
+**Pillar Content / Comprehensive Guides:** 3,000-5,000 words maximum
+**How-To Guides:** 1,500-2,500 words
+**News / Updates:** 800-1,200 words (exception to standard)
+```
+
+### Important Guidelines
+
+```markdown
+**Maximum for most articles:** 3,000 words
+**Maximum for pillar content:** 5,000 words
+
+**Why:**
+- Articles over 3,000 words often hurt user experience
+- Concise, focused content often performs better
+- If topic requires more, break into series
+
+**Quality over quantity:**
+- Don't add fluff to hit word counts
+- Every section should provide genuine value
+- Better to have 2,000 valuable words than 3,000 padded words
+```
+
+## Keyword Optimization
+
+### Keyword Research Requirements
+
+Define pre-writing research process:
+
+```markdown
+Before writing any article:
+
+1. Identify primary target keyword
+2. Research search volume and difficulty
+3. Analyze top 10 ranking competitors
+4. Identify 3-5 secondary/related keywords
+5. List LSI (Latent Semantic Indexing) keywords
+```
+
+### Keyword Density Guidelines
+
+```markdown
+**Primary Keyword:** 1-2% density
+- Example: In 2,000-word article, use keyword 20-40 times
+- Natural integration is critical—never force keywords
+
+**Secondary Keywords:** 0.5-1% density each
+
+**LSI Keywords:** Sprinkle throughout naturally
+```
+
+### Critical Keyword Placement
+
+Primary keyword MUST appear in:
+
+```markdown
+- [ ] H1 headline (preferably near beginning)
+- [ ] First 100 words of article
+- [ ] At least 2-3 H2 subheadings
+- [ ] Last paragraph / conclusion
+- [ ] Meta title (within first 60 characters)
+- [ ] Meta description
+- [ ] URL slug
+```
+
+### Keyword Integration Best Practices
+
+**Natural Language:**
+
+❌ **Keyword stuffing:**
+```
+Podcast hosting is important. Podcast hosting helps podcasters.
+Our podcast hosting platform offers podcast hosting services for
+podcast hosting needs.
+```
+
+✅ **Natural integration:**
+```
+Podcast hosting is important for creators who want to distribute
+their show to major platforms. A reliable host ensures your episodes
+are accessible wherever listeners discover new content.
+```
+
+**Use Variations:**
+```markdown
+Don't repeat exact phrase robotically:
+
+- "podcast hosting" 
+- "hosting your podcast"
+- "podcast host"
+- "hosting platform for podcasts"
+```
+
+**Question Formats:**
+```markdown
+Include conversational variations:
+
+- "how to start a podcast"
+- "starting a podcast"
+- "can I start a podcast"
+- "podcast startup guide"
+```
+
+## Content Structure Requirements
+
+### Heading Hierarchy
+
+**H1 (Title):**
+```markdown
+**Requirements:**
+- Only one H1 per article
+- Include primary keyword naturally
+- 60 characters or less (for SERP display)
+- Compelling and benefit-focused
+- Answer: "What will I learn/gain?"
+
+**Examples:**
+- ✅ "How to Start a Podcast: Complete 2025 Guide"
+- ✅ "12 Proven Podcast Growth Strategies"
+- ❌ "Podcast Tips" (too vague, no value prop)
+```
+
+**H2 (Main Sections):**
+```markdown
+**Requirements:**
+- 4-7 H2 sections for standard articles
+- At least 2-3 should include keyword variations
+- Descriptive and keyword-rich
+- Logical progression through topic
+- Can be standalone (readers understand flow from H2s alone)
+```
+
+**H3 (Subsections):**
+```markdown
+**Requirements:**
+- Nested under H2s (never skip from H2 to H4)
+- Break complex sections into digestible chunks
+- Include keywords where natural
+- More specific than H2s
+```
+
+### Article Structure Template
+
+```markdown
+# [H1: Compelling Title with Primary Keyword]
+
+## Introduction (150-250 words)
+- Hook: Attention-grabbing opening
+- Problem: What challenge does this address?
+- Promise: What will reader learn/achieve?
+- Keyword in first 100 words
+
+## [H2: Main Section 1 - Include Keyword Variation]
+### [H3: Subsection if needed]
+- Content depth
+- Examples
+- Data/statistics
+
+## [H2: Main Section 2]
+### [H3: Subsection if needed]
+
+## [H2: Main Section 3 - Include Keyword Variation]
+### [H3: Subsection if needed]
+
+[Continue with 4-7 total H2 sections]
+
+## Conclusion (150-250 words)
+- Recap key points (3-5 takeaways)
+- Include keyword
+- Clear call-to-action
+- Next steps for reader
+```
+
+## Meta Elements
+
+### Meta Title
+
+```markdown
+**Requirements:**
+- Length: 50-60 characters (including "| Brand" if used)
+- Primary keyword: Must be included
+- Compelling: Should encourage clicks from SERP
+- Unique: Different from all other page titles
+- Accurate: Must match page content
+
+**Format Options:**
+- [Primary Keyword]: [Benefit/Promise]
+- How to [Goal] | [Qualifier]
+- [Number] Ways to [Achieve Benefit]
+- [Topic] Guide for [Audience] | Brand
+
+**Examples:**
+✅ "How to Start a Podcast in 2025: Complete Guide"
+✅ "12 Proven Podcast Growth Strategies | Castos"
+❌ "Podcast Tips and Tricks" (too vague)
+❌ "The Ultimate Comprehensive Guide..." (too long)
+```
+
+### Meta Description
+
+```markdown
+**Requirements:**
+- Length: 150-160 characters
+- Primary keyword: Include naturally
+- Value proposition: Clear benefit to reader
+- Call-to-action: Action phrase (Learn, Discover, Find out)
+- Complete: Must not cut off mid-sentence
+- Compelling: Should drive clicks from SERP
+
+**Formula:**
+[Problem/Question]? [Solution/Benefit]. [Unique angle]. [CTA].
+
+**Examples:**
+✅ "Learn how to start a podcast with our step-by-step guide.
+Everything from equipment to launch strategy. Perfect for
+beginners. Start your show today." (159 chars)
+
+❌ "This is a blog post about podcasting where we discuss
+many podcast-related topics." (vague, no value, no CTA)
+```
+
+### URL Slug
+
+```markdown
+**Requirements:**
+- Include primary keyword
+- Lowercase letters only
+- Hyphens between words (not underscores)
+- Short and descriptive (3-5 words ideal)
+- No stop words unless necessary (a, the, and, of)
+
+**Format:** /blog/[primary-keyword-phrase]
+
+**Examples:**
+✅ /blog/start-podcast-guide
+✅ /blog/podcast-growth-strategies
+❌ /blog/how-to-start-a-podcast-in-2025-the-complete-guide (too long)
+❌ /blog/post-12345 (no keywords)
+```
+
+## Internal Linking Strategy
+
+### Requirements
+
+```markdown
+**Per Article:**
+- Minimum: 3 internal links
+- Optimal: 4-5 internal links
+- Maximum: 7 internal links (unless 3,000+ word article)
+```
+
+### Link Types to Include
+
+```markdown
+1. **Pillar Content** (1-2 links)
+   - Main comprehensive guides on related topics
+   - Builds topic cluster authority
+   - Usually 2,000+ word cornerstone content
+
+2. **Related Blog Posts** (2-3 links)
+   - Articles on related subtopics
+   - Creates content web
+   - Helps readers explore topics comprehensively
+
+3. **Product/Feature Pages** (0-1 link)
+   - Only when contextually relevant
+   - Natural mention of how product solves problem
+   - Never forced or overly promotional
+
+4. **Resource Pages** (0-1 link)
+   - Templates, tools, checklists
+   - When mentioned as solutions in content
+   - Provides additional value to reader
+```
+
+### Anchor Text Best Practices
+
+```markdown
+✅ **Good:**
+- "our complete guide to podcast analytics"
+- "Learn more about podcast SEO strategies"
+- "how to optimize your podcast for growth"
+
+❌ **Bad:**
+- "click here"
+- "read more"
+- "this article"
+- Using exact same anchor text repeatedly for same page
+```
+
+### Reference
+
+```markdown
+Always check context/internal-links-map.md for:
+- Priority linking targets
+- Topic clusters
+- Most relevant related content
+```
+
+## External Linking Strategy
+
+### Requirements
+
+```markdown
+**Per Article:**
+- Minimum: 2 external links
+- Optimal: 3-4 external authority links
+
+**Purpose:**
+- Add credibility
+- Provide sources
+- Support claims
+```
+
+### What to Link Externally
+
+```markdown
+✅ **Link to:**
+- Statistics and data sources (always cite)
+- Research and studies (original research)
+- Tools and resources (when recommending)
+- Industry authorities (expert opinions)
+
+❌ **Don't link to:**
+- Random blogs with no authority
+- Spammy or low-quality sites
+- Competitors (unless truly best resource)
+- Outdated sources
+```
+
+### Quality Standards
+
+```markdown
+**Authority:**
+✅ Industry publications (credible sources)
+✅ Research institutions and studies
+✅ Established media outlets
+
+**Relevance:**
+Links must directly support content claims
+
+**Freshness:**
+Prefer recent sources (within 1-2 years for data)
+
+**Functionality:**
+All links must work (no broken links)
+```
+
+## Readability Optimization
+
+### Target Reading Level
+
+```markdown
+**Goal:** 8th-10th grade reading level (Flesch-Kincaid)
+
+**Why:**
+- Accessible to wider audience
+- Easier to scan and understand
+- Better mobile reading experience
+```
+
+### Sentence Structure
+
+```markdown
+**Guidelines:**
+- Average length: 15-20 words per sentence
+- Maximum: 25 words (break longer into two)
+- Variety: Mix short punchy sentences with longer explanatory ones
+- Active voice: Preferred over passive (80%+ active)
+
+**Examples:**
+✅ Active: "We built this feature to solve that problem."
+❌ Passive: "This feature was built to solve that problem."
+```
+
+### Paragraph Structure
+
+```markdown
+**Guidelines:**
+- Length: 2-4 sentences per paragraph
+- One idea: Focus each paragraph on single point
+- White space: No walls of text
+- Mobile-friendly: Short paragraphs scan better on phones
+```
+
+### Formatting for Scannability
+
+```markdown
+**Use:**
+- Subheadings: Every 300-400 words
+- Lists: For sequential or multiple items
+- Bold: Emphasize key concepts
+- Short paragraphs: Easier to digest
+- White space: Makes content less intimidating
+```
+
+## Featured Snippet Optimization
+
+Featured snippets appear at position 0 in Google search results.
+
+### Question-Based Snippets
+
+```markdown
+**Format:**
+- Include question as H2 heading
+- Answer concisely in 40-60 words immediately after
+- Use clear, direct language
+
+**Example:**
+## What is Podcast Hosting?
+
+Podcast hosting is a service that stores your audio files and
+generates an RSS feed that distributes your episodes to podcast
+platforms like Apple Podcasts, Spotify, and Google Podcasts.
+```
+
+### List-Based Snippets
+
+```markdown
+**Format:**
+- Use numbered or bulleted lists
+- Keep items concise (1-2 sentences each)
+- Include 5-8 items typically
+```
+
+### Table-Based Snippets
+
+```markdown
+**Format:**
+- Use HTML tables or markdown tables
+- Comparison charts, pricing, specifications
+- Clear headers and organized data
+```
+
+## Image Optimization
+
+### Image SEO
+
+```markdown
+**File Names:**
+✅ podcast-editing-software-interface.jpg
+❌ IMG_12345.jpg
+
+**Alt Text:**
+- Describe what image shows
+- Include keywords naturally if relevant
+- 125 characters or less
+- No "image of" or "picture of" (implied)
+
+**Example:**
+✅ "Podcast editing software interface showing waveform and timeline"
+❌ "Image"
+```
+
+## Configuration Steps
+
+### 1. Review the Template
+
+The SEO guidelines template includes comprehensive standards:
+
+```bash
+cat ~/workspace/source/context/seo-guidelines.md
+```
+
+### 2. Customize for Your Industry
+
+Adapt guidelines for your specific needs:
+
+- Adjust word counts for your content types
+- Define industry-specific keyword practices
+- Set link requirements based on your strategy
+- Customize meta element formats
+
+### 3. Align with Brand Voice
+
+Ensure SEO standards support your brand:
+
+- Keyword integration that sounds natural in your voice
+- Meta descriptions that match your tone
+- Internal linking that reflects your messaging
+
+### 4. Document Tools
+
+List tools you use for:
+
+- Keyword research
+- Content analysis
+- Readability checking
+- Rank tracking
+
+### 5. Create Checklists
+
+Build practical checklists for:
+
+- Pre-writing research
+- Writing optimization
+- Pre-publish review
+- Post-publish monitoring
+
+## Quality Checklist
+
+Before finalizing SEO guidelines:
+
+- [ ] **Word count standards defined** - Clear targets by content type
+- [ ] **Keyword rules documented** - Density, placement, integration
+- [ ] **Structure templates provided** - Heading hierarchy and article format
+- [ ] **Meta element standards** - Title, description, URL requirements
+- [ ] **Linking strategy clear** - Internal and external link guidelines
+- [ ] **Readability standards** - Target grade level and formatting
+- [ ] **Image optimization** - File names, alt text, placement
+- [ ] **Aligned with brand** - SEO supports voice and style
+
+## Common Mistakes
+
+### Over-Optimizing
+
+❌ **Bad:** Forcing keywords unnaturally to hit density targets
+
+✅ **Good:** Natural integration that reads well and includes keywords organically
+
+### Ignoring User Experience
+
+❌ **Bad:** Optimizing for search engines at expense of readability
+
+✅ **Good:** Optimizing for users first, search engines second
+
+### Inconsistent Standards
+
+❌ **Bad:** Different rules for different writers
+
+✅ **Good:** Clear, consistent standards everyone follows
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Write Content" icon="pencil" href="/commands/write">
+    Generate SEO-optimized content
+  </Card>
+  <Card title="SEO Optimizer Agent" icon="magnifying-glass" href="/agents/seo-optimizer">
+    Automatically optimize content for search
+  </Card>
+  <Card title="Brand Voice" icon="microphone" href="/reference/brand-voice">
+    Define your brand voice guidelines
+  </Card>
+  <Card title="Context Files Overview" icon="folder" href="/reference/context-files">
+    Learn about all context files
+  </Card>
+</CardGroup>

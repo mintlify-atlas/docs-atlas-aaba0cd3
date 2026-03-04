@@ -1,0 +1,413 @@
+---
+title: /write Command
+description: Create comprehensive, SEO-optimized long-form blog content (2000-3000+ words) with automatic optimization
+---
+
+The `/write` command creates complete, well-structured long-form articles optimized for SEO and reader engagement.
+
+## Usage
+
+```bash
+/write [topic or research brief]
+```
+
+<ParamField path="topic" type="string" required>
+  The topic to write about. Can reference a research brief or be a standalone topic.
+</ParamField>
+
+## Examples
+
+```bash
+/write content marketing strategies for B2B SaaS
+```
+
+```bash
+/write podcast analytics
+```
+
+## What It Does
+
+### Content Creation
+
+1. **Reviews research brief** from `/research` command if available
+2. **Applies brand voice** from `context/brand-voice.md`
+3. **Studies writing examples** from `context/writing-examples.md`
+4. **Follows style guide** from `context/style-guide.md`
+5. **Integrates keywords** from `context/target-keywords.md`
+6. **Creates 2000-3000+ word article** with full SEO optimization
+
+### Article Structure
+
+<Steps>
+  <Step title="Compelling Headline (H1)">
+    - Includes primary keyword naturally
+    - Under 60 characters for SERP display
+    - Promises clear value to reader
+    
+    **Never use generic openings** like "X is..." or "When it comes to..."
+  </Step>
+  
+  <Step title="Hook-Driven Introduction (150-200 words)">
+    Uses the **APP Formula**:
+    - **Agree**: Acknowledge what reader believes/feels
+    - **Promise**: Tell them what they'll learn
+    - **Preview**: Brief overview of what's coming
+    
+    Includes primary keyword in first 100 words.
+  </Step>
+  
+  <Step title="Comprehensive Body (1800-2500+ words)">
+    - 4-7 main H2 sections
+    - H3 subsections for complex topics
+    - 1-2% keyword density
+    - 2-3 mini-stories with specific details
+    - 2-3 contextual CTAs throughout
+    - Data and statistics to support claims
+  </Step>
+  
+  <Step title="Strong Conclusion (150-200 words)">
+    - Recaps 3-5 key takeaways
+    - Provides clear next steps
+    - Includes relevant CTA
+  </Step>
+</Steps>
+
+## Hook Types
+
+The opening hook determines reader retention. Choose ONE:
+
+| Hook Type | Example | Best For |
+|-----------|---------|----------|
+| **Provocative Question** | "What if the 'free' plan is costing you $500/month?" | Challenging assumptions |
+| **Specific Scenario** | "Last Tuesday, Sarah discovered her site had been invisible to Google for three weeks." | Emotional connection |
+| **Surprising Statistic** | "73% of SaaS users who switch platforms do so within 18 months." | Data-driven topics |
+| **Bold Statement** | "Your current tool is lying to you about your numbers." | Controversial takes |
+| **Counterintuitive Claim** | "The cheapest option might be the most expensive decision." | Comparison content |
+
+<Warning>
+  **Never** open with generic definitions like "Content marketing is..." or "When it comes to SEO..."
+  
+  Strong hooks boost reader retention by 30%.
+</Warning>
+
+## Mini-Stories Requirement
+
+Every article MUST include **2-3 mini-stories** with:
+- A **specific person** (use names: "Sarah," "Mike," "Team at Acme Corp")
+- **Concrete situation** with details (dates, numbers, specifics)
+- **Clear outcome** that illustrates the point
+
+### Example Mini-Story
+
+<Accordion title="See Example (50-150 words)">
+  > "When Marcus launched his SaaS product in March 2024, he chose the cheapest hosting plan he could find. $5/month seemed like a no-brainer. Six months later, his app hit 10,000 active users. That's when he discovered the hidden bandwidth fees buried in his provider's terms. His $5/month plan suddenly became $89/month. Worse, migrating mid-growth meant a 3-week gap in analytics that cost him a $2,000 partnership deal. The 'savings' from cheap hosting cost him over $3,000."
+</Accordion>
+
+**Placement**:
+- One in introduction or early section (hook readers)
+- One in the middle (re-engage skimmers)
+- One near conclusion (reinforce main point)
+
+## Contextual CTAs
+
+Embedded CTAs get **121% more conversions** than end-only CTAs.
+
+<Tabs>
+  <Tab title="Soft CTA (First 500 words)">
+    After first major value section:
+    
+    ```markdown
+    Want to see how this works in practice? [Explore our features →]
+    ```
+  </Tab>
+  
+  <Tab title="Medium CTA (Mid-article)">
+    After comparison/proof section:
+    
+    ```markdown
+    **Ready to test the difference?** Start a free trial, no credit card required.
+    ```
+  </Tab>
+  
+  <Tab title="Strong CTA (End)">
+    End of article:
+    
+    ```markdown
+    **[Start Your Free Trial →]**
+    
+    Join 10,000+ teams using [Product] to [benefit]. No credit card required.
+    ```
+  </Tab>
+</Tabs>
+
+## SEO Optimization
+
+### Keyword Placement
+
+Primary keyword must appear in:
+
+<Tabs>
+  <Tab title="Critical Locations">
+    - H1 headline ✓
+    - First 100 words ✓
+    - At least 2-3 H2 headings ✓
+    - Meta title ✓
+    - Meta description ✓
+    - URL slug ✓
+  </Tab>
+  
+  <Tab title="Density Target">
+    **1-2% density** throughout body:
+    - Natural integration
+    - Semantic variations
+    - LSI keywords
+    - No keyword stuffing
+  </Tab>
+</Tabs>
+
+### Internal Linking (3-5+ links)
+
+References `context/internal-links-map.md`:
+- Link to pillar content
+- Link to related blog articles
+- Link to product/service pages naturally
+- Use descriptive anchor text with keywords
+
+### External Linking (2-3 links)
+
+- Link to authoritative sources for statistics
+- Reference industry research or studies
+- Link to tools or resources mentioned
+
+### Readability
+
+- Sentences under 25 words average
+- Transition words between sections
+- Varied sentence length for rhythm
+- 8th-10th grade reading level
+- Active voice predominantly
+- Subheadings every 300-400 words
+
+## Output
+
+Creates a complete article saved to:
+
+```
+drafts/[topic-slug]-[YYYY-MM-DD].md
+```
+
+### File Contents
+
+<CodeGroup>
+```markdown Article Frontmatter
+---
+Meta Title: [50-60 character optimized title]
+Meta Description: [150-160 character compelling description]
+Primary Keyword: [main target keyword]
+Secondary Keywords: [keyword1, keyword2, keyword3]
+URL Slug: /blog/[optimized-slug]
+Internal Links: [list of pages linked]
+External Links: [list of external sources]
+Word Count: [actual word count]
+---
+```
+
+```markdown Article Content
+# [Compelling H1 with Keyword]
+
+[Compelling hook - question, scenario, stat, or bold statement]
+
+[APP Formula introduction...]
+
+## [Main Section H2]
+
+[Content with mini-story...]
+
+## [Another Section H2]
+
+[Content with contextual CTA...]
+
+## Conclusion
+
+[Key takeaways and final CTA...]
+```
+</CodeGroup>
+
+### SEO Checklist
+
+Automatically generated:
+
+```markdown
+## SEO Checklist
+
+- [ ] Primary keyword in H1
+- [ ] Primary keyword in first 100 words
+- [ ] Primary keyword in 2+ H2 headings
+- [ ] Keyword density 1-2%
+- [ ] 3-5+ internal links included
+- [ ] 2-3 external authority links
+- [ ] Meta title 50-60 characters
+- [ ] Meta description 150-160 characters
+- [ ] Article 2000+ words
+- [ ] Proper H2/H3 hierarchy
+- [ ] Readability optimized
+```
+
+### Engagement Checklist
+
+```markdown
+## Engagement Checklist
+
+- [ ] Hook: Opens with question, scenario, stat, or bold statement
+- [ ] APP Formula: Introduction includes Agree, Promise, Preview
+- [ ] Mini-stories: 2-3 specific scenarios with names and details
+- [ ] Contextual CTAs: 2-3 CTAs throughout (not just at end)
+- [ ] First CTA: Appears within first 500 words
+- [ ] Paragraph length: No paragraphs exceed 4 sentences
+- [ ] Sentence rhythm: Mix of short and longer sentences
+```
+
+## Automatic Post-Processing
+
+After saving the article, these processes run automatically:
+
+### 1. Content Scrubbing
+
+<Steps>
+  <Step title="Removes AI Watermarks">
+    - Invisible Unicode characters
+    - Zero-width spaces
+    - Format-control characters
+  </Step>
+  
+  <Step title="Cleans AI Patterns">
+    - Em-dash overuse
+    - Robotic phrasing
+    - Whitespace normalization
+  </Step>
+</Steps>
+
+### 2. Quality Scoring
+
+Automatic scoring across 5 dimensions:
+
+| Dimension | Weight | Target |
+|-----------|--------|--------|
+| Humanity/Voice | 30% | No AI phrases, use contractions |
+| Specificity | 25% | Concrete examples, numbers, names |
+| Structure Balance | 20% | 40-70% prose (not all lists) |
+| SEO Compliance | 15% | Keywords, meta, structure |
+| Readability | 10% | Flesch 60-70, grade 8-10 |
+
+<Info>
+  **Composite score must be ≥70**
+  
+  Articles scoring less than 70 go to `review-required/` with detailed notes.
+</Info>
+
+### 3. Agent Auto-Execution
+
+These agents run automatically:
+
+<CardGroup cols={2}>
+  <Card title="Content Analyzer" icon="chart-mixed">
+    Search intent, keyword density, length comparison, readability, SEO quality (0-100)
+  </Card>
+  
+  <Card title="SEO Optimizer" icon="magnifying-glass-chart">
+    On-page SEO analysis and recommendations
+  </Card>
+  
+  <Card title="Meta Creator" icon="tags">
+    5 meta title/description variations
+  </Card>
+  
+  <Card title="Internal Linker" icon="link">
+    3-5 specific internal link suggestions
+  </Card>
+  
+  <Card title="Keyword Mapper" icon="map">
+    Keyword placement and density analysis
+  </Card>
+</CardGroup>
+
+Agent reports are saved to `drafts/` with corresponding filenames.
+
+## Quality Standards
+
+Every article must meet:
+
+<AccordionGroup>
+  <Accordion title="Content Requirements">
+    - Minimum 2000 words (2500-3000+ preferred)
+    - Proper H1/H2/H3 hierarchy
+    - Primary keyword naturally integrated
+    - 3-5 internal links
+    - 2-3 external authoritative links
+    - Compelling meta title and description
+    - Clear introduction and conclusion
+    - Brand voice maintained
+  </Accordion>
+  
+  <Accordion title="Engagement Requirements">
+    - Compelling hook (no generic openings)
+    - 2-3 mini-stories with specific names and details
+    - 2-3 contextual CTAs distributed throughout
+    - First CTA within 500 words
+    - No paragraphs longer than 4 sentences
+    - Varied sentence rhythm
+  </Accordion>
+  
+  <Accordion title="Quality Score">
+    - Composite quality score ≥70
+    - Humanity/Voice: Remove AI patterns
+    - Specificity: Include concrete examples
+    - Structure: Balance prose and lists
+    - SEO: Meet all optimization requirements
+    - Readability: 8th-10th grade level
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+After article creation:
+
+1. **Review agent reports** - Read all optimization suggestions
+2. **Make improvements** - Address high-priority issues
+3. **Run optimize** - Use `/optimize` for final polish
+
+```bash
+/optimize drafts/[article-name]-2025-03-04.md
+```
+
+## Tips
+
+<CardGroup cols={2}>
+  <Card title="Research First" icon="magnifying-glass">
+    Always run `/research` before `/write` for best results.
+  </Card>
+  
+  <Card title="Strong Hooks" icon="fish">
+    Avoid generic openings. Start with a question, scenario, or surprising stat.
+  </Card>
+  
+  <Card title="Specific Examples" icon="bullseye">
+    Use names, dates, and numbers in mini-stories for credibility.
+  </Card>
+  
+  <Card title="Natural Keywords" icon="seedling">
+    Integrate keywords naturally. If it sounds forced, rewrite.
+  </Card>
+</CardGroup>
+
+## Related Commands
+
+<CardGroup cols={2}>
+  <Card title="/research" icon="magnifying-glass" href="/commands/research">
+    Run research before writing
+  </Card>
+  
+  <Card title="/optimize" icon="wand-magic-sparkles" href="/commands/optimize">
+    Final optimization pass
+  </Card>
+</CardGroup>

@@ -1,0 +1,732 @@
+---
+title: Directory Structure
+description: Complete directory structure and organization system for SEO Machine
+---
+
+SEO Machine uses a structured directory system to organize content through every stage of the creation process.
+
+## Overview
+
+```
+seomachine/
+├── .claude/              # Claude Code configuration
+├── config/              # Configuration files
+├── context/             # Brand and SEO guidelines
+├── data_sources/        # Analytics and modules
+├── wordpress/           # WordPress integration
+├── topics/              # Raw topic ideas
+├── research/            # Research briefs and reports
+├── drafts/              # Work-in-progress content
+├── review-required/     # Content pending review
+├── rewrites/            # Updated existing content
+├── published/           # Final production-ready content
+├── landing-pages/       # Landing page content
+├── audits/              # Audit reports
+└── README.md            # Documentation
+```
+
+## Core Directories
+
+### .claude/
+
+Claude Code workspace configuration.
+
+```
+.claude/
+├── commands/            # Custom workflow commands
+│   ├── analyze-existing.md
+│   ├── research.md
+│   ├── write.md
+│   ├── rewrite.md
+│   ├── optimize.md
+│   ├── scrub.md
+│   ├── performance-review.md
+│   ├── publish-draft.md
+│   ├── article.md
+│   ├── priorities.md
+│   ├── research-serp.md
+│   ├── research-gaps.md
+│   ├── research-trending.md
+│   ├── research-performance.md
+│   ├── research-topics.md
+│   ├── landing-write.md
+│   ├── landing-audit.md
+│   ├── landing-research.md
+│   ├── landing-competitor.md
+│   └── landing-publish.md
+├── agents/              # Specialized analysis agents
+│   ├── content-analyzer.md
+│   ├── seo-optimizer.md
+│   ├── meta-creator.md
+│   ├── internal-linker.md
+│   ├── keyword-mapper.md
+│   ├── editor.md
+│   ├── performance.md
+│   ├── headline-generator.md
+│   ├── cro-analyst.md
+│   └── landing-page-optimizer.md
+└── skills/              # 26 marketing skills
+    ├── copywriting.md
+    ├── page-cro.md
+    ├── content-strategy.md
+    └── ... (23 more)
+```
+
+**Purpose**: Defines commands, agents, and skills for Claude Code.
+
+**Do not edit** unless creating custom commands or agents.
+
+### config/
+
+Configuration files for SEO analysis scripts.
+
+```
+config/
+├── competitors.json          # Your configuration
+└── competitors.example.json  # Template
+```
+
+**competitors.json**:
+
+```json
+{
+  "direct_competitors": ["competitor1.com"],
+  "content_competitors": ["blog1.com"],
+  "bofu_keywords": ["pricing", "vs competitor"],
+  "mofu_keywords": ["how to", "guide"],
+  "alternative_keywords": ["competitor alternative"],
+  "relevant_terms": ["industry", "keywords"],
+  "skip_terms": ["spam", "irrelevant"]
+}
+```
+
+**Usage**: SEO analysis scripts (`seo_*.py`) load keywords and competitors from this file.
+
+### context/
+
+Brand guidelines and SEO configuration.
+
+```
+context/
+├── brand-voice.md
+├── writing-examples.md
+├── features.md
+├── internal-links-map.md
+├── style-guide.md
+├── target-keywords.md
+├── competitor-analysis.md
+├── seo-guidelines.md
+└── cro-best-practices.md
+```
+
+**Purpose**: These files guide all content generation. Customize for your business.
+
+**Key files**:
+
+- **brand-voice.md**: Voice pillars, tone, messaging framework
+- **writing-examples.md**: 3-5 exemplary posts from your blog
+- **style-guide.md**: Grammar, formatting, terminology standards
+- **seo-guidelines.md**: SEO requirements and best practices
+- **target-keywords.md**: Keyword research organized by topic cluster
+- **internal-links-map.md**: Catalog of pages for internal linking
+- **competitor-analysis.md**: Competitive intelligence
+
+**See**: [examples/castos/](https://github.com/yourusername/seomachine/tree/main/examples/castos) for complete examples.
+
+### data_sources/
+
+Analytics integrations and Python modules.
+
+```
+data_sources/
+├── modules/              # Python analysis modules
+│   ├── google_analytics.py
+│   ├── google_search_console.py
+│   ├── dataforseo.py
+│   ├── data_aggregator.py
+│   ├── search_intent_analyzer.py
+│   ├── keyword_analyzer.py
+│   ├── seo_quality_rater.py
+│   ├── content_length_comparator.py
+│   ├── readability_scorer.py
+│   ├── opportunity_scorer.py
+│   ├── content_scorer.py
+│   ├── engagement_analyzer.py
+│   ├── social_research_aggregator.py
+│   ├── competitor_gap_analyzer.py
+│   ├── article_planner.py
+│   ├── section_writer.py
+│   ├── wordpress_publisher.py
+│   ├── above_fold_analyzer.py
+│   ├── cro_checker.py
+│   ├── cta_analyzer.py
+│   ├── landing_page_scorer.py
+│   ├── landing_performance.py
+│   ├── trust_signal_analyzer.py
+│   └── content_scrubber.py
+├── config/
+│   └── .env              # API credentials (not in git)
+├── utils/                # Helper functions
+├── cache/                # Cached API responses
+├── requirements.txt      # Python dependencies
+└── README.md             # Setup instructions
+```
+
+**Purpose**: Python modules for data analysis and integrations.
+
+**Setup**: See `data_sources/README.md` for API configuration.
+
+### wordpress/
+
+WordPress publishing integration.
+
+```
+wordpress/
+├── seo-machine-yoast-rest.php  # MU-plugin for Yoast fields
+├── functions-snippet.php        # Theme functions addition
+└── README.md                    # Setup instructions
+```
+
+**Purpose**: Publish articles to WordPress with Yoast SEO metadata.
+
+**Setup**: Install MU-plugin, configure `.env` with WP credentials.
+
+## Content Workflow Directories
+
+### topics/
+
+Raw topic ideas and brainstorming.
+
+```
+topics/
+├── content-marketing-ideas.md
+├── podcast-topics.md
+└── q4-2026-topics.md
+```
+
+**Purpose**: Capture ideas before research.
+
+**Usage**:
+
+1. Add topic ideas as they come up
+2. Organize by category or quarter
+3. Use when ready to research
+
+**Example**:
+
+```markdown
+# Content Marketing Topics - Q1 2026
+
+## High Priority
+- AI content tools comparison
+- Content distribution strategies
+- SEO trends 2026
+
+## Medium Priority
+- Content repurposing guide
+- Video content marketing
+```
+
+### research/
+
+Research briefs, analysis reports, and SERP studies.
+
+```
+research/
+├── brief-content-marketing-2026-03-04.md
+├── analysis-product-comparison-2026-03-04.md
+├── quick-wins-2026-03-04.md
+├── competitor-gaps-2026-03-04.md
+├── performance-matrix-2026-03-04.md
+├── topic-clusters-2026-03-04.md
+├── trending-2026-03-04.md
+├── serp-analysis-content-marketing.md
+└── ROADMAP-2026-03-04.md
+```
+
+**Purpose**: Store research before writing.
+
+**Generated by**:
+
+- `/research [topic]` command
+- `/analyze-existing [URL]` command
+- `/research-serp [keyword]` command
+- Research scripts (`research_*.py`)
+
+**Naming convention**: `type-topic-YYYY-MM-DD.md`
+
+### drafts/
+
+Work-in-progress articles.
+
+```
+drafts/
+├── content-marketing-strategies-2026-03-04.md
+├── seo-analysis-content-marketing-strategies-2026-03-04.md
+├── meta-options-content-marketing-strategies-2026-03-04.md
+├── internal-links-content-marketing-strategies-2026-03-04.md
+├── keyword-map-content-marketing-strategies-2026-03-04.md
+└── optimization-report-content-marketing-strategies-2026-03-04.md
+```
+
+**Purpose**: Active writing and editing.
+
+**Generated by**:
+
+- `/write [topic]` command
+- Auto-triggered agents (SEO, Meta, Internal Links, Keywords)
+
+**Workflow**:
+
+1. `/write [topic]` creates article + agent reports
+2. Review agent recommendations
+3. Edit article based on feedback
+4. Run `/optimize [file]` when ready
+5. Move to `published/` when complete
+
+**Keep**: All agent reports with the article for reference.
+
+### review-required/
+
+Articles pending editorial review.
+
+```
+review-required/
+├── content-marketing-strategies-2026-03-04.md
+└── seo-analysis-content-marketing-strategies-2026-03-04.md
+```
+
+**Purpose**: Queue for manual review before publishing.
+
+**Usage**:
+
+1. Move from `drafts/` when ready for review
+2. Team member reviews
+3. Make any final edits
+4. Move to `published/` when approved
+
+**Optional**: Not needed if you're solo or trust automated scoring.
+
+### rewrites/
+
+Updated versions of existing content.
+
+```
+rewrites/
+├── product-comparison-rewrite-2026-03-04.md
+├── analysis-product-comparison-original-2026-03-04.md
+└── product-comparison-changes-2026-03-04.md
+```
+
+**Purpose**: Store content updates and refreshes.
+
+**Generated by**:
+
+- `/rewrite [topic]` command
+- `/analyze-existing [URL]` command (creates analysis first)
+
+**Includes**:
+
+- Rewritten article
+- Original analysis report
+- Change summary (what was updated)
+
+**Workflow**:
+
+1. `/analyze-existing [URL]` for current content
+2. Review analysis and recommendations
+3. `/rewrite [topic]` to update
+4. Compare original vs rewrite
+5. Move to `published/` when satisfied
+
+### published/
+
+Final, production-ready content.
+
+```
+published/
+├── content-marketing-strategies-2026-03-04.md
+├── product-comparison-2026-02-15.md
+└── seo-guide-2026-01-20.md
+```
+
+**Purpose**: Archive of published articles.
+
+**Usage**:
+
+1. Move from `drafts/` or `rewrites/` when complete
+2. Ready to publish to your site
+3. Keep for reference and updates
+
+**Naming**: Use publish date in filename.
+
+### landing-pages/
+
+Landing page content.
+
+```
+landing-pages/
+├── pricing-page-2026-03-04.md
+├── product-landing-2026-03-01.md
+└── landing-audit-pricing-2026-03-04.md
+```
+
+**Purpose**: Conversion-focused landing pages.
+
+**Generated by**:
+
+- `/landing-write [topic]` command
+- `/landing-audit [file]` command
+- `/landing-research [topic]` command
+
+**Different from blog posts**: CRO-focused with specific conversion elements.
+
+### audits/
+
+Audit reports and analysis.
+
+```
+audits/
+├── site-audit-2026-Q1.md
+├── content-audit-march-2026.md
+└── competitor-audit-2026-03-04.md
+```
+
+**Purpose**: Store comprehensive site and content audits.
+
+**Usage**:
+
+- Quarterly content audits
+- Competitive analysis reports
+- Performance reviews
+- SEO audits
+
+## File Naming Conventions
+
+### Articles & Content
+
+Format: `topic-name-YYYY-MM-DD.md`
+
+**Examples**:
+
+- `content-marketing-strategies-2026-03-04.md`
+- `podcast-hosting-guide-2026-02-15.md`
+- `seo-trends-2026-01-10.md`
+
+### Research Briefs
+
+Format: `brief-topic-name-YYYY-MM-DD.md`
+
+**Examples**:
+
+- `brief-content-marketing-2026-03-04.md`
+- `brief-seo-strategies-2026-02-20.md`
+
+### Analysis Reports
+
+Format: `analysis-topic-name-YYYY-MM-DD.md`
+
+**Examples**:
+
+- `analysis-product-comparison-2026-03-04.md`
+- `analysis-pricing-page-2026-02-28.md`
+
+### Research Scripts Output
+
+Format: `script-type-YYYY-MM-DD.md`
+
+**Examples**:
+
+- `quick-wins-2026-03-04.md`
+- `competitor-gaps-2026-03-04.md`
+- `performance-matrix-2026-03-04.md`
+- `ROADMAP-2026-03-04.md` (comprehensive priorities)
+
+### Agent Reports
+
+Format: `agent-name-article-topic-YYYY-MM-DD.md`
+
+**Examples**:
+
+- `seo-analysis-content-marketing-2026-03-04.md`
+- `meta-options-content-marketing-2026-03-04.md`
+- `internal-links-content-marketing-2026-03-04.md`
+- `keyword-map-content-marketing-2026-03-04.md`
+
+## Organization Best Practices
+
+### Daily Workflow
+
+1. **Start in `topics/`**: Capture ideas
+2. **Move to `research/`**: Run `/research` or scripts
+3. **Write in `drafts/`**: Run `/write` and edit
+4. **Optimize in `drafts/`**: Run `/optimize`
+5. **Publish from `published/`**: Move when complete
+
+### Weekly Maintenance
+
+- Add new topic ideas to `topics/`
+- Review `drafts/` for stalled articles
+- Check `review-required/` queue
+- Archive old research reports
+- Update `context/` files if needed
+
+### Monthly Cleanup
+
+- Archive old drafts that won't be used
+- Move outdated research to archive folder
+- Review and update `internal-links-map.md`
+- Add new published content to map
+- Run performance analysis
+
+### Archive Strategy
+
+Create archive folders for old content:
+
+```
+research/
+├── archive/
+│   └── 2025/
+│       ├── Q1/
+│       ├── Q2/
+│       ├── Q3/
+│       └── Q4/
+```
+
+**Archive after**:
+
+- Research reports: 90 days
+- Unused drafts: 60 days
+- Agent reports: When article published
+
+**Keep indefinitely**:
+
+- Published articles
+- ROADMAP files
+- Context files
+
+## Git Integration
+
+### .gitignore
+
+Add to `.gitignore`:
+
+```
+# API credentials
+data_sources/config/.env
+credentials/
+
+# API response cache
+data_sources/cache/
+
+# Work in progress (optional)
+drafts/
+review-required/
+
+# Personal notes (optional)
+topics/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# OS files
+.DS_Store
+Thumbs.db
+```
+
+### What to Commit
+
+**Always commit**:
+
+- `.claude/` directory
+- `context/` files (your brand guidelines)
+- `published/` articles (final content)
+- `config/competitors.example.json` (template)
+- `README.md` and documentation
+
+**Optional**:
+
+- `research/` reports (can be large)
+- `rewrites/` updates
+- `landing-pages/`
+
+**Never commit**:
+
+- `.env` files
+- API credentials
+- Cache files
+
+## Tips & Tricks
+
+### Use Descriptive Names
+
+Bad:
+
+```
+article1.md
+article2.md
+research.md
+```
+
+Good:
+
+```
+content-marketing-strategies-2026-03-04.md
+brief-seo-trends-2026-02-15.md
+analysis-pricing-page-2026-01-20.md
+```
+
+### Keep Related Files Together
+
+In `drafts/`:
+
+```
+content-marketing-strategies-2026-03-04.md         (article)
+seo-analysis-content-marketing-strategies-2026-03-04.md  (agent report)
+meta-options-content-marketing-strategies-2026-03-04.md  (agent report)
+```
+
+### Use Dates in Filenames
+
+Why:
+
+- Easy to sort by date
+- Track when content created
+- Identify outdated content
+- Avoid name conflicts
+
+Format: `YYYY-MM-DD` (sorts correctly)
+
+### Separate by Content Type
+
+Don't mix:
+
+```
+drafts/
+├── blog-post.md
+├── landing-page.md      # Move to landing-pages/
+└── research-report.md   # Move to research/
+```
+
+Do:
+
+```
+drafts/
+└── blog-post.md
+
+landing-pages/
+└── landing-page.md
+
+research/
+└── research-report.md
+```
+
+### Create Subdirectories for Scale
+
+When you have 50+ files:
+
+```
+published/
+├── 2026/
+│   ├── 03-march/
+│   ├── 02-february/
+│   └── 01-january/
+└── 2025/
+    ├── 12-december/
+    └── ...
+```
+
+### Use TODO Comments
+
+In markdown files:
+
+```markdown
+<!-- TODO: Add statistics -->
+<!-- TODO: Find better example -->
+<!-- TODO: Update screenshot -->
+<!-- REVIEW: Check this claim -->
+```
+
+Search for TODOs:
+
+```bash
+grep -r "TODO" drafts/
+```
+
+## Common Questions
+
+### Where do I start?
+
+1. Configure `context/` files (copy from `examples/castos/`)
+2. Add topics to `topics/`
+3. Run `/research [topic]`
+4. Run `/write [topic]`
+5. Review `drafts/`
+
+### What if I have 100s of drafts?
+
+Create subdirectories:
+
+```
+drafts/
+├── in-progress/
+├── needs-review/
+├── ready-to-publish/
+└── archived/
+```
+
+### Should I commit draft files?
+
+No, add to `.gitignore`. Only commit:
+
+- Final published content
+- Context files
+- Configuration
+
+### How do I find old research?
+
+```bash
+# By date
+ls -lt research/
+
+# By keyword
+grep -l "content marketing" research/*.md
+
+# By type
+ls research/brief-*.md
+ls research/quick-wins-*.md
+```
+
+### How long to keep drafts?
+
+Archive or delete:
+
+- Unused drafts after 60 days
+- Research reports after 90 days
+- Agent reports after article published
+
+Keep indefinitely:
+
+- Published articles
+- Context files
+- Successful templates
+
+## Directory Checklist
+
+Setup checklist:
+
+- [ ] `.claude/` directory exists (from repo)
+- [ ] `config/competitors.json` created from example
+- [ ] `context/` files customized for your brand
+- [ ] `data_sources/config/.env` configured with API keys
+- [ ] `wordpress/` MU-plugin installed (if publishing)
+- [ ] `topics/` directory created
+- [ ] `research/` directory created
+- [ ] `drafts/` directory created
+- [ ] `published/` directory created
+- [ ] `.gitignore` configured
+- [ ] Python dependencies installed
+
+Ready to create content! 🚀

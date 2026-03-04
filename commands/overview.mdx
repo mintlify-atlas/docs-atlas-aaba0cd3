@@ -1,0 +1,180 @@
+---
+title: Commands Overview
+description: Complete reference for all SEO Machine commands for content research, writing, optimization, and publishing
+---
+
+SEO Machine provides custom commands that orchestrate complete SEO content workflows. Each command is designed for a specific phase of the content lifecycle.
+
+## Core Content Commands
+
+<CardGroup cols={2}>
+  <Card title="/research" icon="magnifying-glass" href="/commands/research">
+    Comprehensive keyword and competitive research before writing
+  </Card>
+  
+  <Card title="/write" icon="pen-to-square" href="/commands/write">
+    Create 2000-3000+ word SEO-optimized articles
+  </Card>
+  
+  <Card title="/rewrite" icon="rotate" href="/commands/rewrite">
+    Update and improve existing content
+  </Card>
+  
+  <Card title="/optimize" icon="wand-magic-sparkles" href="/commands/optimize">
+    Final SEO polish before publishing
+  </Card>
+</CardGroup>
+
+## Analysis & Publishing
+
+<CardGroup cols={2}>
+  <Card title="/analyze-existing" icon="chart-line" href="/commands/analyze-existing">
+    Audit existing posts for improvement opportunities
+  </Card>
+  
+  <Card title="/publish-draft" icon="upload" href="/commands/publish-draft">
+    Publish to WordPress with Yoast SEO metadata
+  </Card>
+</CardGroup>
+
+## Command Structure
+
+All commands follow this pattern:
+
+```bash
+/command-name [input] [--flags]
+```
+
+### Input Types
+
+Commands accept different input types:
+
+- **Topic string**: `/research content marketing strategies`
+- **File path**: `/optimize drafts/article-2025-03-04.md`
+- **URL**: `/analyze-existing https://yoursite.com/blog/post`
+
+### Output Locations
+
+Each command saves its output to specific directories:
+
+| Command | Output Directory | File Pattern |
+|---------|------------------|-------------|
+| `/research` | `research/` | `brief-[topic]-[date].md` |
+| `/write` | `drafts/` | `[topic]-[date].md` |
+| `/rewrite` | `rewrites/` | `[topic]-rewrite-[date].md` |
+| `/optimize` | `drafts/` | `optimization-report-[topic]-[date].md` |
+| `/analyze-existing` | `research/` | `analysis-[topic]-[date].md` |
+| `/publish-draft` | WordPress | Draft post via REST API |
+
+## Typical Workflows
+
+### Creating New Content
+
+```mermaid
+graph LR
+    A[/research topic] --> B[/write topic]
+    B --> C[/optimize file]
+    C --> D[/publish-draft file]
+```
+
+1. Research the topic: `/research [topic]`
+2. Write the article: `/write [topic]`
+3. Optimize for SEO: `/optimize drafts/[file].md`
+4. Publish to WordPress: `/publish-draft drafts/[file].md`
+
+### Updating Existing Content
+
+```mermaid
+graph LR
+    A[/analyze-existing URL] --> B[/rewrite topic]
+    B --> C[/optimize file]
+    C --> D[/publish-draft file]
+```
+
+1. Analyze current post: `/analyze-existing [URL]`
+2. Rewrite content: `/rewrite [topic]`
+3. Optimize: `/optimize rewrites/[file].md`
+4. Publish: `/publish-draft rewrites/[file].md`
+
+## Agent Auto-Execution
+
+Many commands automatically trigger specialized agents after completion:
+
+### After `/write`
+
+These agents run automatically:
+- **SEO Optimizer** - On-page SEO recommendations
+- **Meta Creator** - Multiple meta title/description options
+- **Internal Linker** - Internal linking suggestions
+- **Keyword Mapper** - Keyword placement analysis
+- **Content Analyzer** - Search intent, readability, quality scoring
+
+### After `/optimize`
+
+Final pass from all agents:
+- All agents from `/write` re-run for final validation
+- Publishing readiness assessment
+- Priority fixes identified
+
+## Quality Standards
+
+All commands enforce these standards:
+
+<AccordionGroup>
+  <Accordion title="Content Requirements">
+    - Minimum 2000 words (2500-3000+ preferred)
+    - Proper H1/H2/H3 hierarchy
+    - 2-3 mini-stories with specific details
+    - 2-3 contextual CTAs throughout
+    - Compelling hook (no generic openings)
+  </Accordion>
+  
+  <Accordion title="SEO Requirements">
+    - Primary keyword density 1-2%
+    - Keyword in H1, first 100 words, 2-3 H2s
+    - 3-5+ internal links
+    - 2-3 external authority links
+    - Meta title 50-60 characters
+    - Meta description 150-160 characters
+  </Accordion>
+  
+  <Accordion title="Readability Requirements">
+    - 8th-10th grade reading level
+    - Average sentence length 15-20 words
+    - Paragraphs 2-4 sentences max
+    - Subheadings every 300-400 words
+    - Varied sentence rhythm
+  </Accordion>
+</AccordionGroup>
+
+## Advanced Features
+
+### Automatic Content Scrubbing
+
+`/write` and `/rewrite` automatically invoke `/scrub` to remove:
+- Invisible Unicode watermarks
+- AI detection patterns (em-dash overuse)
+- Format-control characters
+
+### Quality Loop
+
+Articles are automatically scored (0-100) across 5 dimensions:
+1. **Humanity/Voice** (30%) - No AI phrases, use contractions
+2. **Specificity** (25%) - Concrete examples, numbers, names
+3. **Structure Balance** (20%) - 40-70% prose (not all lists)
+4. **SEO Compliance** (15%) - Keywords, meta, structure
+5. **Readability** (10%) - Flesch 60-70, grade 8-10
+
+Articles scoring less than 70 go to `review-required/` with notes.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Research Command" icon="magnifying-glass" href="/commands/research">
+    Learn how to conduct comprehensive keyword research
+  </Card>
+  
+  <Card title="Write Command" icon="pen-to-square" href="/commands/write">
+    Create long-form SEO-optimized content
+  </Card>
+</CardGroup>

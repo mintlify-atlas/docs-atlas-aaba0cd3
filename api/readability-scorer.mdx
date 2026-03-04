@@ -1,0 +1,438 @@
+---
+title: "Readability Scorer"
+description: "Calculate Flesch Reading Ease, grade level, and comprehensive readability metrics for content optimization"
+---
+
+The Readability Scorer analyzes content readability using multiple metrics including Flesch Reading Ease, Flesch-Kincaid Grade Level, sentence structure, and complexity indicators. It provides a 0-100 score with actionable recommendations for improving content clarity.
+
+## Basic Usage
+
+Use the convenience function for quick analysis:
+
+```python
+from data_sources.modules.readability_scorer import score_readability
+
+result = score_readability(article_content)
+
+print(f"Overall Score: {result['overall_score']:.1f}/100")
+print(f"Grade: {result['grade']}")
+print(f"Reading Level: Grade {result['reading_level']}")
+print(f"Flesch Score: {result['readability_metrics']['flesch_reading_ease']}")
+```
+
+## Class API
+
+### ReadabilityScorer
+
+The main scorer class:
+
+```python
+from data_sources.modules.readability_scorer import ReadabilityScorer
+
+scorer = ReadabilityScorer()
+result = scorer.analyze(article_content)
+```
+
+### Target Settings
+
+Default target settings optimized for web content:
+
+```python
+scorer = ReadabilityScorer()
+
+# Default targets:
+# - Reading level: 8th-10th grade
+# - Flesch ease: 60-70 (fairly easy)
+# - Max sentence length: 20 words
+# - Paragraph sentences: 2-4 sentences
+```
+
+### analyze()
+
+Perform comprehensive readability analysis.
+
+<ParamField path="content" type="string" required>
+  Article content to analyze (full text with markdown formatting)
+</ParamField>
+
+<ResponseField name="overall_score" type="float">
+  Overall readability score (0-100)
+</ResponseField>
+
+<ResponseField name="grade" type="string">
+  Letter grade: `A (Excellent)`, `B (Good)`, `C (Average)`, `D (Needs Work)`, `F (Poor)`
+</ResponseField>
+
+<ResponseField name="reading_level" type="float">
+  Flesch-Kincaid Grade Level (target: 8-10)
+</ResponseField>
+
+<ResponseField name="readability_metrics" type="object">
+  Comprehensive readability metrics:
+  - `flesch_reading_ease` (float): Flesch Reading Ease score (0-100)
+  - `flesch_kincaid_grade` (float): Grade level
+  - `gunning_fog` (float): Gunning Fog index
+  - `smog_index` (float): SMOG index
+  - `coleman_liau_index` (float): Coleman-Liau index
+  - `automated_readability_index` (float): ARI
+  - `dale_chall_readability` (float): Dale-Chall score
+  - `syllable_count` (int): Total syllables
+  - `lexicon_count` (int): Total words
+  - `sentence_count` (int): Total sentences
+  - `polysyllable_count` (int): Complex word count
+</ResponseField>
+
+<ResponseField name="structure_analysis" type="object">
+  Content structure metrics:
+  - `total_sentences` (int): Number of sentences
+  - `avg_sentence_length` (float): Average words per sentence
+  - `shortest_sentence` (int): Shortest sentence length
+  - `longest_sentence` (int): Longest sentence length
+  - `sentence_length_variance` (float): Sentence length variation
+  - `total_paragraphs` (int): Number of paragraphs
+  - `avg_sentences_per_paragraph` (float): Average sentences per paragraph
+  - `total_words` (int): Total word count
+  - `avg_word_length` (float): Average characters per word
+  - `long_sentences` (int): Sentences over 25 words
+  - `very_long_sentences` (int): Sentences over 35 words
+</ResponseField>
+
+<ResponseField name="complexity_analysis" type="object">
+  Text complexity indicators:
+  - `transition_word_count` (int): Number of transition words
+  - `transition_words_per_100` (float): Transitions per 100 words
+  - `passive_sentence_count` (int): Passive voice sentences
+  - `passive_sentence_ratio` (float): Percentage passive voice
+  - `complex_word_count` (int): Words with 3+ syllables
+  - `complex_word_ratio` (float): Percentage complex words
+</ResponseField>
+
+<ResponseField name="recommendations" type="list[string]">
+  Actionable recommendations for improving readability
+</ResponseField>
+
+<ResponseField name="status" type="object">
+  Quick status assessment:
+  - `grade_level_status` (string): `optimal`, `too_simple`, `too_complex`
+  - `ease_status` (string): `good`, `difficult`, `too_easy`
+  - `sentence_length_status` (string): `good`, `too_long`
+  - `overall_assessment` (string): `excellent`, `acceptable`, `needs_improvement`
+</ResponseField>
+
+## Flesch Reading Ease
+
+The primary readability metric (0-100 scale):
+
+```python
+flesch = result['readability_metrics']['flesch_reading_ease']
+
+if flesch >= 70:
+    print("Easy to read (7th grade)")
+elif flesch >= 60:
+    print("Fairly easy (8th-9th grade)")
+elif flesch >= 50:
+    print("Fairly difficult (10th-12th grade)")
+else:
+    print("Difficult (college level)")
+```
+
+### Flesch Score Interpretation
+
+- **90-100**: Very Easy - 5th grade
+- **80-89**: Easy - 6th grade
+- **70-79**: Fairly Easy - 7th grade
+- **60-69**: Standard - 8th-9th grade ✅ **Target**
+- **50-59**: Fairly Difficult - 10th-12th grade
+- **30-49**: Difficult - College
+- **0-29**: Very Difficult - College graduate
+
+## Reading Level (Grade Level)
+
+Flesch-Kincaid Grade Level indicates U.S. school grade:
+
+```python
+grade_level = result['reading_level']
+
+print(f"Reading Level: Grade {grade_level}")
+print(f"Target: 8-10 (high school)")
+print(f"Status: {result['status']['grade_level_status']}")
+```
+
+Example:
+```
+Reading Level: Grade 8.5
+Target: 8-10 (high school)
+Status: optimal
+```
+
+## Sentence Structure Analysis
+
+Analyze sentence length and variation:
+
+```python
+structure = result['structure_analysis']
+
+print(f"Average sentence length: {structure['avg_sentence_length']} words")
+print(f"Shortest: {structure['shortest_sentence']} words")
+print(f"Longest: {structure['longest_sentence']} words")
+print(f"Long sentences (>25 words): {structure['long_sentences']}")
+print(f"Very long sentences (>35 words): {structure['very_long_sentences']}")
+```
+
+### Sentence Length Guidelines
+
+- **Optimal average**: 15-20 words
+- **Long sentence**: > 25 words
+- **Very long sentence**: > 35 words (should be split)
+- **Variance**: Higher variance = more dynamic writing
+
+## Paragraph Analysis
+
+Analyze paragraph structure:
+
+```python
+structure = result['structure_analysis']
+
+print(f"Total paragraphs: {structure['total_paragraphs']}")
+print(f"Avg sentences per paragraph: {structure['avg_sentences_per_paragraph']}")
+```
+
+Target: **2-4 sentences per paragraph** for web content
+
+## Complexity Analysis
+
+Identify complexity indicators:
+
+```python
+complexity = result['complexity_analysis']
+
+print(f"Passive voice: {complexity['passive_sentence_ratio']}%")
+print(f"Complex words: {complexity['complex_word_ratio']}%")
+print(f"Transition words: {complexity['transition_words_per_100']} per 100 words")
+```
+
+### Passive Voice
+
+Target: **Under 20% passive voice**
+
+```python
+passive_ratio = result['complexity_analysis']['passive_sentence_ratio']
+
+if passive_ratio > 30:
+    print("⚠️ Too much passive voice")
+elif passive_ratio > 20:
+    print("ℹ️ Passive voice slightly high")
+else:
+    print("✅ Good use of active voice")
+```
+
+### Complex Words
+
+Words with 3+ syllables:
+
+```python
+complex_ratio = result['complexity_analysis']['complex_word_ratio']
+
+if complex_ratio > 15:
+    print("High percentage of complex words")
+else:
+    print("Appropriate vocabulary complexity")
+```
+
+### Transition Words
+
+Improve flow with transition words:
+
+```python
+transitions = result['complexity_analysis']['transition_words_per_100']
+
+if transitions < 0.5:
+    print("Add more transition words (however, therefore, additionally)")
+else:
+    print("Good use of transitions")
+```
+
+## Recommendations
+
+Get specific recommendations for improvement:
+
+```python
+print("Recommendations:")
+for rec in result['recommendations']:
+    print(f"  {rec}")
+```
+
+Example output:
+```
+Recommendations:
+  ⚠️ Reading level is too high (Grade 12.5). Target is 8-10. Simplify sentences and use more common words.
+  ⚠️ Average sentence length is too long (28.3 words). Target is under 20 words. Break up long sentences.
+  ⚠️ 8 sentences are very long (35+ words). These should be split into multiple sentences.
+  ⚠️ Paragraphs are too long (avg 5.2 sentences). Keep paragraphs to 4 sentences or less.
+  ⚠️ Too much passive voice (32% of sentences). Convert to active voice where possible (target: under 20%).
+  ℹ️ Few transition words detected. Add words like 'however', 'therefore', 'additionally' to improve flow.
+```
+
+## Score Calculation
+
+The overall score (0-100) is calculated from:
+
+1. **Flesch Reading Ease (30 points)**
+   - 60-80 = optimal
+   - < 30 = -30 points
+   - < 50 = -20 points
+
+2. **Grade Level (25 points)**
+   - 8-10 = optimal
+   - > 14 = -25 points
+   - > 12 = -15 points
+
+3. **Sentence Length (20 points)**
+   - < 20 words = optimal
+   - > 30 words = -20 points
+   - > 25 words = -10 points
+
+4. **Very Long Sentences (up to 15 points penalty)**
+   - Each very long sentence: -3 points
+
+5. **Paragraph Structure (10 points)**
+   - 2-4 sentences = optimal
+   - > 6 sentences = -10 points
+
+6. **Passive Voice (10 points)**
+   - < 20% = optimal
+   - > 30% = -10 points
+
+7. **Transition Words (5 points)**
+   - Good use: +5 points
+   - Very few: -5 points
+
+## Status Assessment
+
+Quick readability assessment:
+
+```python
+status = result['status']
+
+print(f"Grade Level: {status['grade_level_status']}")
+print(f"Reading Ease: {status['ease_status']}")
+print(f"Sentence Length: {status['sentence_length_status']}")
+print(f"Overall: {status['overall_assessment']}")
+```
+
+Example:
+```python
+{
+    'grade_level_status': 'optimal',
+    'ease_status': 'good',
+    'sentence_length_status': 'good',
+    'overall_assessment': 'excellent'
+}
+```
+
+## Real-World Example
+
+Complete readability analysis:
+
+```python
+from data_sources.modules.readability_scorer import score_readability
+
+article = """
+# How to Start a Podcast
+
+Starting a podcast is easier than you might think. This guide will walk you through everything you need to know.
+
+## Choose Your Topic
+
+The first step is choosing what you want to talk about. Pick something you're passionate about and that your audience will find valuable. This ensures you'll have plenty to say and stay motivated over time.
+
+## Get Your Equipment
+
+You don't need expensive equipment to start. A decent USB microphone, headphones, and free recording software like Audacity are enough for beginners. As you grow, you can upgrade your gear.
+
+## Record Your First Episode
+
+Don't worry about being perfect. Just hit record and start talking. Your first episode won't be your best, but it's an important step in your podcasting journey. Edit out major mistakes, but don't obsess over every detail.
+"""
+
+result = score_readability(article)
+
+print("=== Readability Analysis ===")
+print(f"\nOverall Score: {result['overall_score']:.1f}/100")
+print(f"Grade: {result['grade']}")
+print(f"Reading Level: Grade {result['reading_level']}")
+
+print(f"\nKey Metrics:")
+metrics = result['readability_metrics']
+print(f"  Flesch Reading Ease: {metrics['flesch_reading_ease']}")
+print(f"  Flesch-Kincaid Grade: {metrics['flesch_kincaid_grade']}")
+print(f"  Gunning Fog: {metrics['gunning_fog']}")
+
+print(f"\nStructure:")
+struct = result['structure_analysis']
+print(f"  Total Words: {struct['total_words']}")
+print(f"  Total Sentences: {struct['total_sentences']}")
+print(f"  Avg Sentence Length: {struct['avg_sentence_length']} words")
+print(f"  Avg Sentences/Paragraph: {struct['avg_sentences_per_paragraph']}")
+print(f"  Long Sentences (>25): {struct['long_sentences']}")
+
+print(f"\nComplexity:")
+comp = result['complexity_analysis']
+print(f"  Passive Voice: {comp['passive_sentence_ratio']}%")
+print(f"  Complex Words: {comp['complex_word_ratio']}%")
+print(f"  Transition Words: {comp['transition_words_per_100']} per 100 words")
+
+print(f"\nStatus: {result['status']['overall_assessment'].upper()}")
+
+if result['recommendations']:
+    print(f"\nRecommendations:")
+    for rec in result['recommendations']:
+        print(f"  {rec}")
+```
+
+## Integration with SEO Modules
+
+Combine with other analyzers:
+
+```python
+from data_sources.modules.readability_scorer import score_readability
+from data_sources.modules.seo_quality_rater import rate_seo_quality
+
+# Step 1: Check readability
+readability = score_readability(article)
+
+# Step 2: Get SEO quality score
+quality = rate_seo_quality(
+    content=article,
+    primary_keyword="start a podcast",
+    meta_title="How to Start a Podcast",
+    meta_description="Complete guide to starting a podcast"
+)
+
+print(f"Readability Score: {readability['overall_score']:.1f}/100")
+print(f"Reading Level: Grade {readability['reading_level']}")
+print(f"SEO Score: {quality['overall_score']:.1f}/100")
+
+# Check if both scores are good
+if readability['overall_score'] >= 80 and quality['overall_score'] >= 80:
+    print("✅ Content is optimized for both readability and SEO!")
+```
+
+## Best Practices
+
+1. **Target 8th-10th grade level** - optimal for web content
+2. **Aim for Flesch 60-70** - "fairly easy" reading level
+3. **Keep sentences under 20 words** - improves comprehension
+4. **Use 2-4 sentences per paragraph** - web-friendly formatting
+5. **Limit passive voice to 20%** - more engaging writing
+6. **Add transition words** - improves flow and coherence
+7. **Break up long sentences** - split any sentence over 35 words
+8. **Vary sentence length** - creates better rhythm
+9. **Use simple words** - when possible without losing meaning
+10. **Score 80+ before publishing** - ensures good readability
+
+## Related Modules
+
+- [SEO Quality Rater](/api/seo-quality-rater) - Includes readability in overall SEO score
+- [Keyword Analyzer](/api/keyword-analyzer) - Keyword placement affects sentence structure
+- [Content Length Comparator](/api/content-length-comparator) - Longer content needs better readability

@@ -1,0 +1,347 @@
+---
+title: "Content Analyzer"
+description: "Data-driven content analysis using 5 Python modules for search intent, keywords, content length, readability, and SEO quality"
+---
+
+The Content Analyzer agent runs comprehensive analysis on completed articles using 5 specialized Python modules to provide actionable, data-driven insights.
+
+## What It Analyzes
+
+The Content Analyzer examines:
+- **Search intent** - Whether content matches what searchers want
+- **Keyword optimization** - Density, distribution, stuffing risk
+- **Content length** - How you compare to top 10 SERP competitors
+- **Readability** - Flesch scores, grade level, sentence structure
+- **SEO quality** - Comprehensive 0-100 score across 6 categories
+
+## Analysis Modules
+
+The agent uses Python modules located in `data_sources/modules/`:
+
+### 1. Search Intent Analyzer
+`search_intent_analyzer.py`
+
+**Analyzes**: Query intent classification
+
+**Determines**:
+- Primary intent (informational, navigational, transactional, commercial)
+- Secondary intent if applicable
+- Confidence percentages
+- Whether content aligns with intent
+
+**Example Output**:
+```
+Primary Intent: Informational (87% confidence)
+Secondary Intent: Commercial (13%)
+Alignment: ✓ Content matches informational intent
+Gap: Missing comparison table for commercial intent
+```
+
+### 2. Keyword Analyzer
+`keyword_analyzer.py`
+
+**Analyzes**: Keyword density, distribution, clustering
+
+**Checks**:
+- Primary keyword density (target: 1.0-2.0%)
+- Secondary keyword coverage
+- Keyword placement in critical locations (H1, first 100 words, H2s)
+- Keyword stuffing risk (none/low/medium/high)
+- Topic clusters detected
+- LSI keyword presence
+
+**Example Output**:
+```python
+{
+  'primary_keyword': {
+    'keyword': 'podcast hosting',
+    'density': 1.4,
+    'status': 'optimal',
+    'occurrences': 23,
+    'stuffing_risk': 'none'
+  },
+  'placements': {
+    'in_h1': True,
+    'in_first_100_words': True,
+    'in_h2_count': 3,
+    'in_conclusion': True
+  }
+}
+```
+
+### 3. Content Length Comparator
+`content_length_comparator.py`
+
+**Analyzes**: Word count vs top SERP competitors
+
+**Compares**:
+- Your word count vs median competitor length
+- Your position in percentile distribution
+- Gap to optimal length
+- Competitor range (min-max)
+
+**Example Output**:
+```
+Your Word Count: 2,100 words
+Median Competitor: 2,850 words
+75th Percentile: 3,200 words
+Your Position: 35th percentile
+Gap to Optimal: +750 words needed
+Status: Below competitive threshold
+```
+
+### 4. Readability Scorer
+`readability_scorer.py`
+
+**Analyzes**: Content readability and comprehension level
+
+**Calculates**:
+- Flesch Reading Ease (0-100, higher = easier)
+- Flesch-Kincaid Grade Level
+- Average sentence length
+- Average paragraph length
+- Passive voice percentage
+- Complex word percentage
+- Long sentence count
+
+**Example Output**:
+```
+Flesch Reading Ease: 62 (Standard - 8th-9th grade)
+Flesch-Kincaid Grade: 8.5
+Average Sentence Length: 18 words (Good)
+Passive Voice: 12% (Excellent - target <20%)
+Long Sentences (25+ words): 8 (Monitor)
+Very Long Sentences (35+ words): 2 (Revise)
+```
+
+### 5. SEO Quality Rater
+`seo_quality_rater.py`
+
+**Analyzes**: Overall SEO health across 6 categories
+
+**Scores** (0-100):
+- Content Quality
+- Keyword Optimization
+- Meta Elements
+- Structure
+- Links
+- Readability
+
+**Reports**:
+- Critical issues (must fix before publishing)
+- Warnings (should fix)
+- Suggestions (nice to have)
+
+**Example Output**:
+```
+Overall SEO Score: 78/100 (Good)
+
+Category Scores:
+- Content Quality: 85/100 ✓
+- Keyword Optimization: 72/100 ⚠
+- Meta Elements: 65/100 ⚠
+- Structure: 90/100 ✓
+- Links: 70/100 ⚠
+- Readability: 82/100 ✓
+
+Critical Issues:
+- Meta description exceeds 160 characters
+- Only 2 internal links (need 3-5)
+
+Warnings:
+- Primary keyword density at 0.8% (target 1-2%)
+- No keyword in conclusion
+```
+
+## How It Works
+
+### 1. Content Extraction
+
+The agent extracts from the article:
+- Full content text
+- Meta title and description
+- Primary keyword
+- Secondary keywords
+- Target URL or SERP data
+
+### 2. Module Execution
+
+Runs all 5 modules in sequence:
+
+```python
+from data_sources.modules.search_intent_analyzer import analyze_intent
+from data_sources.modules.keyword_analyzer import analyze_keywords
+from data_sources.modules.content_length_comparator import compare_content_length
+from data_sources.modules.readability_scorer import score_readability
+from data_sources.modules.seo_quality_rater import rate_seo_quality
+
+# Execute analysis
+intent_result = analyze_intent(keyword, serp_features, top_results)
+keyword_result = analyze_keywords(content, primary_keyword, secondary_keywords)
+length_result = compare_content_length(keyword, word_count, serp_results)
+readability_result = score_readability(content)
+seo_result = rate_seo_quality(content, meta_title, meta_description, ...)
+```
+
+### 3. Report Generation
+
+Synthesizes all results into comprehensive report with:
+- Executive summary
+- Individual module findings
+- Priority action plan
+- Publishing checklist
+
+## Output Format
+
+The agent generates a structured report:
+
+```markdown
+# Content Analysis Report: [Article Title]
+
+**Overall Assessment**: Good
+**Publishing Ready**: Yes, with minor revisions
+
+---
+
+## 1. Search Intent Analysis
+Primary Intent: Informational
+Alignment: ✓ Strong match
+Recommendations: [specific suggestions]
+
+## 2. Keyword Optimization
+Density: 1.4% ✓ Optimal
+Critical Placements: 4/5 ✓
+Recommendations: [specific additions]
+
+## 3. Content Length Analysis
+Your Count: 2,100 words
+Status: Below competitive (need +750 words)
+Recommendations: [sections to expand]
+
+## 4. Readability Analysis
+Score: 62/100 (8th-9th grade) ✓
+Recommendations: [sentence improvements]
+
+## 5. SEO Quality Rating
+Score: 78/100 (Good)
+Critical Issues: [must fix]
+Warnings: [should fix]
+
+## 6. Priority Action Plan
+### Critical (Do First)
+1. [Most important fix with location]
+2. [Second priority]
+
+### High Priority (Do Next)
+1. [Important improvement]
+
+## 8. Publishing Checklist
+- [x] Word count competitive
+- [ ] Keyword density 1-2%
+- [ ] 3-5 internal links
+```
+
+## When It Runs
+
+The Content Analyzer runs when you:
+- Use `/analyze-existing [URL]` command
+- Manually invoke with `@content-analyzer`
+- Run comprehensive content audits
+
+It does **not** run automatically after `/write` (that uses SEO Optimizer instead).
+
+## Integration with Other Agents
+
+The Content Analyzer provides the data foundation for:
+- **SEO Optimizer** - Uses keyword and structure insights
+- **Keyword Mapper** - Builds on density analysis
+- **Editor** - Addresses readability findings
+- **Meta Creator** - Informed by intent analysis
+
+## Use Cases
+
+**Audit existing content**: Analyze published articles to find improvement opportunities
+
+**Pre-publish quality check**: Run comprehensive analysis before publishing
+
+**Competitor benchmarking**: Compare your content to top-ranking pages
+
+**Content refresh decisions**: Identify which articles need updates
+
+**Performance diagnosis**: Understand why content isn't ranking
+
+## Example Analysis
+
+For an article on "How to Start a Podcast":
+
+```
+Content Analysis Report
+
+1. Search Intent: Informational ✓
+   - Content provides step-by-step guide (matches intent)
+   - Missing: Equipment comparison (commercial sub-intent)
+
+2. Keyword Optimization: 72/100
+   - Density: 1.2% ✓
+   - Missing from: Conclusion, 2 H2 headings
+   - Add 3 instances in sections 4, 6, and conclusion
+
+3. Content Length: Too Short
+   - Your count: 1,800 words
+   - Median competitor: 2,900 words
+   - Recommendation: Add 1,000+ words covering equipment details
+
+4. Readability: 85/100 ✓
+   - Grade level: 8.2 (optimal)
+   - 3 sentences over 35 words (simplify)
+
+5. SEO Quality: 78/100
+   - Critical: Meta description 175 chars (trim to 160)
+   - Warning: Only 2 internal links (add 2-3 more)
+
+Priority Actions:
+1. Trim meta description by 15 characters
+2. Add internal links to hosting comparison and equipment guide
+3. Expand equipment section by 600 words
+4. Add keyword to H2 in section 4 and conclusion
+```
+
+## Technical Requirements
+
+The Python modules require:
+```bash
+pip install -r data_sources/requirements.txt
+```
+
+API credentials in `data_sources/config/.env` for:
+- DataForSEO (for SERP data)
+- Optional: Google Search Console (for ranking data)
+
+## Best Practices
+
+**Run before publishing**: Use as final quality gate
+
+**Focus on critical issues**: Fix must-have items before nice-to-haves
+
+**Compare to competitors**: Use length and intent data to understand gaps
+
+**Track scores over time**: Monitor SEO quality scores to measure improvement
+
+**Combine with performance data**: Use with Performance Agent for complete picture
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="SEO Optimizer" icon="magnifying-glass" href="/agents/seo-optimizer">
+    Learn about on-page optimization analysis
+  </Card>
+  <Card title="Keyword Mapper" icon="location-dot" href="/agents/keyword-mapper">
+    Deep dive into keyword distribution mapping
+  </Card>
+  <Card title="Performance" icon="chart-line" href="/agents/performance">
+    Prioritize content work with analytics data
+  </Card>
+  <Card title="Editor" icon="pen" href="/agents/editor">
+    Improve readability and human voice
+  </Card>
+</CardGroup>

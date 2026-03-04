@@ -1,0 +1,366 @@
+---
+title: 'Opportunity Scorer'
+description: 'Multi-factor scoring system for prioritizing SEO opportunities based on volume, position, intent, and more'
+---
+
+## Overview
+
+The `OpportunityScorer` class provides a comprehensive scoring system for prioritizing SEO opportunities. It considers 8 weighted factors to calculate opportunity scores and identify the highest-value content optimization tasks.
+
+## Installation
+
+```python
+from data_sources.modules.opportunity_scorer import OpportunityScorer, OpportunityType
+```
+
+## Scoring Methodology
+
+The scorer uses 8 weighted factors:
+
+- **Volume Score (25%)**: Search demand/impressions
+- **Position Score (20%)**: Proximity to target position
+- **Intent Score (20%)**: Commercial value
+- **Competition Score (15%)**: Ranking difficulty
+- **Cluster Score (10%)**: Strategic topic value
+- **CTR Score (5%)**: Improvement potential
+- **Freshness Score (5%)**: Content update requirements
+- **Trend Score (5%)**: Rising/declining interest
+
+## Opportunity Types
+
+```python
+from data_sources.modules.opportunity_scorer import OpportunityType
+
+OpportunityType.QUICK_WIN        # Position 11-20, close to page 1
+OpportunityType.IMPROVEMENT      # Position 1-10, can reach #1-3
+OpportunityType.MEDIUM_TERM      # Position 21-50, needs significant work
+OpportunityType.NEW_CONTENT      # Not ranking, competitor gap
+OpportunityType.DECLINING        # Was good, now dropping
+OpportunityType.UNDERPERFORMER   # High ranking, low CTR
+```
+
+## Initialization
+
+```python
+scorer = OpportunityScorer()
+```
+
+## Methods
+
+### calculate_score
+
+Calculate comprehensive opportunity score.
+
+```python
+result = scorer.calculate_score(
+    keyword_data={
+        'keyword': 'podcast hosting',
+        'position': 12.3,
+        'impressions': 1500,
+        'clicks': 15,
+        'ctr': 0.01,
+        'commercial_intent': 2.5
+    },
+    opportunity_type=OpportunityType.QUICK_WIN,
+    search_volume=2000,
+    difficulty=45,
+    serp_features=['featured_snippet', 'people_also_ask'],
+    cluster_value=75,
+    trend_direction='rising',
+    trend_percent=25
+)
+```
+
+<ParamField path="keyword_data" type="dict" required>
+  GSC data with position, impressions, clicks, ctr
+  <ParamField path="keyword" type="str">
+    Keyword text
+  </ParamField>
+  <ParamField path="position" type="float">
+    Average position
+  </ParamField>
+  <ParamField path="impressions" type="int">
+    Total impressions
+  </ParamField>
+  <ParamField path="clicks" type="int">
+    Total clicks
+  </ParamField>
+  <ParamField path="ctr" type="float">
+    Click-through rate (0-1)
+  </ParamField>
+  <ParamField path="commercial_intent" type="float" optional>
+    Commercial intent score (0.1-3.0)
+  </ParamField>
+</ParamField>
+
+<ParamField path="opportunity_type" type="OpportunityType" default="QUICK_WIN">
+  Type of opportunity being scored
+</ParamField>
+
+<ParamField path="search_volume" type="int" optional>
+  Monthly search volume (from DataForSEO)
+</ParamField>
+
+<ParamField path="difficulty" type="int" optional>
+  SEO difficulty 0-100 (from DataForSEO)
+</ParamField>
+
+<ParamField path="serp_features" type="list" optional>
+  SERP features present
+</ParamField>
+
+<ParamField path="cluster_value" type="int" optional>
+  Strategic value of topic cluster (0-100)
+</ParamField>
+
+<ParamField path="trend_direction" type="str" optional>
+  'rising', 'stable', or 'declining'
+</ParamField>
+
+<ParamField path="trend_percent" type="float" optional>
+  Percent change in search volume
+</ParamField>
+
+<ResponseField name="result" type="dict">
+  <ResponseField name="final_score" type="float">
+    Final weighted score (0-100)
+  </ResponseField>
+  <ResponseField name="score_breakdown" type="dict">
+    Individual scores for each factor
+  </ResponseField>
+  <ResponseField name="priority" type="str">
+    CRITICAL, HIGH, MEDIUM, LOW, or SKIP
+  </ResponseField>
+  <ResponseField name="primary_factor" type="str">
+    Primary factor driving the score
+  </ResponseField>
+  <ResponseField name="score_explanation" type="str">
+    Human-readable explanation
+  </ResponseField>
+</ResponseField>
+
+### calculate_potential_traffic
+
+Calculate potential traffic increase from ranking improvement.
+
+```python
+traffic = scorer.calculate_potential_traffic(
+    current_position=12.3,
+    target_position=7,
+    impressions=1500,
+    current_clicks=15
+)
+```
+
+<ParamField path="current_position" type="float" required>
+  Current average position
+</ParamField>
+
+<ParamField path="target_position" type="int" required>
+  Target position to reach
+</ParamField>
+
+<ParamField path="impressions" type="int" required>
+  Monthly impressions
+</ParamField>
+
+<ParamField path="current_clicks" type="int" required>
+  Current monthly clicks
+</ParamField>
+
+<ResponseField name="traffic" type="dict">
+  <ResponseField name="current_clicks" type="int">
+    Current monthly clicks
+  </ResponseField>
+  <ResponseField name="current_position" type="float">
+    Current position
+  </ResponseField>
+  <ResponseField name="current_ctr" type="float">
+    Current CTR percentage
+  </ResponseField>
+  <ResponseField name="current_expected_ctr" type="float">
+    Expected CTR for current position
+  </ResponseField>
+  <ResponseField name="target_position" type="int">
+    Target position
+  </ResponseField>
+  <ResponseField name="target_expected_ctr" type="float">
+    Expected CTR at target position
+  </ResponseField>
+  <ResponseField name="potential_clicks" type="int">
+    Projected clicks at target position
+  </ResponseField>
+  <ResponseField name="additional_clicks" type="int">
+    Additional clicks gained
+  </ResponseField>
+  <ResponseField name="percent_increase" type="float">
+    Percentage increase
+  </ResponseField>
+</ResponseField>
+
+## Expected CTR by Position
+
+The scorer uses industry-average CTR by position:
+
+| Position | Expected CTR |
+|----------|-------------|
+| 1        | 31.6%       |
+| 2        | 15.7%       |
+| 3        | 10.5%       |
+| 4        | 7.5%        |
+| 5        | 5.9%        |
+| 6        | 4.8%        |
+| 7        | 4.1%        |
+| 8        | 3.5%        |
+| 9        | 3.1%        |
+| 10       | 2.7%        |
+| 11-20    | 1.8% - 0.7% |
+
+## Priority Levels
+
+- **CRITICAL**: Score >= 80 OR (Quick win + high intent + very close to page 1)
+- **HIGH**: Score >= 65
+- **MEDIUM**: Score >= 45
+- **LOW**: Score >= 25
+- **SKIP**: Score < 25 (not worth pursuing)
+
+## Volume Score Tiers
+
+```python
+if volume >= 5000:   return 100
+elif volume >= 2000: return 90
+elif volume >= 1000: return 80
+elif volume >= 500:  return 65
+elif volume >= 250:  return 50
+elif volume >= 100:  return 35
+elif volume >= 50:   return 20
+else:                return 10
+```
+
+## Competition Score (Difficulty Inverted)
+
+```python
+if difficulty <= 20: return 100  # Very easy
+elif difficulty <= 35: return 85   # Easy
+elif difficulty <= 50: return 70   # Moderate
+elif difficulty <= 65: return 50   # Difficult
+elif difficulty <= 80: return 30   # Very difficult
+else:                  return 10   # Extremely difficult
+```
+
+## Example Usage
+
+```python
+from data_sources.modules.opportunity_scorer import OpportunityScorer, OpportunityType
+
+scorer = OpportunityScorer()
+
+# Score a quick win opportunity
+keyword_data = {
+    'keyword': 'podcast hosting software',
+    'position': 12.3,
+    'impressions': 1500,
+    'clicks': 15,
+    'ctr': 0.01,
+    'commercial_intent': 2.5  # High commercial intent
+}
+
+result = scorer.calculate_score(
+    keyword_data=keyword_data,
+    opportunity_type=OpportunityType.QUICK_WIN,
+    search_volume=2000,
+    difficulty=45,
+    serp_features=['featured_snippet', 'people_also_ask'],
+    cluster_value=75,
+    trend_direction='rising',
+    trend_percent=25
+)
+
+print("Opportunity Score Analysis")
+print("=" * 60)
+print(f"Keyword: {keyword_data['keyword']}")
+print(f"Final Score: {result['final_score']}/100")
+print(f"Priority: {result['priority']}")
+print(f"Primary Factor: {result['primary_factor']}")
+print(f"\nScore Breakdown:")
+for factor, score in result['score_breakdown'].items():
+    print(f"  {factor}: {score}/100")
+print(f"\nExplanation: {result['score_explanation']}")
+
+# Calculate traffic potential
+traffic = scorer.calculate_potential_traffic(
+    current_position=keyword_data['position'],
+    target_position=7,
+    impressions=keyword_data['impressions'],
+    current_clicks=keyword_data['clicks']
+)
+
+print(f"\nTraffic Potential:")
+print(f"  Current: {traffic['current_clicks']} clicks/month (position {traffic['current_position']})")
+print(f"  Potential: {traffic['potential_clicks']} clicks/month (position {traffic['target_position']})")
+print(f"  Gain: +{traffic['additional_clicks']} clicks (+{traffic['percent_increase']}%)")
+```
+
+## Example Output
+
+```
+Opportunity Score Analysis
+============================================================
+Keyword: podcast hosting software
+Final Score: 78.5/100
+Priority: HIGH
+Primary Factor: volume
+
+Score Breakdown:
+  volume_score: 90.0/100
+  position_score: 85.0/100
+  intent_score: 83.3/100
+  competition_score: 70.0/100
+  cluster_score: 75.0/100
+  ctr_score: 85.0/100
+  freshness_score: 50.0/100
+  trend_score: 70.0/100
+
+Explanation: Strong volume, position, intent. Weak freshness
+
+Traffic Potential:
+  Current: 15 clicks/month (position 12.3)
+  Potential: 62 clicks/month (position 7)
+  Gain: +47 clicks (+313.3%)
+```
+
+## Integration with GSC
+
+Use with Google Search Console data:
+
+```python
+from data_sources.modules.google_search_console import GoogleSearchConsole
+from data_sources.modules.opportunity_scorer import OpportunityScorer, OpportunityType
+
+gsc = GoogleSearchConsole()
+scorer = OpportunityScorer()
+
+# Get quick wins from GSC
+quick_wins = gsc.get_quick_wins(days=30)
+
+# Score each opportunity
+for kw in quick_wins[:10]:
+    result = scorer.calculate_score(
+        keyword_data=kw,
+        opportunity_type=OpportunityType.QUICK_WIN,
+        cluster_value=50  # Default cluster value
+    )
+    
+    print(f"\n{kw['keyword']}")
+    print(f"  Score: {result['final_score']}/100 ({result['priority']})")
+    print(f"  Position: {kw['position']}")
+    print(f"  Impressions: {kw['impressions']:,}")
+```
+
+## Source Code Reference
+
+Location: `data_sources/modules/opportunity_scorer.py:23`
+
+See also:
+- [Google Search Console](/api/google-search-console) - Get keyword data
+- [DataForSEO](/api/dataforseo) - Get search volume and difficulty

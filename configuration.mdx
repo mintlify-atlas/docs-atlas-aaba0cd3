@@ -1,0 +1,840 @@
+---
+title: Configuration
+description: Complete guide to configuring context files, API integrations, and settings for optimal content quality
+---
+
+# Configuration
+
+SEO Machine's content quality depends on well-configured context files and API integrations. This guide covers everything you need to set up for production-quality content.
+
+## Context Files Overview
+
+Context files are the foundation of SEO Machine. They teach the AI about your brand, style, and SEO requirements so every article sounds like your company wrote it.
+
+<Note>
+  All context files are located in the `context/` directory and are provided as templates. You must fill them out with your company's information.
+</Note>
+
+### Essential Context Files
+
+These **must** be configured before creating content:
+
+| File | Purpose | Priority |
+|------|---------|----------|
+| `brand-voice.md` | Your brand's tone, messaging, and personality | 🔴 Critical |
+| `features.md` | Product/service features and benefits | 🔴 Critical |
+| `writing-examples.md` | 3-5 exemplary blog posts | 🔴 Critical |
+
+### Recommended Context Files
+
+These **should** be configured for best results:
+
+| File | Purpose | Priority |
+|------|---------|----------|
+| `internal-links-map.md` | Key pages for strategic internal linking | 🟡 High |
+| `style-guide.md` | Editorial and formatting standards | 🟡 High |
+| `target-keywords.md` | Organized keyword research | 🟡 High |
+| `seo-guidelines.md` | SEO requirements and best practices | 🟢 Medium |
+| `competitor-analysis.md` | Competitive intelligence | 🟢 Medium |
+
+## Context File Configuration
+
+### 1. Brand Voice (`context/brand-voice.md`)
+
+Defines your brand's voice, tone, and messaging framework.
+
+<Steps>
+  <Step title="Define Voice Pillars">
+    Identify 3-5 core characteristics of your brand voice:
+    
+    ```markdown
+    ## Voice Pillars
+    
+    1. **Authentic & Honest**: We speak plainly about challenges and solutions
+    2. **Empowering**: We help creators take control of their content
+    3. **Technical but Accessible**: We explain complex topics in simple terms
+    4. **Supportive**: We're here to help, not sell
+    5. **Data-Driven**: We back claims with evidence and research
+    ```
+  </Step>
+  
+  <Step title="Set Tone Guidelines">
+    Define tone for different content types:
+    
+    ```markdown
+    ## Tone Guidelines by Content Type
+    
+    ### Educational Content (How-to Guides)
+    - Informative and patient
+    - Step-by-step and clear
+    - Encouraging and supportive
+    
+    ### Product Content (Features, Comparison)
+    - Confident but not arrogant
+    - Benefit-focused, not feature-listing
+    - Clear about limitations
+    
+    ### Thought Leadership
+    - Bold and opinionated
+    - Backed by data and experience
+    - Conversational but authoritative
+    ```
+  </Step>
+  
+  <Step title="Establish Do's and Don'ts">
+    Be specific about what to do and avoid:
+    
+    ```markdown
+    ## Writing Do's
+    ✅ Use "you" and "your" (direct address to reader)
+    ✅ Use contractions (we're, you'll, it's) for conversational tone
+    ✅ Include specific examples with names and numbers
+    ✅ Cite sources for all statistics and claims
+    ✅ Break up long paragraphs (2-4 sentences max)
+    
+    ## Writing Don'ts
+    ❌ Never use jargon without explanation
+    ❌ Don't make unsubstantiated claims
+    ❌ Avoid speaking negatively about competitors by name
+    ❌ Don't use corporate buzzwords (synergy, leverage, etc.)
+    ❌ Never open articles with generic definitions
+    ```
+  </Step>
+  
+  <Step title="Define Terminology Preferences">
+    ```markdown
+    ## Terminology Guide
+    
+    **Preferred Terms**:
+    - "podcast creator" (not "podcaster")
+    - "private podcast" (not "subscription podcast")
+    - "RSS feed" (not "podcast feed")
+    
+    **Terms to Avoid**:
+    - "utilize" → use "use"
+    - "leverage" → use "use" or "take advantage of"
+    - "best-in-class" → be specific about what makes it good
+    ```
+  </Step>
+</Steps>
+
+<Tip>
+  See `examples/castos/brand-voice.md` for a complete real-world example from a podcast hosting company.
+</Tip>
+
+### 2. Writing Examples (`context/writing-examples.md`)
+
+Provides 3-5 exemplary blog posts so the AI learns your style through real examples.
+
+<Warning>
+  This is one of the **most important** context files. Quality examples = quality output.
+</Warning>
+
+<Steps>
+  <Step title="Select Your Best Posts">
+    Choose 3-5 articles that represent:
+    - Your best writing
+    - Different content types (how-to, comparison, strategy)
+    - Your ideal brand voice
+    - Strong SEO performance
+  </Step>
+  
+  <Step title="Include Full Content">
+    **Critical**: Copy the **entire article**, not just excerpts:
+    
+    ```markdown
+    # Writing Examples
+    
+    ## Example 1: How to Start a Podcast in 2025
+    
+    **URL**: https://yoursite.com/blog/start-podcast
+    **Type**: How-to Guide
+    **Word Count**: 3,200
+    **Published**: January 2025
+    
+    **What makes this great**:
+    - Opens with a compelling scenario, not a definition
+    - Uses specific numbers throughout ("73% of creators")
+    - Includes real examples with names
+    - Natural product mentions without being salesy
+    - Clear step-by-step structure
+    
+    **Full Content**:
+    
+    [Paste the complete article markdown here, including all headings,
+    paragraphs, lists, and formatting]
+    
+    ---
+    
+    ## Example 2: [Next Article]
+    ...
+    ```
+  </Step>
+  
+  <Step title="Annotate Each Example">
+    For each article, explain:
+    - What makes it great
+    - What voice/tone techniques it uses
+    - What structure patterns to replicate
+    - What SEO elements work well
+  </Step>
+</Steps>
+
+### 3. Features (`context/features.md`)
+
+Lists your product or service features, benefits, and differentiators.
+
+<CodeGroup>
+```markdown Template
+# Product/Service Features
+
+## Overview
+[Brief description of what your product/service does]
+
+## Core Features
+
+### Feature 1: [Name]
+**Description**: [What it does]
+**Benefit**: [Why it matters to users]
+**Use Case**: [When/how users would use this]
+
+### Feature 2: [Name]
+...
+
+## Key Differentiators
+
+What makes us different from competitors:
+1. **[Differentiator 1]**: [Specific advantage]
+2. **[Differentiator 2]**: [Specific advantage]
+
+## Common Pain Points We Solve
+
+- **Pain Point 1**: [How we solve it]
+- **Pain Point 2**: [How we solve it]
+
+## When to Mention Features
+
+- **Natural Context**: When discussing [topic], mention [feature]
+- **Problem-Solution**: For [pain point], highlight [feature]
+```
+
+```markdown Example: SaaS Product
+# Podcast Hosting Platform Features
+
+## Overview
+Castos is an unlimited podcast hosting platform for creators and brands
+who need reliable, scalable podcast infrastructure.
+
+## Core Features
+
+### Unlimited Uploads
+**Description**: Upload unlimited audio files of any length without
+storage caps or bandwidth limits
+**Benefit**: Never worry about hitting limits or overage charges
+**Use Case**: High-frequency podcasters, networks, or video podcasts
+
+### Private Podcasting
+**Description**: Create password-protected private podcasts for
+members-only content
+**Benefit**: Monetize exclusive content or create internal company podcasts
+**Use Case**: Membership sites, online courses, internal communications
+
+### Built-in Website
+**Description**: Customizable podcast website with player and episode pages
+**Benefit**: No need for separate website hosting or development
+**Use Case**: Creators who want a simple, professional web presence
+
+## Key Differentiators
+
+1. **Truly Unlimited**: No hidden caps on storage, bandwidth, or downloads
+   (competitors often have "fair use" limits)
+   
+2. **Superior Audio Quality**: 320kbps encoding vs industry standard 128kbps
+   
+3. **White-Glove Migration**: Free migration service with dedicated support
+   (competitors charge $99-299)
+   
+4. **Real Human Support**: 24/7 support from actual podcast experts,
+   not chatbots
+
+## Common Pain Points We Solve
+
+- **Unexpected Overage Fees**: Unlimited plans mean predictable costs
+- **Complex Migration**: We handle entire migration process
+- **Poor Audio Quality**: Higher bitrate = better sound
+- **Technical Barriers**: Simple interface, no technical knowledge needed
+```
+</CodeGroup>
+
+### 4. Internal Links Map (`context/internal-links-map.md`)
+
+Catalog of key pages for strategic internal linking in articles.
+
+<Steps>
+  <Step title="Organize by Category">
+    Group pages by type:
+    
+    ```markdown
+    # Internal Links Map
+    
+    ## Product Pages
+    - **[Podcast Hosting](https://yoursite.com/hosting)**
+      Description: Main hosting service overview
+      Use when: Discussing podcast infrastructure, hosting choices
+      
+    - **[Private Podcasting](https://yoursite.com/private)**
+      Description: Private/members-only podcast feature
+      Use when: Talking about monetization, exclusive content
+    
+    ## Pillar Content
+    - **[Complete Podcasting Guide](https://yoursite.com/blog/guide)**
+      Description: 5,000-word comprehensive guide
+      Use when: Any beginner-focused content
+    ```
+  </Step>
+  
+  <Step title="Map Topic Clusters">
+    Organize related content into clusters:
+    
+    ```markdown
+    ## Topic Cluster: Podcast Growth
+    
+    **Pillar**: [Growing Your Podcast](https://yoursite.com/blog/grow-podcast)
+    
+    **Cluster Articles**:
+    - [Podcast Marketing Strategies](https://yoursite.com/blog/marketing)
+    - [Getting More Listeners](https://yoursite.com/blog/get-listeners)
+    - [Podcast Promotion Guide](https://yoursite.com/blog/promotion)
+    - [Cross-Promotion Strategies](https://yoursite.com/blog/cross-promotion)
+    ```
+  </Step>
+  
+  <Step title="Include Anchor Text Suggestions">
+    ```markdown
+    ## Anchor Text Recommendations
+    
+    **For Product Links**:
+    - "podcast hosting platform"
+    - "reliable podcast hosting"
+    - "podcast hosting service"
+    - Avoid: "click here", "learn more"
+    
+    **For Content Links**:
+    - Descriptive phrases that hint at the destination
+    - Include target keyword where natural
+    - Use variations to avoid repetition
+    ```
+  </Step>
+</Steps>
+
+### 5. Target Keywords (`context/target-keywords.md`)
+
+Organized keyword research by topic cluster.
+
+<CodeGroup>
+```markdown Template
+# Target Keywords
+
+## Cluster: [Topic]
+
+**Pillar Keyword**: [main keyword] ([volume]/mo, [difficulty])
+
+**Cluster Keywords**:
+- [keyword 1] ([volume]/mo, [difficulty])
+- [keyword 2] ([volume]/mo, [difficulty])
+
+**Long-tail Variations**:
+- [long-tail 1] ([volume]/mo, [difficulty])
+- [long-tail 2] ([volume]/mo, [difficulty])
+
+**Search Intent**: [Informational/Commercial/Transactional]
+
+**Current Rankings**:
+- [keyword]: Position [X] (as of [date])
+- [keyword]: Not ranking
+
+**Content Gaps**:
+- [Opportunity 1]
+- [Opportunity 2]
+```
+
+```markdown Example
+# Target Keywords
+
+## Cluster: Podcast Hosting
+
+**Pillar Keyword**: podcast hosting (12,000/mo, Medium)
+
+**Cluster Keywords**:
+- best podcast hosting (5,400/mo, High)
+- podcast hosting platforms (2,900/mo, Medium)
+- podcast hosting comparison (1,600/mo, Medium)
+- podcast hosting services (1,300/mo, Medium)
+- podcast hosting sites (880/mo, Low)
+
+**Long-tail Variations**:
+- best podcast hosting for beginners (720/mo, Low)
+- unlimited podcast hosting (480/mo, Low)
+- podcast hosting with transcription (320/mo, Low)
+- podcast hosting for churches (210/mo, Low)
+
+**Search Intent**: Commercial Investigation
+(Users researching options before purchase decision)
+
+**Current Rankings**:
+- podcast hosting: Position 8
+- best podcast hosting: Position 15
+- podcast hosting platforms: Not ranking
+
+**Content Gaps**:
+- No comparison content targeting "best podcast hosting"
+- Missing beginner-focused guide
+- Opportunity for feature comparison table
+```
+</CodeGroup>
+
+### 6. Style Guide (`context/style-guide.md`)
+
+Editorial and formatting standards for consistency.
+
+<AccordionGroup>
+  <Accordion title="Grammar & Mechanics">
+    ```markdown
+    ## Grammar & Mechanics
+    
+    **Capitalization**:
+    - Product names: Capitalize (WordPress, Google Analytics)
+    - Features: Lowercase unless proper noun (private podcasting)
+    - Headings: Title case for H1, sentence case for H2/H3
+    
+    **Numbers**:
+    - Spell out one through nine
+    - Use numerals for 10 and above
+    - Exception: Always use numerals for percentages, prices, dates
+    
+    **Lists**:
+    - Use parallel structure (all sentences or all fragments)
+    - End with period if items are complete sentences
+    - No period if items are fragments
+    ```
+  </Accordion>
+  
+  <Accordion title="Formatting Standards">
+    ```markdown
+    ## Formatting Standards
+    
+    **Headings**:
+    - One H1 per article (the title)
+    - H2 for main sections
+    - H3 for subsections
+    - Never skip heading levels (H1 → H3)
+    
+    **Paragraphs**:
+    - Maximum 4 sentences
+    - Prefer 2-3 sentences
+    - Single sentence paragraphs OK for emphasis
+    
+    **Emphasis**:
+    - **Bold** for key concepts and important terms
+    - *Italics* for emphasis or introducing new terms
+    - `Code formatting` for technical terms and file names
+    ```
+  </Accordion>
+  
+  <Accordion title="Link Standards">
+    ```markdown
+    ## Link Standards
+    
+    **Internal Links**:
+    - 3-5 per article minimum
+    - Descriptive anchor text with keywords
+    - Open in same tab
+    
+    **External Links**:
+    - 2-3 per article minimum
+    - Link to authoritative sources for statistics
+    - Open in new tab (_blank)
+    - Use rel="noopener noreferrer" for security
+    
+    **Link Placement**:
+    - First internal link in first 500 words
+    - Distribute throughout article
+    - At least one link per major section
+    ```
+  </Accordion>
+</AccordionGroup>
+
+### 7. SEO Guidelines (`context/seo-guidelines.md`)
+
+SEO requirements and best practices specific to your needs.
+
+<CodeGroup>
+```markdown SEO Requirements
+# SEO Guidelines
+
+## Content Length
+- **Minimum**: 2,000 words
+- **Target**: 2,500-3,000 words
+- **Competitive niches**: 3,500+ words
+
+## Keyword Optimization
+
+**Primary Keyword Density**: 1-2%
+- Too low (<1%): May not rank
+- Too high (>2%): Risk of keyword stuffing
+
+**Primary Keyword Placement**:
+- [ ] H1 headline
+- [ ] First 100 words
+- [ ] At least 2-3 H2 headings
+- [ ] Meta title
+- [ ] Meta description
+- [ ] URL slug
+- [ ] First and last paragraph
+
+## Meta Elements
+
+**Meta Title**:
+- Length: 50-60 characters
+- Include primary keyword (preferably at start)
+- Include brand name at end (if room)
+- Compelling and click-worthy
+
+**Meta Description**:
+- Length: 150-160 characters
+- Include primary keyword
+- Clear value proposition
+- Call-to-action when appropriate
+
+## Content Structure
+
+**Introduction**:
+- Hook in first 1-2 sentences
+- Primary keyword in first 100 words
+- Clear value proposition
+- 150-200 words total
+
+**Body**:
+- H2 section every 400-500 words
+- H3 subsections for complex topics
+- Lists for scannability
+- 2-3 images or visuals
+
+**Conclusion**:
+- Summarize key takeaways
+- Clear call-to-action
+- 150-200 words
+
+## Link Requirements
+
+**Internal Links**: 3-5 minimum
+- Link to pillar content
+- Link to related cluster articles
+- Link to product/service pages naturally
+- Vary anchor text
+
+**External Links**: 2-3 minimum
+- Link to authoritative sources
+- Cite statistics and data
+- Use rel="nofollow" for competitor links
+
+## Readability
+
+**Target Reading Level**: 8th-10th grade
+- Use Flesch Reading Ease: 60-70
+- Average sentence length: 15-20 words
+- Paragraphs: 2-4 sentences max
+- Use transition words
+- Active voice preferred (80%+ of sentences)
+```
+</CodeGroup>
+
+### 8. Competitor Analysis (`context/competitor-analysis.md`)
+
+Competitive intelligence and differentiation opportunities.
+
+<CodeGroup>
+```markdown Template
+# Competitor Analysis
+
+## Primary Competitors
+
+### Competitor 1: [Name]
+**Website**: [URL]
+**Positioning**: [How they position themselves]
+**Strengths**:
+- [Strength 1]
+- [Strength 2]
+**Weaknesses**:
+- [Weakness 1]
+- [Weakness 2]
+**Content Strategy**:
+- Publishing frequency: [X posts/month]
+- Content types: [How-to, comparison, etc.]
+- Top performing content: [Examples]
+
+## Content Gaps
+
+Topics competitors cover that we don't:
+1. [Gap 1]
+2. [Gap 2]
+
+Topics we could cover better:
+1. [Opportunity 1]
+2. [Opportunity 2]
+
+## Differentiation Strategy
+
+How to position our content differently:
+- **Angle 1**: [Our unique perspective]
+- **Angle 2**: [Our specific advantage]
+- **Angle 3**: [What we can say that they can't]
+```
+</CodeGroup>
+
+## API Integration Configuration
+
+### Environment Variables
+
+Create `data_sources/config/.env` with your API credentials:
+
+<CodeGroup>
+```bash .env Template
+# Google Analytics 4
+GA4_PROPERTY_ID=123456789
+GA4_CREDENTIALS_PATH=./credentials/ga4-credentials.json
+
+# Google Search Console
+GSC_SITE_URL=https://yoursite.com/
+GSC_CREDENTIALS_PATH=./credentials/gsc-credentials.json
+
+# DataForSEO
+DATAFORSEO_LOGIN=your_email@example.com
+DATAFORSEO_PASSWORD=your_api_password_here
+
+# WordPress Publishing
+WP_URL=https://yoursite.com
+WP_USERNAME=your_username
+WP_APP_PASSWORD=your_application_password
+
+# Optional Configuration
+BLOG_PATH=/blog/
+COMPANY_NAME=Your Company Name
+COMPANY_DOMAIN=yoursite.com
+TARGET_INDUSTRY=your-industry
+```
+</CodeGroup>
+
+<Warning>
+  Never commit your `.env` file to version control! It should already be in `.gitignore`.
+</Warning>
+
+See the [Installation Guide](/installation#step-5-configure-api-integrations-optional) for detailed API setup instructions.
+
+## Competitor Configuration
+
+For SEO analysis scripts, configure `config/competitors.json`:
+
+<CodeGroup>
+```json Template
+{
+  "company": {
+    "name": "Your Company",
+    "domain": "yoursite.com",
+    "industry": "your-industry"
+  },
+  "competitors": [
+    {
+      "name": "Competitor 1",
+      "domain": "competitor1.com",
+      "positioning": "Their market position"
+    },
+    {
+      "name": "Competitor 2",
+      "domain": "competitor2.com",
+      "positioning": "Their market position"
+    }
+  ],
+  "target_keywords": [
+    "primary keyword",
+    "secondary keyword",
+    "product category"
+  ]
+}
+```
+
+```json Example: Podcast Hosting
+{
+  "company": {
+    "name": "Castos",
+    "domain": "castos.com",
+    "industry": "podcast-hosting"
+  },
+  "competitors": [
+    {
+      "name": "Buzzsprout",
+      "domain": "buzzsprout.com",
+      "positioning": "Beginner-friendly, simple interface"
+    },
+    {
+      "name": "Transistor",
+      "domain": "transistor.fm",
+      "positioning": "Professional networks, analytics"
+    },
+    {
+      "name": "Libsyn",
+      "domain": "libsyn.com",
+      "positioning": "Enterprise, long-established"
+    }
+  ],
+  "target_keywords": [
+    "podcast hosting",
+    "best podcast hosting",
+    "podcast hosting platforms",
+    "private podcasting"
+  ]
+}
+```
+</CodeGroup>
+
+Then run SEO analysis scripts:
+
+```bash
+python3 seo_baseline_analysis.py
+python3 seo_competitor_analysis.py
+python3 seo_bofu_rankings.py
+```
+
+## Validation & Testing
+
+Verify your configuration is working:
+
+### Test Context Files
+
+<Steps>
+  <Step title="Create Test Article">
+    ```
+    /write test topic about your product
+    ```
+  </Step>
+  
+  <Step title="Review Output">
+    Check that the article:
+    - Matches your brand voice
+    - Uses terminology from your style guide
+    - Mentions features appropriately
+    - Includes internal links from your map
+  </Step>
+  
+  <Step title="Iterate">
+    If output doesn't match expectations, refine context files and test again
+  </Step>
+</Steps>
+
+### Test API Integrations
+
+<CodeGroup>
+```bash Test DataForSEO
+python3 test_dataforseo.py
+```
+
+```bash Test Analytics
+python3 research_performance_matrix.py
+```
+
+```bash Test WordPress Publishing
+# Create test post
+/write test article
+
+# Publish to WordPress (creates draft)
+/publish-draft drafts/test-article-[date].md
+```
+</CodeGroup>
+
+## Maintenance
+
+### Weekly Tasks
+
+- Add new topic ideas to `topics/` directory
+- Update `target-keywords.md` with new keyword opportunities
+- Check for broken links in `internal-links-map.md`
+
+### Monthly Tasks
+
+- Review published content performance
+- Update `writing-examples.md` if better examples emerge
+- Add newly published content to `internal-links-map.md`
+- Track competitor activity in `competitor-analysis.md`
+
+### Quarterly Tasks
+
+- Full audit of all context files
+- Update SEO guidelines based on algorithm changes
+- Comprehensive competitor analysis refresh
+- Review and update topic clusters in `target-keywords.md`
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Start Small, Iterate">
+    Don't try to perfect everything at once:
+    1. Configure the 3 essential files first
+    2. Create 2-3 test articles
+    3. Review output and identify gaps
+    4. Refine context files
+    5. Gradually add more context (keywords, competitors, etc.)
+  </Accordion>
+  
+  <Accordion title="Use Real Examples">
+    The AI learns best from real examples:
+    - Use actual published posts in `writing-examples.md`
+    - Reference real feature names in `features.md`
+    - Include actual competitor URLs in `competitor-analysis.md`
+    - Use real keyword data in `target-keywords.md`
+  </Accordion>
+  
+  <Accordion title="Be Specific">
+    Vague guidance produces vague output:
+    - ❌ "Be friendly"
+    - ✅ "Use contractions, direct address (you/your), and conversational transitions"
+    
+    - ❌ "Follow SEO best practices"
+    - ✅ "Primary keyword density: 1-2%, placement in H1, first 100 words, 2-3 H2s"
+  </Accordion>
+  
+  <Accordion title="Keep Files Updated">
+    Context files are living documents:
+    - Update when your brand voice evolves
+    - Add new examples as you publish great content
+    - Refresh competitor analysis quarterly
+    - Update keyword targets based on performance
+  </Accordion>
+</AccordionGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Output doesn't match brand voice">
+    **Solution**: Review `brand-voice.md` and add more specific guidance. Include more examples in `writing-examples.md` that demonstrate the desired voice.
+  </Accordion>
+  
+  <Accordion title="Keywords feel forced">
+    **Solution**: Check `seo-guidelines.md` target density (should be 1-2%). Run `/optimize [file]` for keyword placement suggestions.
+  </Accordion>
+  
+  <Accordion title="Internal links aren't relevant">
+    **Solution**: Update `internal-links-map.md` with better page descriptions and organize by topic cluster.
+  </Accordion>
+  
+  <Accordion title="Content too generic">
+    **Solution**: Add more specific examples to `features.md` and `competitor-analysis.md`. Use differentiation opportunities to stand out.
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+With your configuration complete, you're ready to create high-quality content at scale.
+
+<Card title="Quick Start Guide" icon="rocket" href="/quickstart">
+  Create your first SEO-optimized article in 10 minutes
+</Card>

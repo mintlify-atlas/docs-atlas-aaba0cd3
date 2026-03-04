@@ -1,0 +1,261 @@
+---
+title: Google Analytics 4
+description: Connect Google Analytics 4 to track traffic, engagement, and conversion data for your content
+---
+
+Google Analytics 4 provides traffic data, user behavior metrics, and page performance insights that power SEO Machine's content recommendations.
+
+## What You'll Get
+
+- Page views and sessions by article
+- Average engagement time and scroll depth
+- Bounce rate and engagement rate
+- Conversion tracking (sign-ups, trials)
+- Traffic sources (organic, direct, referral)
+- Declining content alerts
+
+## Prerequisites
+
+- Admin access to your Google Analytics 4 property
+- A Google Cloud project (or create a new one)
+
+## Setup Instructions
+
+<Steps>
+  <Step title="Enable the Google Analytics Data API">
+    1. Go to the [Google Cloud Console](https://console.cloud.google.com/)
+    2. Select or create a project for your SEO Machine integration
+    3. Navigate to **APIs & Services > Library**
+    4. Search for "Google Analytics Data API"
+    5. Click on the API and click **Enable**
+  </Step>
+  
+  <Step title="Create a Service Account">
+    1. In Google Cloud Console, go to **APIs & Services > Credentials**
+    2. Click **Create Credentials** and select **Service Account**
+    3. Fill in the service account details:
+       - **Name**: `seo-machine-ga4` (or any descriptive name)
+       - **Description**: "Service account for SEO Machine GA4 integration"
+    4. Click **Create and Continue**
+    5. Skip the optional steps (click **Continue** then **Done**)
+  </Step>
+  
+  <Step title="Download the Service Account Key">
+    1. Find your newly created service account in the **Credentials** page
+    2. Click on the service account email
+    3. Go to the **Keys** tab
+    4. Click **Add Key > Create new key**
+    5. Select **JSON** as the key type
+    6. Click **Create**
+    7. The JSON key file will automatically download
+    
+    <Warning>
+      Keep this file secure! It provides access to your GA4 data.
+    </Warning>
+  </Step>
+  
+  <Step title="Grant Access to Your GA4 Property">
+    1. Go to [Google Analytics](https://analytics.google.com/)
+    2. Select your GA4 property
+    3. Click **Admin** (gear icon in bottom left)
+    4. Under **Property**, click **Property access management**
+    5. Click the **+** button and select **Add users**
+    6. Enter the service account email (looks like `seo-machine-ga4@your-project.iam.gserviceaccount.com`)
+    7. Select the role **Viewer** (read-only access)
+    8. Uncheck "Notify new users by email"
+    9. Click **Add**
+  </Step>
+  
+  <Step title="Get Your GA4 Property ID">
+    1. In Google Analytics, click **Admin**
+    2. Under **Property**, click **Property Settings**
+    3. Copy your **Property ID** (format: `123456789`)
+  </Step>
+  
+  <Step title="Configure SEO Machine">
+    1. Rename your downloaded JSON key file to `ga4-credentials.json`
+    2. Move the file to: `credentials/ga4-credentials.json`
+    3. Add to your `.env` file:
+    
+    ```bash
+    GA4_PROPERTY_ID=123456789
+    GA4_CREDENTIALS_PATH=./credentials/ga4-credentials.json
+    ```
+  </Step>
+</Steps>
+
+## Available Methods
+
+The `GoogleAnalytics` class provides these methods:
+
+### Get Top Pages
+
+Fetch top performing pages by pageviews:
+
+```python
+from data_sources.modules.google_analytics import GoogleAnalytics
+
+ga = GoogleAnalytics()
+
+# Get top 10 blog articles (last 30 days)
+top_articles = ga.get_top_pages(
+    days=30,
+    limit=10,
+    path_filter="/blog/"
+)
+
+for article in top_articles:
+    print(f"{article['title']}")
+    print(f"  {article['pageviews']:,} pageviews")
+    print(f"  {article['engagement_rate']:.1%} engagement")
+```
+
+### Get Page Trends
+
+Analyze traffic trends for a specific page:
+
+```python
+trends = ga.get_page_trends(
+    url="/blog/podcast-monetization-guide",
+    days=90,
+    granularity="week"  # or "day"
+)
+
+print(f"Trend: {trends['trend_direction']}")
+print(f"Change: {trends['trend_percent']}%")
+print(f"Total pageviews: {trends['total_pageviews']:,}")
+```
+
+Returns:
+- `timeline`: List of pageviews by period
+- `trend_direction`: "rising", "declining", or "stable"
+- `trend_percent`: Percentage change
+- `total_pageviews`: Sum across all periods
+
+### Get Conversions
+
+Track conversion data by page:
+
+```python
+conversions = ga.get_conversions(
+    days=30,
+    path_filter="/blog/"
+)
+
+for page in conversions:
+    print(f"{page['title']}")
+    print(f"  {page['conversions']:.0f} conversions")
+    print(f"  {page['conversion_rate']:.2f}% rate")
+```
+
+### Get Traffic Sources
+
+Breakdown of traffic sources:
+
+```python
+sources = ga.get_traffic_sources(
+    url="/blog/podcast-monetization-guide",  # Optional
+    days=30
+)
+
+for source in sources:
+    print(f"{source['source']}: {source['sessions']:,} sessions")
+```
+
+### Find Declining Pages
+
+Identify content losing traffic:
+
+```python
+declining = ga.get_declining_pages(
+    comparison_days=30,
+    threshold_percent=-20.0,  # -20% or worse
+    path_filter="/blog/"
+)
+
+for page in declining:
+    print(f"{page['title']}")
+    print(f"  {page['change_percent']:.1f}% change")
+    print(f"  Priority: {page['priority']}")
+```
+
+## Data Returned
+
+Each page data object includes:
+
+```python
+{
+    'path': '/blog/podcast-monetization',
+    'title': 'How to Monetize Your Podcast',
+    'pageviews': 12500,
+    'sessions': 8900,
+    'avg_session_duration': 245.3,  # seconds
+    'bounce_rate': 0.42,  # 42%
+    'engagement_rate': 0.68  # 68%
+}
+```
+
+## Integration with Performance Agent
+
+The Performance Agent automatically uses GA4 data:
+
+```bash
+/performance-review
+```
+
+This command:
+1. Fetches data from GA4
+2. Identifies declining content
+3. Finds high-traffic articles needing updates
+4. Prioritizes next actions
+5. Creates recommendations report
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Error: Permission denied">
+    - Verify the service account email is added to your GA4 property with Viewer permissions
+    - Double-check you're using the correct Property ID in `.env`
+    - Wait a few minutes after adding the service account for changes to propagate
+  </Accordion>
+  
+  <Accordion title="Error: API not enabled">
+    - Make sure you enabled the Google Analytics Data API in Google Cloud Console
+    - Wait a few minutes after enabling for changes to take effect
+    - Verify you're using the correct Google Cloud project
+  </Accordion>
+  
+  <Accordion title="Error: Invalid credentials">
+    - Verify the JSON key file is in the correct location: `credentials/ga4-credentials.json`
+    - Ensure the file hasn't been corrupted or modified
+    - Check that the service account hasn't been deleted in Google Cloud Console
+  </Accordion>
+  
+  <Accordion title="Error: No data returned">
+    - Check date ranges (some properties have data delays)
+    - Verify the Property ID is correct
+    - Ensure your property has data for the requested time period
+    - Try a longer time range (e.g., 90 days instead of 7)
+  </Accordion>
+</AccordionGroup>
+
+## Testing Your Integration
+
+Verify GA4 is working:
+
+```bash
+python3 -c "from data_sources.modules.google_analytics import GoogleAnalytics; ga = GoogleAnalytics(); print(ga.get_top_pages(days=30, limit=5))"
+```
+
+Expected output: List of top pages with metrics.
+
+## What's Next
+
+<CardGroup cols={2}>
+  <Card title="Google Search Console" icon="magnifying-glass" href="/data-sources/google-search-console">
+    Add search performance data to complement GA4 traffic metrics
+  </Card>
+  <Card title="DataForSEO" icon="ranking-star" href="/data-sources/dataforseo">
+    Enable competitive keyword research and SERP analysis
+  </Card>
+</CardGroup>

@@ -1,0 +1,496 @@
+---
+title: "SEO Quality Rater"
+description: "Rate content against SEO best practices with a comprehensive 0-100 score and actionable recommendations"
+---
+
+The SEO Quality Rater evaluates content against SEO best practices and provides a comprehensive 0-100 score with detailed category breakdowns and actionable recommendations. It checks content quality, keyword optimization, meta elements, structure, links, and readability.
+
+## Basic Usage
+
+Use the convenience function for quick rating:
+
+```python
+from data_sources.modules.seo_quality_rater import rate_seo_quality
+
+result = rate_seo_quality(
+    content=article_content,
+    meta_title="How to Start a Podcast: Complete Guide for 2024",
+    meta_description="Learn how to start a podcast from scratch with this step-by-step guide. Everything you need to know about equipment, recording, and publishing.",
+    primary_keyword="start a podcast",
+    secondary_keywords=["podcast hosting", "recording software"],
+    keyword_density=1.8,
+    internal_link_count=4,
+    external_link_count=2
+)
+
+print(f"Overall Score: {result['overall_score']}/100")
+print(f"Grade: {result['grade']}")
+print(f"Publishing Ready: {result['publishing_ready']}")
+```
+
+## Class API
+
+### SEOQualityRater
+
+The main rater class with optional custom guidelines:
+
+```python
+from data_sources.modules.seo_quality_rater import SEOQualityRater
+
+# Use default guidelines
+rater = SEOQualityRater()
+
+# Or provide custom guidelines
+custom_guidelines = {
+    'min_word_count': 1500,
+    'optimal_word_count': 2000,
+    'primary_keyword_density_min': 1.0,
+    'primary_keyword_density_max': 2.0
+}
+rater = SEOQualityRater(guidelines=custom_guidelines)
+
+result = rater.rate(
+    content=article_content,
+    meta_title="Your Title",
+    meta_description="Your description",
+    primary_keyword="your keyword"
+)
+```
+
+### rate()
+
+Rate content against SEO best practices.
+
+<ParamField path="content" type="string" required>
+  Article content to rate (full text including headers)
+</ParamField>
+
+<ParamField path="meta_title" type="string">
+  Meta title tag. Target length: 50-60 characters
+</ParamField>
+
+<ParamField path="meta_description" type="string">
+  Meta description tag. Target length: 150-160 characters
+</ParamField>
+
+<ParamField path="primary_keyword" type="string">
+  Target primary keyword for optimization checks
+</ParamField>
+
+<ParamField path="secondary_keywords" type="list[string]">
+  List of secondary keywords to check
+</ParamField>
+
+<ParamField path="keyword_density" type="float">
+  Pre-calculated keyword density (from Keyword Analyzer)
+</ParamField>
+
+<ParamField path="internal_link_count" type="int">
+  Number of internal links. Target: 3-5 links
+</ParamField>
+
+<ParamField path="external_link_count" type="int">
+  Number of external links. Target: 2-3 links
+</ParamField>
+
+<ResponseField name="overall_score" type="float">
+  Overall SEO score (0-100)
+</ResponseField>
+
+<ResponseField name="grade" type="string">
+  Letter grade: `A (Excellent)`, `B (Good)`, `C (Average)`, `D (Needs Work)`, `F (Poor)`
+</ResponseField>
+
+<ResponseField name="category_scores" type="object">
+  Individual category scores (0-100):
+  - `content` (20% weight): Content length and quality
+  - `keyword_optimization` (25% weight): Keyword usage and placement
+  - `meta_elements` (15% weight): Meta title and description
+  - `structure` (15% weight): Heading hierarchy and organization
+  - `links` (15% weight): Internal and external linking
+  - `readability` (10% weight): Sentence length and formatting
+</ResponseField>
+
+<ResponseField name="critical_issues" type="list[string]">
+  Critical issues that must be fixed before publishing
+</ResponseField>
+
+<ResponseField name="warnings" type="list[string]">
+  Important warnings that should be addressed
+</ResponseField>
+
+<ResponseField name="suggestions" type="list[string]">
+  Optional suggestions for improvement
+</ResponseField>
+
+<ResponseField name="publishing_ready" type="boolean">
+  True if score >= 80 and no critical issues
+</ResponseField>
+
+<ResponseField name="details" type="object">
+  Additional details:
+  - `word_count` (int): Total word count
+  - `h2_count` (int): Number of H2 sections
+  - `has_h1` (bool): Has H1 heading
+  - `keyword_in_h1` (bool): Keyword in H1
+  - `keyword_in_first_100` (bool): Keyword in first 100 words
+</ResponseField>
+
+## Category Scores
+
+### Content Score (20% weight)
+
+Evaluates content length and paragraph structure:
+
+- **Word count**: Minimum 2000, optimal 2500, max 3000
+- **Paragraph length**: Average 30-150 words per paragraph
+
+```python
+content_score = result['category_scores']['content']
+print(f"Content Score: {content_score}/100")
+```
+
+Penalties:
+- Under 2000 words: -30 points (critical)
+- Under 2500 words: -10 points (warning)
+- Paragraphs > 150 words: -10 points
+- Paragraphs < 30 words: -5 points
+
+### Keyword Optimization Score (25% weight)
+
+Evaluates keyword usage and placement:
+
+- **Keyword in H1**: Required
+- **Keyword in first 100 words**: Required
+- **Keyword in H2 headings**: At least 33% of H2s
+- **Keyword density**: Target 1.0-2.0%
+
+```python
+keyword_score = result['category_scores']['keyword_optimization']
+print(f"Keyword Score: {keyword_score}/100")
+```
+
+Penalties:
+- Missing from H1: -20 points (critical)
+- Missing from first 100 words: -15 points (critical)
+- Low H2 presence: -10 points
+- Density too low: -15 points
+- Density too high (> 3%): -20 points (critical)
+
+### Meta Elements Score (15% weight)
+
+Evaluates meta title and description:
+
+- **Meta title**: 50-60 characters, includes keyword
+- **Meta description**: 150-160 characters, includes keyword
+
+```python
+meta_score = result['category_scores']['meta_elements']
+print(f"Meta Score: {meta_score}/100")
+```
+
+Penalties:
+- Missing meta title: -40 points (critical)
+- Missing meta description: -40 points (critical)
+- Title too short/long: -10-15 points
+- Description too short/long: -10-15 points
+- Keyword not in title: -15 points
+- Keyword not in description: -10 points
+
+### Structure Score (15% weight)
+
+Evaluates heading hierarchy:
+
+- **H1 count**: Exactly one H1
+- **H2 count**: Minimum 4, optimal 6
+
+```python
+structure_score = result['category_scores']['structure']
+print(f"Structure Score: {structure_score}/100")
+```
+
+Penalties:
+- Missing H1: -30 points (critical)
+- Multiple H1s: -20 points (critical)
+- Under 4 H2s: -15 points
+- Under 6 H2s: -5 points
+
+### Links Score (15% weight)
+
+Evaluates internal and external linking:
+
+- **Internal links**: Minimum 3, optimal 5
+- **External links**: Minimum 2, optimal 3
+
+```python
+link_score = result['category_scores']['links']
+print(f"Link Score: {link_score}/100")
+```
+
+Penalties:
+- Under 3 internal links: -20 points
+- Under 5 internal links: -5 points
+- Under 2 external links: -15 points
+- Under 3 external links: -5 points
+
+### Readability Score (10% weight)
+
+Evaluates sentence length and formatting:
+
+- **Average sentence length**: Under 20 words
+- **Very long sentences**: Under 35 words
+- **Lists**: Use bullet or numbered lists
+
+```python
+readability_score = result['category_scores']['readability']
+print(f"Readability Score: {readability_score}/100")
+```
+
+Penalties:
+- Average sentence > 25 words: -10 points
+- Many very long sentences: -10 points
+- No lists: -5 points
+
+## Score Interpretation
+
+### Letter Grades
+
+- **A (90-100)**: Excellent - Ready to publish
+- **B (80-89)**: Good - Minor improvements recommended
+- **C (70-79)**: Average - Several improvements needed
+- **D (60-69)**: Needs Work - Major improvements required
+- **F (0-59)**: Poor - Significant rewrite needed
+
+### Publishing Ready
+
+Content is marked as `publishing_ready` when:
+1. Overall score >= 80
+2. No critical issues present
+
+```python
+if result['publishing_ready']:
+    print("✅ Content is ready to publish!")
+else:
+    print("⚠️ Address issues before publishing")
+    print(f"Critical Issues: {len(result['critical_issues'])}")
+```
+
+## Issue Types
+
+### Critical Issues
+
+Must be fixed before publishing:
+
+```python
+if result['critical_issues']:
+    print("Critical Issues:")
+    for issue in result['critical_issues']:
+        print(f"  ❌ {issue}")
+```
+
+Example:
+```
+Critical Issues:
+  ❌ Content is too short (1200 words). Minimum is 2000 words.
+  ❌ Primary keyword 'start a podcast' missing from H1 heading
+  ❌ Meta title is missing
+```
+
+### Warnings
+
+Should be addressed for better performance:
+
+```python
+if result['warnings']:
+    print("Warnings:")
+    for warning in result['warnings']:
+        print(f"  ⚠️ {warning}")
+```
+
+Example:
+```
+Warnings:
+  ⚠️ Content could be longer (2200 words). Optimal is 2500+ words.
+  ⚠️ Keyword density is too low (0.8%). Target is 1.0-2.0%.
+  ⚠️ Too few internal links (2). Add 1 more (target: 5).
+```
+
+### Suggestions
+
+Optional improvements:
+
+```python
+if result['suggestions']:
+    print("Suggestions:")
+    for suggestion in result['suggestions']:
+        print(f"  💡 {suggestion}")
+```
+
+Example:
+```
+Suggestions:
+  💡 Could use more H2 sections (4). Optimal is 6 sections.
+  💡 Could add more internal links (3). Optimal is 5.
+  💡 Secondary keywords not found: podcast analytics
+```
+
+## Custom Guidelines
+
+Provide custom SEO guidelines to match your requirements:
+
+```python
+from data_sources.modules.seo_quality_rater import SEOQualityRater
+
+custom_guidelines = {
+    # Content length
+    'min_word_count': 1500,
+    'optimal_word_count': 2000,
+    'max_word_count': 2500,
+    
+    # Keyword density
+    'primary_keyword_density_min': 1.0,
+    'primary_keyword_density_max': 2.0,
+    'secondary_keyword_density': 0.5,
+    
+    # Internal linking
+    'min_internal_links': 2,
+    'optimal_internal_links': 4,
+    
+    # External linking
+    'min_external_links': 1,
+    'optimal_external_links': 2,
+    
+    # Meta tags
+    'meta_title_length_min': 50,
+    'meta_title_length_max': 60,
+    'meta_description_length_min': 150,
+    'meta_description_length_max': 160,
+    
+    # Structure
+    'min_h2_sections': 3,
+    'optimal_h2_sections': 5,
+    'h2_with_keyword_ratio': 0.33,
+    
+    # Readability
+    'max_sentence_length': 20,
+    'paragraph_sentence_min': 2,
+    'paragraph_sentence_max': 4,
+}
+
+rater = SEOQualityRater(guidelines=custom_guidelines)
+result = rater.rate(content, meta_title, meta_description, primary_keyword)
+```
+
+## Real-World Example
+
+Complete quality rating workflow:
+
+```python
+from data_sources.modules.seo_quality_rater import rate_seo_quality
+
+article = """
+# How to Start a Podcast
+
+Starting a podcast is easier than you think. This complete guide shows you how to start a podcast from scratch.
+
+## Choose Your Topic
+
+Pick a topic you're passionate about. Your podcast topic should resonate with your target audience.
+
+## Get Equipment
+
+You'll need a microphone, headphones, and recording software.
+
+## Record Your First Episode
+
+Start recording! Don't worry about perfection on your first try.
+
+## Publish Your Podcast
+
+Upload to a podcast hosting platform and distribute to directories.
+
+Ready to start your podcast? Begin today with these simple steps.
+"""
+
+result = rate_seo_quality(
+    content=article,
+    meta_title="How to Start a Podcast: Complete Guide for 2024",
+    meta_description="Learn how to start a podcast from scratch with this step-by-step guide. Everything you need to know about podcast equipment, recording, and publishing.",
+    primary_keyword="start a podcast",
+    secondary_keywords=["podcast hosting", "recording software"],
+    keyword_density=1.8,
+    internal_link_count=4,
+    external_link_count=2
+)
+
+print("=== SEO Quality Report ===")
+print(f"\nOverall Score: {result['overall_score']}/100")
+print(f"Grade: {result['grade']}")
+print(f"Publishing Ready: {result['publishing_ready']}")
+
+print(f"\nCategory Scores:")
+for category, score in result['category_scores'].items():
+    print(f"  {category}: {score}/100")
+
+if result['critical_issues']:
+    print(f"\nCritical Issues:")
+    for issue in result['critical_issues']:
+        print(f"  ❌ {issue}")
+
+if result['warnings']:
+    print(f"\nWarnings:")
+    for warning in result['warnings']:
+        print(f"  ⚠️ {warning}")
+
+if result['suggestions']:
+    print(f"\nSuggestions:")
+    for suggestion in result['suggestions'][:3]:
+        print(f"  💡 {suggestion}")
+```
+
+## Integration with Other Modules
+
+Combine with other analyzers for comprehensive scoring:
+
+```python
+from data_sources.modules.keyword_analyzer import analyze_keywords
+from data_sources.modules.readability_scorer import score_readability
+from data_sources.modules.seo_quality_rater import rate_seo_quality
+
+# Step 1: Analyze keywords
+keyword_result = analyze_keywords(
+    content=article,
+    primary_keyword="start a podcast",
+    secondary_keywords=["podcast hosting"]
+)
+
+# Step 2: Rate SEO quality using keyword density
+quality_result = rate_seo_quality(
+    content=article,
+    primary_keyword="start a podcast",
+    keyword_density=keyword_result['primary_keyword']['density'],
+    meta_title="How to Start a Podcast",
+    meta_description="Complete guide to starting a podcast"
+)
+
+print(f"Keyword Density: {keyword_result['primary_keyword']['density']}%")
+print(f"SEO Score: {quality_result['overall_score']}/100")
+print(f"Publishing Ready: {quality_result['publishing_ready']}")
+```
+
+## Best Practices
+
+1. **Aim for 80+ score** before publishing
+2. **Fix all critical issues** - they significantly impact SEO
+3. **Address warnings** - they provide meaningful improvements
+4. **Include meta tags** - 15% of total score
+5. **Optimize keyword placement** - H1, first 100 words, H2s
+6. **Add internal links** - minimum 3, optimal 5
+7. **Include external links** - minimum 2 authoritative sources
+8. **Target 2500 words** - optimal length for ranking
+
+## Related Modules
+
+- [Keyword Analyzer](/api/keyword-analyzer) - Provides keyword_density parameter
+- [Readability Scorer](/api/readability-scorer) - Additional readability metrics
+- [Content Length Comparator](/api/content-length-comparator) - Optimal word count recommendations

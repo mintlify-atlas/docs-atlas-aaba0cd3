@@ -1,0 +1,360 @@
+---
+title: "Internal Linker"
+description: "Strategic internal linking recommendations with exact placements, anchor text, and topic cluster awareness"
+---
+
+The Internal Linker agent analyzes article content and recommends 3-5 strategic internal links that enhance user experience, distribute page authority, and strengthen topic clusters.
+
+## What It Recommends
+
+The Internal Linker provides:
+- **3-5 specific internal links** with exact placement locations
+- **Descriptive anchor text** for each link
+- **Context and reasoning** for why each link adds value
+- **Topic cluster mapping** showing how links strengthen site architecture
+- **User journey visualization** showing content progression paths
+
+## Strategic Goals
+
+Internal linking serves multiple purposes:
+
+1. **User Value**: Help readers discover related helpful content
+2. **SEO Value**: Distribute page authority and strengthen topic clusters
+3. **Conversion Path**: Guide readers toward high-value pages
+4. **Engagement**: Increase time on site and reduce bounce rate
+5. **Topical Authority**: Signal content relationships to search engines
+
+## Analysis Process
+
+### 1. Content Context Mapping
+
+The agent:
+- Reads article thoroughly to understand topics and subtopics
+- Identifies key concepts, products, processes, or tools mentioned
+- Notes pain points, questions, or challenges discussed
+- Flags opportunities for deeper exploration or next steps
+
+### 2. Reference Material Review
+
+Checks `context/internal-links-map.md` for priority linking targets:
+- **Pillar content** (comprehensive guides on main topics)
+- **Related blog posts** (supporting content on subtopics)
+- **Product pages** (Castos features that solve problems)
+- **Resource pages** (tools, templates, checklists)
+- **How-to guides** (step-by-step processes)
+
+### 3. Strategic Placement
+
+**Ideal Link Locations**:
+
+**Contextual Body Links** (Primary Focus):
+- Within explanatory paragraphs where topic is discussed
+- After introducing a concept with dedicated content elsewhere
+- When mentioning a process with a step-by-step guide
+- Where readers would naturally want to learn more
+
+**Introduction Links** (Use Sparingly):
+- Link to pillar content when article is subtopic of larger guide
+- Reference prerequisite knowledge
+- One strategic link maximum
+
+**Conclusion Links** (Next Steps):
+- "Related reading" or "next steps" suggestions
+- Logical follow-up content
+- Product/tool pages as solutions
+- 1-2 links maximum
+
+**List Items** (Natural Fit):
+- When listing tools, features, or strategies with dedicated pages
+- Each item can link to more detailed explanation
+
+## Anchor Text Optimization
+
+### Best Practices
+
+1. **Descriptive**: Reader knows exactly what they'll get
+2. **Natural**: Flows seamlessly in sentence
+3. **Keyword-Rich**: Includes relevant keywords for linked page
+4. **Varied**: Don't use same anchor text repeatedly
+5. **Appropriate Length**: 2-5 words typically
+
+### Anchor Text Formulas
+
+**Exact Match** (use sparingly):
+- "podcast hosting" → podcast hosting page
+- Best for: Main product/service pages
+
+**Partial Match** (most common):
+- "choosing the right podcast hosting platform" → hosting guide
+- "effective podcast SEO strategies" → SEO article
+- Best for: Blog posts and guides
+
+**Branded**:
+- "Castos analytics dashboard" → analytics feature page
+- Best for: Product features
+
+**Generic** (avoid when possible):
+- "click here", "read more" (only if surrounded by context)
+
+### Good vs Bad Examples
+
+❌ Bad: "You can learn more about this topic here."
+✅ Good: "Learn more about podcast monetization strategies."
+
+❌ Bad: "Check out this article for more information."
+✅ Good: "Our complete guide to podcast analytics covers this in depth."
+
+❌ Bad: Linking just "podcast" (too vague)
+✅ Good: Linking "podcast editing workflow" (specific, descriptive)
+
+## Link Quantity Guidelines
+
+**Target Range**: 3-5 internal links per article
+- **Minimum**: 3 links (avoid isolated content)
+- **Optimal**: 4-5 links (strong connectivity)
+- **Maximum**: 7 links (only for 3000+ word articles)
+
+**Distribution**:
+- Pillar content: 1-2 links (high priority pages)
+- Blog posts: 2-3 links (related articles)
+- Product/tools: 1 link (only if contextually relevant)
+- Resources: 0-1 link (if mentioned)
+
+## Output Format
+
+```markdown
+### Article Overview
+- Main Topic: Podcast audience growth strategies
+- Key Subtopics: Content quality, promotion, analytics, engagement
+- Topic Cluster: Audience Growth
+- User Intent: Learn actionable growth tactics
+
+### Recommended Internal Links
+
+#### Link 1: [High Priority]
+- Link To: The Complete Guide to Podcast SEO
+  URL: /blog/podcast-seo-guide
+- Page Type: Pillar
+- Placement Location:
+  - Section: "Making Your Content Discoverable"
+  - After sentence: "Search engines are a critical discovery channel."
+- Anchor Text: "optimizing your podcast for search engines"
+- Context: "Beyond social media, search engines are a critical
+  discovery channel for new listeners. Learn more about
+  [optimizing your podcast for search engines] to increase
+  organic discovery."
+- Why This Link: Supports promotion section with comprehensive
+  SEO resource. Natural progression from basic promotion to
+  advanced SEO tactics. Pillar content strengthens cluster.
+- Priority: High
+
+#### Link 2: [High Priority]
+- Link To: Podcast Analytics: What to Track and Why
+  URL: /blog/podcast-analytics-guide
+- Page Type: Blog
+- Placement Location:
+  - Section: "Measuring Growth and Success"
+  - After sentence: "Tracking the right metrics is essential."
+- Anchor Text: "understanding your podcast analytics"
+- Context: "Tracking the right metrics is essential to know
+  what's working. Start with [understanding your podcast
+  analytics] to identify which episodes and topics resonate
+  most with your audience."
+- Why This Link: Directly relevant to metrics section. Provides
+  deeper dive into analytics. Completes user journey from
+  strategy to implementation to measurement.
+- Priority: High
+
+#### Link 3: [Medium Priority]
+- Link To: Castos Analytics Dashboard
+  URL: /features/analytics
+- Page Type: Product
+- Placement Location:
+  - Section: "Measuring Growth and Success"
+  - After sentence: "You need reliable tools to track performance."
+- Anchor Text: "Castos analytics dashboard"
+- Context: "You need reliable tools to track performance across
+  platforms. The [Castos analytics dashboard] centralizes all
+  your podcast data in one place, making it easy to spot trends
+  and opportunities."
+- Why This Link: Natural product mention solving stated problem.
+  Not forced—genuinely helpful in context. Supports conversion
+  path without being salesy.
+- Priority: Medium
+
+#### Link 4: [Medium Priority]
+- Link To: How to Create a Podcast Content Calendar
+  URL: /blog/podcast-content-calendar
+- Page Type: Blog
+- Placement Location:
+  - Section: "Consistency Builds Audience"
+  - After sentence: "Planning ahead ensures you never miss a publish date."
+- Anchor Text: "creating a podcast content calendar"
+- Context: "Planning ahead ensures you never miss a publish date.
+  [Creating a podcast content calendar] helps you batch record,
+  plan promotional campaigns, and maintain consistency even during
+  busy periods."
+- Why This Link: Supports consistency advice with tactical how-to.
+  Addresses common challenge readers face. Strengthens content
+  cluster around production workflow.
+- Priority: Medium
+
+### Alternative Anchor Text Options
+
+For Link 1 (SEO guide):
+1. "optimizing your podcast for search engines" (recommended)
+2. "podcast SEO strategies"
+3. "how to rank your podcast in search results"
+Recommended: Option 1 - Most natural, includes main keyword
+
+For Link 2 (Analytics guide):
+1. "understanding your podcast analytics" (recommended)
+2. "podcast metrics that matter"
+3. "what analytics to track"
+Recommended: Option 1 - Most comprehensive, flows best
+
+### Link Balance Analysis
+- Total Recommended Links: 4
+- Pillar Content: 1 (SEO guide)
+- Blog Articles: 2 (analytics, content calendar)
+- Product Pages: 1 (analytics dashboard)
+- Distribution: Well-balanced - mix of educational and product
+
+### User Journey Map
+```
+Current Article: "How to Grow Your Podcast Audience"
+    ↓ Link 1 (Promotion section)
+Pillar: "Complete Guide to Podcast SEO" (deeper SEO knowledge)
+    ↓ Link 2 (Measurement section)
+Blog: "Podcast Analytics Guide" (tactical metrics)
+    ↓ Link 3 (Same section)
+Product: "Castos Analytics Dashboard" (solution tool)
+    ↓ Link 4 (Consistency section)
+Blog: "Podcast Content Calendar" (implementation how-to)
+```
+
+### Opportunities Not Pursued
+- Episode Description Templates: Too tangential to growth focus
+- Podcast Hosting Comparison: Already linked in another section
+- Monetization Guide: Different user intent, would distract
+- Social Media Promotion: Same concept covered better by Link 1
+
+### Cross-Linking Opportunities
+Suggestions for linking TO this article FROM other pages:
+
+From: "Podcast SEO Guide" (pillar)
+- Section: "Content Strategy for SEO"
+- Anchor Text: "proven audience growth strategies"
+- Benefit: Bidirectional linking strengthens both pages,
+  provides next steps after SEO basics
+
+From: "Podcast Analytics Guide"
+- Section: "Using Analytics to Improve"
+- Anchor Text: "broader audience growth tactics"
+- Benefit: Natural progression from analysis to action
+
+### SEO Impact Prediction
+- Link Equity Flow: Strengthens Audience Growth topic cluster
+- Topic Cluster Strength: +4 connections to cluster hub
+- User Engagement: Expected +30 seconds time on site
+- Conversion Path: Clear progression to product (analytics)
+
+### Implementation Checklist
+- [ ] Link 1: Add "optimizing your podcast for search engines"
+      in "Making Your Content Discoverable" section
+      linking to /blog/podcast-seo-guide
+- [ ] Link 2: Add "understanding your podcast analytics"
+      in "Measuring Growth" section
+      linking to /blog/podcast-analytics-guide
+- [ ] Link 3: Add "Castos analytics dashboard"
+      in "Measuring Growth" section
+      linking to /features/analytics
+- [ ] Link 4: Add "creating a podcast content calendar"
+      in "Consistency Builds Audience" section
+      linking to /blog/podcast-content-calendar
+- [ ] Verify all links open correctly
+- [ ] Confirm anchor text flows naturally
+- [ ] Check no paragraph has more than 2 links
+```
+
+## When It Runs
+
+The Internal Linker runs automatically after:
+- `/write [topic]` - Recommends links for new articles
+- `/optimize [file]` - Reviews and improves existing links
+
+You can also invoke manually:
+```
+Use the @internal-linker agent to recommend links
+```
+
+## Topic Cluster Awareness
+
+### Pillar-Cluster Relationship
+
+**If article is cluster content** → MUST link to pillar page
+**If article is pillar content** → Link to 2-3 cluster articles
+
+This strengthens topic authority and helps search engines understand content relationships.
+
+### Related Content Network
+
+The agent creates a web of related content:
+- Links to articles in same topic cluster
+- Connects supporting content to main resources
+- Builds comprehensive topic coverage
+
+## Quality Standards
+
+Every link recommendation must:
+
+1. **Add Genuine Value**: Reader benefits from following the link
+2. **Be Contextually Relevant**: Naturally fits the discussion
+3. **Have Clear Purpose**: Supports specific user need or journey
+4. **Use Descriptive Anchor Text**: Reader knows what to expect
+5. **Flow Naturally**: Doesn't interrupt reading experience
+6. **Support SEO Goals**: Strengthens topic cluster or page authority
+7. **Avoid Over-Linking**: Doesn't crowd article with excessive links
+
+## Links to Avoid
+
+- ❌ Forced links that don't add value
+- ❌ Too many links in one paragraph (max 1-2)
+- ❌ Links in every section (feels spammy)
+- ❌ Linking only to product/sales pages
+- ❌ Repeating same link multiple times
+- ❌ Links that interrupt article flow
+- ❌ Vague "click here" or "learn more" anchors
+
+## Best Practices
+
+**Quality over quantity**: 3 great links beat 7 mediocre ones
+
+**Natural integration**: Links should flow seamlessly in content
+
+**Strategic placement**: Each link serves a clear purpose
+
+**Descriptive anchors**: Always use keyword-rich, descriptive text
+
+**User-first**: Links serve reader needs, not just SEO
+
+**Cluster awareness**: Strengthen topic authority through connections
+
+**Balance**: Mix pillar, blog, and product links appropriately
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="SEO Optimizer" icon="magnifying-glass" href="/agents/seo-optimizer">
+    Comprehensive on-page SEO analysis
+  </Card>
+  <Card title="Keyword Mapper" icon="location-dot" href="/agents/keyword-mapper">
+    Keyword distribution mapping
+  </Card>
+  <Card title="Content Analyzer" icon="chart-mixed" href="/agents/content-analyzer">
+    Data-driven content analysis
+  </Card>
+  <Card title="Meta Creator" icon="tag" href="/agents/meta-creator">
+    High-performing meta elements
+  </Card>
+</CardGroup>

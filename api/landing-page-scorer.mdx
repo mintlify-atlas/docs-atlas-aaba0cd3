@@ -1,0 +1,233 @@
+---
+title: 'Landing Page Scorer'
+description: 'Score landing pages (0-100) against CRO best practices with support for SEO and PPC page types'
+---
+
+## Overview
+
+The `LandingPageScorer` class scores landing pages against conversion rate optimization (CRO) best practices. It supports both SEO landing pages and PPC landing pages with different scoring criteria.
+
+## Installation
+
+```python
+from data_sources.modules.landing_page_scorer import LandingPageScorer, score_landing_page
+```
+
+## Scoring Categories
+
+The scorer evaluates five weighted categories:
+
+- **Above-the-fold (25%)**: Headline, value prop, CTA visibility, trust signal
+- **CTAs (25%)**: Quality, distribution, goal alignment
+- **Trust signals (20%)**: Testimonials, social proof, risk reversals
+- **Structure (15%)**: Benefit-focused, scannable, appropriate length
+- **SEO (15%)**: Meta, keywords, links (for SEO pages only)
+
+## Page Types
+
+### SEO Landing Pages
+- Min word count: 1,500
+- Optimal word count: 2,000
+- Max word count: 2,500
+- Min CTAs: 3
+- Optimal CTAs: 5
+- Internal links: 2+
+
+### PPC Landing Pages
+- Min word count: 400
+- Optimal word count: 600
+- Max word count: 800
+- Min CTAs: 2
+- Optimal CTAs: 3
+- Internal links: 0 (minimize distractions)
+
+## Initialization
+
+```python
+scorer = LandingPageScorer(
+    page_type='seo',  # 'seo' or 'ppc'
+    conversion_goal='trial'  # 'trial', 'demo', or 'lead'
+)
+```
+
+<ParamField path="page_type" type="str" default="seo">
+  Page type: 'seo' or 'ppc'
+</ParamField>
+
+<ParamField path="conversion_goal" type="str" default="trial">
+  Conversion goal: 'trial', 'demo', or 'lead'
+</ParamField>
+
+## Methods
+
+### score
+
+Score a landing page against CRO best practices.
+
+```python
+result = scorer.score(
+    content=page_content,
+    meta_title="Best Podcast Hosting | Start Free Today",
+    meta_description="Get started in minutes with Castos. Free 14-day trial.",
+    primary_keyword="podcast hosting"
+)
+```
+
+<ParamField path="content" type="str" required>
+  Landing page content (markdown)
+</ParamField>
+
+<ParamField path="meta_title" type="str" optional>
+  Meta title tag
+</ParamField>
+
+<ParamField path="meta_description" type="str" optional>
+  Meta description tag
+</ParamField>
+
+<ParamField path="primary_keyword" type="str" optional>
+  Target keyword (for SEO pages)
+</ParamField>
+
+<ResponseField name="result" type="dict">
+  <ResponseField name="overall_score" type="float">
+    Overall score (0-100)
+  </ResponseField>
+  <ResponseField name="grade" type="str">
+    Letter grade (A-F)
+  </ResponseField>
+  <ResponseField name="page_type" type="str">
+    'seo' or 'ppc'
+  </ResponseField>
+  <ResponseField name="conversion_goal" type="str">
+    'trial', 'demo', or 'lead'
+  </ResponseField>
+  <ResponseField name="category_scores" type="dict">
+    Scores for each category (above_fold, ctas, trust_signals, structure, seo)
+  </ResponseField>
+  <ResponseField name="critical_issues" type="list">
+    Issues that must be fixed
+  </ResponseField>
+  <ResponseField name="warnings" type="list">
+    Issues that should be fixed
+  </ResponseField>
+  <ResponseField name="suggestions" type="list">
+    Recommended improvements
+  </ResponseField>
+  <ResponseField name="publishing_ready" type="bool">
+    True if score >= 75 and no critical issues
+  </ResponseField>
+  <ResponseField name="details" type="dict">
+    Additional details (word count, CTA count, etc.)
+  </ResponseField>
+</ResponseField>
+
+## Conversion Goals
+
+The scorer recognizes goal-specific CTA patterns:
+
+### Trial Goal
+- Primary patterns: "Start Your Free Trial", "Try Free for 14 Days", "Get Started Free"
+- Secondary patterns: "Sign Up Free", "Create Your Account", "Launch Your [Product]"
+
+### Demo Goal
+- Primary patterns: "Book a Demo", "Get a Demo", "See It in Action"
+- Secondary patterns: "Schedule a Call", "Talk to Sales", "Contact Us"
+
+### Lead Goal
+- Primary patterns: "Download the Guide", "Get Instant Access", "Claim Your Free [Asset]"
+- Secondary patterns: "Subscribe", "Join Our Newsletter", "Get Updates"
+
+## Trust Signal Detection
+
+The scorer automatically detects trust signals:
+
+- **Testimonials**: Quoted text with attribution ("— Name" or "**Name**")
+- **Customer counts**: "50,000+ customers", "trusted by thousands"
+- **Specific results**: "300% growth", "10,000 downloads", "$5,000 saved"
+- **Risk reversals**: "no credit card", "money-back guarantee", "cancel anytime"
+- **Authority**: "as seen in", "award-winning", "partner with"
+
+## Convenience Function
+
+```python
+from data_sources.modules.landing_page_scorer import score_landing_page
+
+result = score_landing_page(
+    content=page_content,
+    page_type='seo',
+    conversion_goal='trial',
+    meta_title="Best Podcast Hosting",
+    meta_description="Start your podcast today.",
+    primary_keyword="podcast hosting"
+)
+```
+
+## Example Usage
+
+```python
+from data_sources.modules.landing_page_scorer import LandingPageScorer
+
+# Read landing page
+with open('landing-pages/podcast-hosting.md', 'r') as f:
+    content = f.read()
+
+# Initialize scorer for SEO page with trial goal
+scorer = LandingPageScorer(page_type='seo', conversion_goal='trial')
+
+# Score the page
+result = scorer.score(
+    content=content,
+    meta_title="Best Podcast Hosting | Start Free Today - Castos",
+    meta_description="Get started in minutes with Castos. No technical skills needed. Free 14-day trial, no credit card required.",
+    primary_keyword="podcast hosting"
+)
+
+print("=== Landing Page Score Report ===")
+print(f"\nPage Type: {result['page_type'].upper()}")
+print(f"Conversion Goal: {result['conversion_goal']}")
+print(f"\nOverall Score: {result['overall_score']}/100")
+print(f"Grade: {result['grade']}")
+print(f"Publishing Ready: {result['publishing_ready']}")
+
+print(f"\nCategory Scores:")
+for category, score in result['category_scores'].items():
+    print(f"  {category}: {score}")
+
+if result['critical_issues']:
+    print(f"\nCritical Issues:")
+    for issue in result['critical_issues']:
+        print(f"  ❌ {issue}")
+
+if result['warnings']:
+    print(f"\nWarnings:")
+    for warning in result['warnings']:
+        print(f"  ⚠️  {warning}")
+
+if result['suggestions']:
+    print(f"\nSuggestions:")
+    for suggestion in result['suggestions'][:3]:
+        print(f"  💡 {suggestion}")
+```
+
+## Grade Scale
+
+- **A (90-100)**: Excellent - ready to publish
+- **B (80-89)**: Good - minor improvements recommended
+- **C (70-79)**: Average - needs some work
+- **D (60-69)**: Needs Work - significant improvements required
+- **F (0-59)**: Poor - major overhaul needed
+
+## Publishing Threshold
+
+A page is considered "publishing ready" when:
+- Overall score >= 75
+- Zero critical issues
+
+## Source Code Reference
+
+Location: `data_sources/modules/landing_page_scorer.py:19`
+
+See also:
+- [CTA Analyzer](/api/cta-analyzer) - Detailed CTA analysis
+- [Trust Signal Analyzer](/api/trust-signal-analyzer) - Trust signal detection
